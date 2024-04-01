@@ -32,22 +32,27 @@ const HomePage = ({ auth, userData }) => {
 export default HomePage;
 const ProfileImage= styled.img`
 width:100px;
-height: 100px;
+border-radius: 50px;
+outline: 4px solid brown;
+outline-offset:10px;
 `
 const LogoutImage = styled.img`
-width:26px;
+width: 100px;
+
 `
 const LogoutWrapper = styled.div`
 ${text.bodyMBold}
 display: flex;
-
+background-color: white;
 `
 const Navigation = styled.div`
   display: flex;
 `;
 const Wrapper = styled.div`
+position: relative;
+  width:100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  color:white;
+  align-self: flex-start;
   justify-content: center;
 `;
