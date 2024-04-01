@@ -43,7 +43,7 @@ function App() {
     createRoutesFromElements(
     
         <Route
-          path="/"
+          path='/'
           element={
             userData.email !== "User Not Found" ? (
               <HomePage auth={auth} userData={userData} />
@@ -65,8 +65,8 @@ export default App;
 
 const Wrapper = styled.div`
 display: flex;
-align-items: center;
 justify-content: center;
-background-color: black;
+align-items: center;
+background:linear-gradient(120deg, #3b5998, #FFFFFF);
 height: 100vh;
 `

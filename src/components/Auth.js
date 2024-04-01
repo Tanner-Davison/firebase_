@@ -39,7 +39,7 @@ const AuthLogin = ({ setUserEmail }) => {
       <Form onSubmit={handleSignIn}>
         {!emailError && (
           <>
-            <Title>Create User</Title>
+            <Title>New User</Title>
 
             <Input
               id="email"
@@ -56,7 +56,7 @@ const AuthLogin = ({ setUserEmail }) => {
               placeholder="Password..."
               autoComplete="current-password"
             />
-            <SignInButton type="submit">Create User</SignInButton>
+            <SignInButton type="submit">Join</SignInButton>
           </>
         )}
         {emailError && (
@@ -98,7 +98,10 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: black;
+  border-radius: 4.736vw;
+  background-color: rgba(0,0,0,0.4);
+  padding:15px;
+  border:1px ridge ${colors.loginWhite};
   ${media.fullWidth} {
   }
 
@@ -114,17 +117,30 @@ const Form = styled.form`
   position: relative;
   display: flex;
   flex-direction: column;
-  border: 0.208vw solid ${colors.primaryPurple};
-  border-radius: 0.694vw;
   background: ${(props) =>
     props.$google ? `${colors.purpleGradient}` : "#5e60ce"};
-  gap: 1.528vw;
-  padding: 3.472vw;
-  margin: 4.028vw;
+  border: 3px solid ${colors.primaryPurple};
+  border-radius: 10px;
+  gap: 22px;
+
+  padding: 50px;
+  margin: 58px;
   ${media.fullWidth} {
+    border: 3px solid ${colors.primaryPurple};
+  border-radius: 10px;
+    gap: 22px;
+
+  padding: 50px;
+  margin: 58px;
   }
 
   ${media.tablet} {
+    border: 0.293vw solid ${colors.primaryPurple};
+  border-radius: 0.977vw;
+  gap: 3.148vw;
+
+  padding: 3.883vw;
+  margin: 5.664vw;
   }
 
   ${media.mobile} {
@@ -138,8 +154,8 @@ const Form = styled.form`
   }
 `;
 
-const Title = styled.h2`
-  ${text.h2}
+const Title = styled.p`
+  ${text.bodyLLeagueBold}
   color: white;
   margin: unset;
   align-self: center;
@@ -203,6 +219,7 @@ const ErrorWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: max-content;
   gap: 10px;
 `;
 const ErrorMessage = styled.p`
@@ -241,6 +258,7 @@ const Pill = styled.div`
   }
 
   ${media.mobile} {
+    padding:1vw;
   }
 `;
 const Back = styled.img`

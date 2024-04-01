@@ -1,4 +1,4 @@
-import media from './media';
+import media from "./media";
 
 const text = {
   giant: `
@@ -426,6 +426,31 @@ ${media.mobile} {
       line-height: 8.411vw;
     }
     `,
+  bodyLLeagueBold: `
+    font-family: 'League Spartan';
+    font-style: normal;
+    font-weight: 700;
+  
+      ${media.fullWidth} {
+        font-size: 38px;
+        line-height: 36px;
+      }
+      
+      ${media.desktop} {
+        font-size: 2.639vw;
+        line-height: 2.5vw;
+      }
+  
+      ${media.tablet} {
+        font-size: 3.344vw;
+        line-height: 3.516vw;
+      }
+  
+      ${media.mobile} {
+        font-size: 7.607vw;
+        line-height: 8.411vw;
+      }
+      `,
   bodyM: `
   font-family: 'Archivo';
   font-style: normal;
@@ -438,6 +463,30 @@ ${media.mobile} {
     
     ${media.desktop} {
       font-size: 1.25vw;
+      line-height: 1.875vw;
+    }
+
+    ${media.tablet} {
+      font-size: 1.758vw;
+      line-height: 2.637vw;
+    }
+
+    ${media.mobile} {
+      font-size: 4.206vw;
+      line-height: 6.308vw;
+    }
+    `,
+  bodyMLeague: `
+    font-family:"League Spartan";
+    font-style: normal;
+    font-weight: 600;
+    ${media.fullWidth} {
+      font-size: 18px;
+      line-height: 27px;
+    }
+    
+    ${media.desktop} {
+      font-size: 2vw;
       line-height: 1.875vw;
     }
 
@@ -526,7 +575,7 @@ ${media.mobile} {
       line-height: 5.607vw;
     }
     `,
-    bodyXSBold: `
+  bodyXSBold: `
     font-family: Archivo;
     font-style: normal;
     font-weight: 700;
