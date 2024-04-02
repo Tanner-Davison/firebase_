@@ -6,6 +6,7 @@ import text from "styles/text";
 import Logout from "../images/Logout.webp";
 import { signOut } from "firebase/auth";
 import { currentDate } from "./utils/date";
+import { auth } from "config/firebase";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import RotatingSVG from "../images/cog";
@@ -13,17 +14,19 @@ import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import IsoRoundedIcon from "@mui/icons-material/IsoRounded";
 import UsersInfo from "./UsersInfo";
 
-const Nav = ({ auth, userData }) => {
+const Nav = ({  userData }) => {
   const [settingsIsOpen, setSettingsIsOpen] = useState(false);
   const navigate = useNavigate();
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigate('/login')
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
+  const handleLogout = (e) => {               
+    signOut(auth).then(() => {
+    // Sign-out successful.
+        navigate("/login");
+        console.log("Signed out successfully")
+    }).catch((error) => {
+    // An error happened.
+    });
+}
 
   const userName = userData?.email.split("@")[0];
   const speed = 0.5;
@@ -133,9 +136,7 @@ const Pill = styled.div`
   width: fit-content;
   justify-content: space-between;
   right:-2.014vw;
-  &:hover {
-    background-color: rgba(255, 255, 0, 0.4);
-  }
+
   ${media.fullWidth} {
     right:-29px;
   }
@@ -227,6 +228,9 @@ const UserTitle = styled.div`
     props.$settings ? "1.875vw" : props.$logout ? "-1.528vw" : "unset"};
 
   &.backwards {
+    &:hover {
+    background-color: rgba(255, 255, 0, 0.4);
+  }
     cursor: pointer;
     -moz-transform: scale(-1, -1);
     -webkit-transform: scale(-1, -1);

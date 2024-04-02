@@ -4,7 +4,6 @@ import HomePage from "pages/HomePage";
 import { auth } from "./config/firebase";
 import { db } from "./config/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Nav from "components/Nav";
 import {
@@ -85,7 +84,7 @@ function App() {
         ,
         <Route path="/login" element={<AuthLogin />} />,
         <Route
-          path="/user/profile/:username"
+          path="/user/profile"
           element={
             <HomePage
               userId={localStorage.getItem("userId")}
