@@ -49,7 +49,7 @@ function App() {
         localStorage.setItem("userEmail", user.email);
         localStorage.setItem("userPhoto", user.photoURL || "");
         localStorage.setItem("handle", handle || "@anonymous_user");
-        localStorage.setItem("userId", user.uid);
+        localStorage.setItem("userId", user.uid || '');
         addUserLoginData(user, userData);
       } else {
         setUserData({
@@ -84,6 +84,9 @@ function App() {
         />
         ,
         <Route path="/login" element={<AuthLogin />} />,
+        <Route path="/user/profile/:username" element={<HomePage userId={localStorage.getItem('userId')}
+              auth={auth}
+              userData={userData}/>} />,
       </>
     )
   );

@@ -6,13 +6,13 @@ import text from "styles/text";
 import { useNavigate } from "react-router-dom";
 import Nav from "components/Nav";
 
-const HomePage = ({ userDataEmail,auth, userData }) => {
-  console.log(userData);
+const HomePage = ({ userId,auth, userData }) => {
+  console.log(userId);
   const navigate = useNavigate();
   const [settingsOpen, setSettingsOpen] = useState(false);
   useEffect(()=>{
     
-    if(userDataEmail === "User Not Found"){
+    if(userId === null){
       navigate('/login')
     }else{
       return 

@@ -20,7 +20,7 @@ const AuthLogin = () => {
     
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate(`/home`)
+      navigate(`/user/profile/${email.split('@')[0]}`)
     } catch (error) {
       console.log(error);
       if (error.message.includes("auth/email-already-in-use")) {
@@ -33,7 +33,7 @@ const AuthLogin = () => {
     e.preventDefault();
     try {
       await signInWithPopup(auth, googleProvider)
-      navigate(`/home`)
+      navigate(`/user/profile/${email.split('@')[0]}`)
       
     } catch (error) {
       console.log(error);
