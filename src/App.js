@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import AuthLogin from "components/Auth";
 import HomePage from "pages/HomePage";
 import { auth } from "./config/firebase";
 import { db } from "./config/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import styled from "styled-components";
-import Nav from "components/Nav";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -13,15 +12,25 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
+export const UserDataContext = createContext();
+
 function App() {
   const [userData, setUserData] = useState({
-    email: localStorage.getItem("userEmail") || "User Not Found",
-    photoUrl: localStorage.getItem("userPhoto") || "",
-    username: localStorage.getItem("handle") || "",
+    email: "",
+    photoUrl: "",
+    username: "",
   });
 
   useEffect(() => {
-    const addUserLoginData = async (user, userData) => {
+    const retrieveUserDataFromLocalStorage = () => {
+      const userEmail = localStorage.getItem("userEmail") || "";
+      const userPhotoUrl = localStorage.getItem("userPhoto") || "";
+      const username = localStorage.getItem("handle") || "";
+      const userId = localStorage.getItem("userId"||"");
+      return { email: userEmail, photoUrl: userPhotoUrl, username, userId };
+    };
+
+    const addUserLoginData = async (user) => {
       try {
         const userRef = doc(db, "users", user.uid);
         await getDoc(userRef);
@@ -37,71 +46,38 @@ function App() {
     };
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        let name = userData?.email.split("@")[0];
-        let handle = "@" + name;
-
-        setUserData({
-          handle: handle,
-          email: user.email,
-          photoUrl: userData.photoUrl,
-          userId: user.uid,
-        });
-        localStorage.setItem("userEmail", user.email);
-        localStorage.setItem("userPhoto", user.photoURL || "");
-        localStorage.setItem("handle", handle || "@anonymous_user");
-        localStorage.setItem("userId", user.uid || "");
-        addUserLoginData(user, userData);
+        addUserLoginData(user);
       } else {
-        setUserData({
-          handle: "@anonymous_user",
-          email: "User Not Found",
-          photoUrl: null,
-        });
-        localStorage.removeItem("userEmail");
-        localStorage.removeItem("userPhoto");
-        localStorage.removeItem("handle");
-        localStorage.removeItem("userId");
+        console.log('user logged out');
       }
     });
 
+    // Retrieve user data from local storage and set to state
+    setUserData(retrieveUserDataFromLocalStorage());
+
     return () => unsubscribe();
-    //eslint-disable-next-line
   }, []);
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        <Route
-          path="/"
-          element={
-            <HomePage
-              userDataEmail={userData.email}
-              auth={auth}
-              userData={userData}
-            />
-          }
-        />
-        ,
-        <Route path="/login" element={<AuthLogin />} />,
+        <Route path="/" element={<AuthLogin />} />
         <Route
           path="/user/profile"
           element={
-            <HomePage
-              userId={localStorage.getItem("userId")}
-              auth={auth}
-              userData={userData}
-            />
+            <HomePage/>
           }
         />
-        ,
       </>
     )
   );
 
   return (
-    <Wrapper>
-      <RouterProvider router={router} />
-    </Wrapper>
+    <UserDataContext.Provider value={userData}>
+      <Wrapper>
+        <RouterProvider router={router} />
+      </Wrapper>
+    </UserDataContext.Provider>
   );
 }
 

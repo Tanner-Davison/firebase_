@@ -1,29 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
 import text from "styles/text";
+import { auth } from "config/firebase";
 import { useNavigate } from "react-router-dom";
 import Nav from "components/Nav";
+import {UserDataContext} from 'App';
 
-const HomePage = ({ userId,auth, userData }) => {
-  console.log(userId);
+const HomePage = () => {
   const navigate = useNavigate();
   const [settingsOpen, setSettingsOpen] = useState(false);
-  useEffect(()=>{
+  const userData = useContext(UserDataContext)
     
-    if(userId === null || undefined){
-      navigate('/login')
-    }else{
-      return 
-    }
-  },[])
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+       console.log(user)
+      } else {
+        // No user is signed in, redirect to login page
+        navigate("/");
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate]);
+
   return (
     <Wrapper>
-      <Nav
-        auth={auth}
-        userData={userData}
-      />
+      <Nav/>
     </Wrapper>
   );
 };

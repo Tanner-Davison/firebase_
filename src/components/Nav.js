@@ -1,34 +1,40 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import media from "styles/media";
 import colors from "styles/colors";
+import media from "styles/media";
 import text from "styles/text";
 import Logout from "../images/Logout.webp";
-import { signOut } from "firebase/auth";
-import { currentDate } from "./utils/date";
-import { auth } from "config/firebase";
-import { useNavigate } from "react-router-dom";
-import gsap from "gsap";
-import RotatingSVG from "../images/cog";
-import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import IsoRoundedIcon from "@mui/icons-material/IsoRounded";
+import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
+import { auth } from "config/firebase";
+import { signOut } from "firebase/auth";
+import gsap from "gsap";
+import { useNavigate } from "react-router-dom";
 import UsersInfo from "./UsersInfo";
+import { currentDate } from "./utils/date";
 
-const Nav = ({  userData }) => {
+const Nav = () => {
   const [settingsIsOpen, setSettingsIsOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  const handleLogout = (e) => {               
-    signOut(auth).then(() => {
-    // Sign-out successful.
-        navigate("/login");
-        console.log("Signed out successfully")
-    }).catch((error) => {
-    // An error happened.
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      setUser(currentUser);
     });
-}
+    return () => unsubscribe();
+  }, []);
 
-  const userName = userData?.email.split("@")[0];
+  const handleLogout = (e) => {
+    signOut(auth)
+      .then(() => {
+        navigate("/");
+        console.log("Signed out successfully");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const speed = 0.5;
   const handleMouseOver = () => {
     const nameObject = document.querySelector(".nameObject");
@@ -81,12 +87,12 @@ const Nav = ({  userData }) => {
       <Navigation>
         <RotationParent>
           <ImageAndNameWrapper
-            onMouseEnter={() => handleMouseOver()}
-            onMouseLeave={() => handleMouseLeave()}
+            onMouseEnter={handleMouseOver}
+            onMouseLeave={handleMouseLeave}
             className={"parent-container"}
           >
             <UserNameBlock className={"settings"}>
-              <UserTitle $logout className={"backwards"} onClick={()=>handleLogout()}>
+              <UserTitle $logout className={"backwards"} onClick={handleLogout}>
                 <LogoutImage src={Logout} />
                 Logout
               </UserTitle>
@@ -102,7 +108,7 @@ const Nav = ({  userData }) => {
               <Name $preferences className={"backwards"}>
                 Preferences
               </Name>
-              <Pill $uploadPhoto >
+              <Pill $uploadPhoto>
                 <UserTitle $imageUpload className={"backwards"} $date>
                   upload photo
                 </UserTitle>
@@ -110,12 +116,12 @@ const Nav = ({  userData }) => {
               </Pill>
             </UserNameBlock>
             <ProfileImage
-              src={localStorage.getItem('userPhoto')}
+              src={user?.photoURL || ""}
               alt={"user-profile-picture"}
             />
             <UserNameBlock className={"nameObject"}>
               <UserTitle>Welcome,</UserTitle>
-              <Name>{"@" + userName}</Name>
+              <Name>{"@" + user?.email.split("@")[0]}</Name>
               <UserTitle $date>{currentDate}</UserTitle>
             </UserNameBlock>
           </ImageAndNameWrapper>
@@ -135,19 +141,19 @@ const Pill = styled.div`
   align-items: center;
   width: fit-content;
   justify-content: space-between;
-  right:-2.014vw;
+  right: -2.014vw;
 
   ${media.fullWidth} {
-    right:-29px;
+    right: -29px;
   }
-  
+
   ${media.tablet} {
-    right: ${props=>props.$uploadPhoto? '-2vw': '-2.5vw'};
-    padding-bottom:0.195vw;
+    right: ${(props) => (props.$uploadPhoto ? "-2vw" : "-2.5vw")};
+    padding-bottom: 0.195vw;
   }
-  
+
   ${media.mobile} {
-    right: ${props=>props.$uploadPhoto? '-6vw': '-1.5vw'};
+    right: ${(props) => (props.$uploadPhoto ? "-6vw" : "-1.5vw")};
   }
 `;
 const ProfileImage = styled.img`
@@ -186,18 +192,18 @@ const LogoutImage = styled.img`
   width: 1.806vw;
   height: 1.806vw;
   ${media.fullWidth} {
-  width: 26px;
-  height: 26px;
+    width: 26px;
+    height: 26px;
   }
-  
+
   ${media.tablet} {
-  width: 2.539vw;
-  height: 2.539vw;
+    width: 2.539vw;
+    height: 2.539vw;
   }
-  
+
   ${media.mobile} {
-  width: 6.933vw;
-  height: 6.933vw;
+    width: 6.933vw;
+    height: 6.933vw;
   }
 `;
 const Name = styled.p`
@@ -205,7 +211,7 @@ const Name = styled.p`
   &::first-letter {
     text-transform: uppercase;
   }
-  color: white;
+  color: ${colors.white};
   margin: unset;
   &.backwards {
     cursor: pointer;
@@ -229,8 +235,8 @@ const UserTitle = styled.div`
 
   &.backwards {
     &:hover {
-    background-color: rgba(255, 255, 0, 0.4);
-  }
+      background-color: rgba(255, 255, 0, 0.4);
+    }
     cursor: pointer;
     -moz-transform: scale(-1, -1);
     -webkit-transform: scale(-1, -1);
@@ -240,26 +246,27 @@ const UserTitle = styled.div`
   }
   ${media.fullWidth} {
     gap: 15px;
-    text-indent: ${props=>props.$settings ? '-12px':props.$logout ? '-12px': '1px'};
+    text-indent: ${(props) =>
+      props.$settings ? "-12px" : props.$logout ? "-12px" : "1px"};
     padding: 5px;
     right: ${(props) =>
-    props.$settings ? "27px" : props.$logout ? "-22px" : "unset"};
+      props.$settings ? "27px" : props.$logout ? "-22px" : "unset"};
   }
 
   ${media.tablet} {
     gap: 1.465vw;
     text-indent: -0.977vw;
-    padding:0vw 1vw;
+    padding: 0vw 1vw;
     right: ${(props) =>
-    props.$settings ? "1.837vw" : props.$logout ? "-2.148vw" : ".8vw"};
+      props.$settings ? "1.837vw" : props.$logout ? "-2.148vw" : ".8vw"};
   }
 
   ${media.mobile} {
     gap: 2vw;
     text-indent: -1.667vw;
-    padding: .8vw;
+    padding: 0.8vw;
     right: ${(props) =>
-    props.$settings ? "-.3vw" : props.$logout ? "-6.867vw" : ".8vw"};
+      props.$settings ? "-.3vw" : props.$logout ? "-6.867vw" : ".8vw"};
   }
 `;
 const UserNameBlock = styled.div`
@@ -270,24 +277,23 @@ const UserNameBlock = styled.div`
   align-items: flex-start;
   flex-wrap: nowrap;
   min-width: fit-content;
-  gap:0.556vw;
+  gap: 0.556vw;
   &.settings {
     pointer-events: all;
     opacity: 0;
     align-items: flex-end;
   }
-  ${media.fullWidth}{
-    gap:8px;
+  ${media.fullWidth} {
+    gap: 8px;
   }
   ${media.tablet} {
     gap: 0.195vw;
     left: 0.977vw;
     top: -0.4vw;
   }
-  ${media.mobile}{
-    gap:unset;
+  ${media.mobile} {
+    gap: unset;
   }
-
 `;
 const ImageAndNameWrapper = styled.div`
   position: absolute;
@@ -304,7 +310,7 @@ const ImageAndNameWrapper = styled.div`
   }
 
   ${media.tablet} {
-    gap: .977vw;
+    gap: 0.977vw;
     left: -12.207vw;
   }
 
