@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
@@ -10,7 +10,10 @@ import gsap from "gsap";
 import RotatingSVG from "../images/cog";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import IsoRoundedIcon from "@mui/icons-material/IsoRounded";
+import UsersInfo from "./UsersInfo";
+
 const Nav = ({ auth, userData }) => {
+  const [settingsIsOpen, setSettingsIsOpen] = useState(false);
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -68,42 +71,51 @@ const Nav = ({ auth, userData }) => {
   };
 
   return (
-    <Navigation>
-      <RotationParent>
-        <ImageAndNameWrapper
-          onMouseEnter={() => handleMouseOver()}
-          onMouseLeave={() => handleMouseLeave()}
-          className={"parent-container"}
-        >
-          <UserNameBlock className={"settings"}>
-            <Pill>
-              <UserTitle className={"backwards"}>
-                {" "}
-                <SettingsRoundedIcon fontSize="larger" />
-                settings
-              </UserTitle>
-            </Pill>
-            <Name className={"backwards"}>Preferences</Name>
-            <Pill>
-              <UserTitle className={"backwards"} $date>
-                <IsoRoundedIcon sx={{ color: "lightgreen" }} />
-                upload photo
-              </UserTitle>
-            </Pill>
-          </UserNameBlock>
-          <ProfileImage src={userData.photoUrl} alt={"user-profile-picture"} />
-          <UserNameBlock className={"nameObject"}>
-            <UserTitle>Welcome,</UserTitle>
-            <Name>{"@" + userName}</Name>
-            <UserTitle $date>{currentDate}</UserTitle>
-          </UserNameBlock>
-        </ImageAndNameWrapper>
-      </RotationParent>
-      <LogoutWrapper onClick={() => handleLogout()}>
-        <LogoutText>{"Logout"}</LogoutText>
-        <LogoutImage src={Logout} alt={"logout"} />
-      </LogoutWrapper>
-    </Navigation>
+    <>
+      <Navigation>
+        <RotationParent>
+          <ImageAndNameWrapper
+            onMouseEnter={() => handleMouseOver()}
+            onMouseLeave={() => handleMouseLeave()}
+            className={"parent-container"}
+          >
+            <UserNameBlock className={"settings"}>
+              <Pill>
+                <UserTitle
+                  onClick={() => setSettingsIsOpen(true)}
+                  className={"backwards"}
+                >
+                  {" "}
+                  <SettingsRoundedIcon fontSize="larger" />
+                  settings
+                </UserTitle>
+              </Pill>
+              <Name className={"backwards"}>Preferences</Name>
+              <Pill>
+                <UserTitle className={"backwards"} $date>
+                  <IsoRoundedIcon sx={{ color: "lightgreen" }} />
+                  upload photo
+                </UserTitle>
+              </Pill>
+            </UserNameBlock>
+            <ProfileImage
+              src={userData.photoUrl}
+              alt={"user-profile-picture"}
+            />
+            <UserNameBlock className={"nameObject"}>
+              <UserTitle>Welcome,</UserTitle>
+              <Name>{"@" + userName}</Name>
+              <UserTitle $date>{currentDate}</UserTitle>
+            </UserNameBlock>
+          </ImageAndNameWrapper>
+        </RotationParent>
+        <LogoutWrapper onClick={() => handleLogout()}>
+          <LogoutText>{"Logout"}</LogoutText>
+          <LogoutImage src={Logout} alt={"logout"} />
+        </LogoutWrapper>
+      </Navigation>
+      {settingsIsOpen && <UsersInfo setSettingsIsOpen={()=>setSettingsIsOpen()}/>}
+    </>
   );
 };
 
@@ -113,7 +125,7 @@ const Pill = styled.div`
   align-items: center;
   justify-content: center;
   gap: 10px;
-  &:hover{
+  &:hover {
     background-color: rgba(255, 255, 0, 0.4);
   }
 `;

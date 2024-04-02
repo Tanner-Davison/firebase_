@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
 import text from "styles/text";
-import Nav from 'components/Nav';
+import Nav from "components/Nav";
 
 const HomePage = ({ auth, userData }) => {
-    console.log(userData);
+  console.log(userData);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   return (
     <Wrapper>
-     <Nav auth={auth} userData={userData}/>
+      <Nav
+        auth={auth}
+        setSettingsOpen={() => setSettingsOpen()}
+        userData={userData}
+      />
     </Wrapper>
   );
 };
@@ -24,5 +29,5 @@ const Wrapper = styled.div`
   justify-self: flex-start;
   align-self: flex-start;
   width: 100vw;
-  padding:1vw 1.736vw;
+  padding: 1vw 1.736vw;
 `;
