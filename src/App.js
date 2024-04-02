@@ -3,9 +3,9 @@ import AuthLogin from "components/Auth";
 import HomePage from "pages/HomePage";
 import { auth } from "./config/firebase";
 import { db } from "./config/firebase";
-import { doc, addDoc,setDoc,getDoc, collection } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import styled from "styled-components";
-
+import Nav from "components/Nav";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -17,37 +17,29 @@ function App() {
   const [userData, setUserData] = useState({
     email: localStorage.getItem("userEmail") || "User Not Found",
     photoUrl: localStorage.getItem("userPhoto") || "",
-    username: localStorage.getItem('handle')|| "",
+    username: localStorage.getItem("handle") || "",
   });
+
   useEffect(() => {
-    const addUserData = async (user, userData) => {
+    const addUserLoginData = async (user, userData) => {
       try {
         const userRef = doc(db, "users", user.uid);
-        // const docSnapshot = await getDoc(userRef);
         await getDoc(userRef);
-        // if (!docSnapshot.exists()) {
-          await setDoc(userRef, {
-            bio: 'Click To Create a bio',
-            email: user.email,
-            profileImgUrl: localStorage.getItem("userPhoto"),
-            theme: false,
-            username: localStorage.getItem("handle"),
-          });
-          console.log("User data added successfully!");
-        // } else {
-        //   console.log("User data already exists, skipping...");
-        // }
+        await setDoc(userRef, {
+          email: user.email,
+          profileImgUrl: localStorage.getItem("userPhoto"),
+          username: localStorage.getItem("handle"),
+        });
+        console.log("User data added successfully!");
       } catch (error) {
         console.error("Error adding user data: ", error);
       }
     };
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log(user.uid)
         let name = userData?.email.split("@")[0];
         let handle = "@" + name;
-        console.log(handle);
-        
+
         setUserData({
           handle: handle,
           email: user.email,
@@ -58,7 +50,7 @@ function App() {
         localStorage.setItem("userPhoto", user.photoURL || "");
         localStorage.setItem("handle", handle || "@anonymous_user");
         localStorage.setItem("userId", user.uid);
-        addUserData(user, userData);
+        addUserLoginData(user, userData);
       } else {
         setUserData({
           handle: "@anonymous_user",
@@ -79,16 +71,20 @@ function App() {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route
-        path="/"
-        element={
-          userData.email !== "User Not Found" ? (
-            <HomePage auth={auth} userData={userData} />
-          ) : (
-            <AuthLogin />
-          )
-        }
-      />
+      <>
+        <Route
+          path="/"
+          element={
+            <HomePage
+              userDataEmail={userData.email}
+              auth={auth}
+              userData={userData}
+            />
+          }
+        />
+        ,
+        <Route path="/login" element={<AuthLogin />} />,
+      </>
     )
   );
 

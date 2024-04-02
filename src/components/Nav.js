@@ -12,7 +12,7 @@ import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import IsoRoundedIcon from "@mui/icons-material/IsoRounded";
 import UsersInfo from "./UsersInfo";
 
-const Nav = ({ auth, userData }) => {
+const Nav = ({ auth, userData, }) => {
   const [settingsIsOpen, setSettingsIsOpen] = useState(false);
   const handleLogout = async () => {
     try {
@@ -82,7 +82,7 @@ const Nav = ({ auth, userData }) => {
             <UserNameBlock className={"settings"}>
               <Pill>
                 <UserTitle
-                  onClick={() => setSettingsIsOpen(true)}
+                  onClick={() => setSettingsIsOpen(!settingsIsOpen)}
                   className={"backwards"}
                 >
                   {" "}

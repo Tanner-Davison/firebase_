@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { auth } from "../config/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { googleProvider } from "../config/firebase";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
@@ -13,11 +14,13 @@ const AuthLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
+  const navigate = useNavigate();
   const handleSignIn = async (e) => {
     e.preventDefault();
     
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      navigate(`/home`)
     } catch (error) {
       console.log(error);
       if (error.message.includes("auth/email-already-in-use")) {
@@ -29,7 +32,9 @@ const AuthLogin = () => {
   const handleSignInWithGoogle = async (e) => {
     e.preventDefault();
     try {
-      await signInWithPopup(auth, googleProvider);
+      await signInWithPopup(auth, googleProvider)
+      navigate(`/home`)
+      
     } catch (error) {
       console.log(error);
     }
