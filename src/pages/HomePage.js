@@ -22,9 +22,11 @@ const HomePage = ({ auth, userData }) => {
 export default HomePage;
 
 const Wrapper = styled.div`
+position: relative;
+  width:100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  color:white;
+  align-self: flex-start;
   justify-content: center;
   justify-self: flex-start;
   align-self: flex-start;
