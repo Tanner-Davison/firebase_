@@ -12,12 +12,12 @@ const HomePage = ({ userId,auth, userData }) => {
   const [settingsOpen, setSettingsOpen] = useState(false);
   useEffect(()=>{
     
-    if(userId === null){
+    if(userId === null || undefined){
       navigate('/login')
     }else{
       return 
     }
-  })
+  },[])
   return (
     <Wrapper>
       <Nav

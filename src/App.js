@@ -4,6 +4,7 @@ import HomePage from "pages/HomePage";
 import { auth } from "./config/firebase";
 import { db } from "./config/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Nav from "components/Nav";
 import {
@@ -49,7 +50,7 @@ function App() {
         localStorage.setItem("userEmail", user.email);
         localStorage.setItem("userPhoto", user.photoURL || "");
         localStorage.setItem("handle", handle || "@anonymous_user");
-        localStorage.setItem("userId", user.uid || '');
+        localStorage.setItem("userId", user.uid || "");
         addUserLoginData(user, userData);
       } else {
         setUserData({
@@ -57,7 +58,6 @@ function App() {
           email: "User Not Found",
           photoUrl: null,
         });
-
         localStorage.removeItem("userEmail");
         localStorage.removeItem("userPhoto");
         localStorage.removeItem("handle");
@@ -84,9 +84,17 @@ function App() {
         />
         ,
         <Route path="/login" element={<AuthLogin />} />,
-        <Route path="/user/profile/:username" element={<HomePage userId={localStorage.getItem('userId')}
+        <Route
+          path="/user/profile/:username"
+          element={
+            <HomePage
+              userId={localStorage.getItem("userId")}
               auth={auth}
-              userData={userData}/>} />,
+              userData={userData}
+            />
+          }
+        />
+        ,
       </>
     )
   );

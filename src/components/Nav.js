@@ -6,17 +6,20 @@ import text from "styles/text";
 import Logout from "../images/Logout.webp";
 import { signOut } from "firebase/auth";
 import { currentDate } from "./utils/date";
+import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import RotatingSVG from "../images/cog";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import IsoRoundedIcon from "@mui/icons-material/IsoRounded";
 import UsersInfo from "./UsersInfo";
 
-const Nav = ({ auth, userData, }) => {
+const Nav = ({ auth, userData }) => {
   const [settingsIsOpen, setSettingsIsOpen] = useState(false);
+  const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      navigate('/login')
     } catch (error) {
       console.log(error);
     }
@@ -40,7 +43,7 @@ const Nav = ({ auth, userData, }) => {
       {
         duration: speed,
         opacity: 1,
-        transformOrigin: "138% 50%",
+        transformOrigin: "140% 50%",
         rotation: 180,
       },
       "<"
@@ -54,7 +57,7 @@ const Nav = ({ auth, userData, }) => {
 
     tl.to(settings, {
       duration: speed,
-      transformOrigin: "138% 50%",
+      transformOrigin: "140% 50%",
       rotation: "0deg",
       opacity: 0,
     });
@@ -80,26 +83,31 @@ const Nav = ({ auth, userData, }) => {
             className={"parent-container"}
           >
             <UserNameBlock className={"settings"}>
+              <UserTitle $logout className={"backwards"} onClick={()=>handleLogout()}>
+                <LogoutImage src={Logout} />
+                Logout
+              </UserTitle>
               <Pill>
                 <UserTitle
+                  $settings
                   onClick={() => setSettingsIsOpen(!settingsIsOpen)}
                   className={"backwards"}
                 >
-                  {" "}
-                  <SettingsRoundedIcon fontSize="larger" />
-                  settings
+                  <SettingsRoundedIcon fontSize="larger" /> settings
                 </UserTitle>
               </Pill>
-              <Name className={"backwards"}>Preferences</Name>
-              <Pill>
-                <UserTitle className={"backwards"} $date>
-                  <IsoRoundedIcon sx={{ color: "lightgreen" }} />
+              <Name $preferences className={"backwards"}>
+                Preferences
+              </Name>
+              <Pill $uploadPhoto >
+                <UserTitle $imageUpload className={"backwards"} $date>
                   upload photo
                 </UserTitle>
+                <IsoRoundedIcon sx={{ color: "lightgreen" }} />
               </Pill>
             </UserNameBlock>
             <ProfileImage
-              src={userData.photoUrl}
+              src={localStorage.getItem('userPhoto')}
               alt={"user-profile-picture"}
             />
             <UserNameBlock className={"nameObject"}>
@@ -109,24 +117,36 @@ const Nav = ({ auth, userData, }) => {
             </UserNameBlock>
           </ImageAndNameWrapper>
         </RotationParent>
-        <LogoutWrapper onClick={() => handleLogout()}>
-          <LogoutText>{"Logout"}</LogoutText>
-          <LogoutImage src={Logout} alt={"logout"} />
-        </LogoutWrapper>
       </Navigation>
-      {settingsIsOpen && <UsersInfo setSettingsIsOpen={()=>setSettingsIsOpen()}/>}
+      {settingsIsOpen && (
+        <UsersInfo setSettingsIsOpen={() => setSettingsIsOpen()} />
+      )}
     </>
   );
 };
 
 export default Nav;
 const Pill = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  width: fit-content;
+  justify-content: space-between;
+  right:-2.014vw;
   &:hover {
     background-color: rgba(255, 255, 0, 0.4);
+  }
+  ${media.fullWidth} {
+    right:-29px;
+  }
+  
+  ${media.tablet} {
+    right: ${props=>props.$uploadPhoto? '-2vw': '-2.5vw'};
+    padding-bottom:0.195vw;
+  }
+  
+  ${media.mobile} {
+    right: ${props=>props.$uploadPhoto? '-6vw': '-1.5vw'};
   }
 `;
 const ProfileImage = styled.img`
@@ -146,27 +166,38 @@ const ProfileImage = styled.img`
   }
 
   ${media.tablet} {
-    width: 7.715vw;
-    height: 7.715vw;
-    border-radius: 4.883vw;
+    width: 11.914vw;
+    height: 11.914vw;
+    border-radius: 25.883vw;
     border: 0.098vw solid black;
     box-sizing: border-box;
   }
 
   ${media.mobile} {
-    width: 21.067vw;
-    height: 21.067vw;
+    width: 25.067vw;
+    height: 25.067vw;
     border-radius: 13.333vw;
     border: 0.267vw solid black;
     box-sizing: border-box;
   }
 `;
 const LogoutImage = styled.img`
+  width: 1.806vw;
+  height: 1.806vw;
+  ${media.fullWidth} {
   width: 26px;
   height: 26px;
-`;
-const LogoutText = styled.p`
-  ${text.bodyLLeagueBold}
+  }
+  
+  ${media.tablet} {
+  width: 2.539vw;
+  height: 2.539vw;
+  }
+  
+  ${media.mobile} {
+  width: 6.933vw;
+  height: 6.933vw;
+  }
 `;
 const Name = styled.p`
   ${text.bodyLLeagueBold}
@@ -188,22 +219,43 @@ const UserTitle = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 15px;
+  justify-content: flex-start;
   ${(props) => (props.$date ? `${text.bodyMBold}` : `${text.bodyM}`)};
-  text-indent: -10px;
   color: black;
   margin: unset;
-  padding: 5px;
+  right: ${(props) =>
+    props.$settings ? "1.875vw" : props.$logout ? "-1.528vw" : "unset"};
+
   &.backwards {
     cursor: pointer;
-    right: -15px;
-    text-align: center;
     -moz-transform: scale(-1, -1);
     -webkit-transform: scale(-1, -1);
     -o-transform: scale(-1, -1);
     -ms-transform: scale(-1, -1);
     transform: scale(-1, -1);
+  }
+  ${media.fullWidth} {
+    gap: 15px;
+    text-indent: ${props=>props.$settings ? '-12px':props.$logout ? '-12px': '1px'};
+    padding: 5px;
+    right: ${(props) =>
+    props.$settings ? "27px" : props.$logout ? "-22px" : "unset"};
+  }
+
+  ${media.tablet} {
+    gap: 1.465vw;
+    text-indent: -0.977vw;
+    padding:0vw 1vw;
+    right: ${(props) =>
+    props.$settings ? "1.837vw" : props.$logout ? "-2.148vw" : ".8vw"};
+  }
+
+  ${media.mobile} {
+    gap: 2vw;
+    text-indent: -1.667vw;
+    padding: .8vw;
+    right: ${(props) =>
+    props.$settings ? "-.3vw" : props.$logout ? "-6.867vw" : ".8vw"};
   }
 `;
 const UserNameBlock = styled.div`
@@ -214,22 +266,48 @@ const UserNameBlock = styled.div`
   align-items: flex-start;
   flex-wrap: nowrap;
   min-width: fit-content;
+  gap:0.556vw;
   &.settings {
     pointer-events: all;
     opacity: 0;
     align-items: flex-end;
   }
+  ${media.fullWidth}{
+    gap:8px;
+  }
+  ${media.tablet} {
+    gap: 0.195vw;
+    left: 0.977vw;
+    top: -0.4vw;
+  }
+  ${media.mobile}{
+    gap:unset;
+  }
+
 `;
 const ImageAndNameWrapper = styled.div`
   position: absolute;
-  left: -125px;
   display: flex;
   flex-direction: row;
   align-items: center;
   flex-wrap: nowrap;
   justify-content: center;
   gap: 0.694vw;
-  transition: transform 0.2s ease-in;
+  left: -8.681vw;
+  ${media.fullWidth} {
+    gap: 10px;
+    left: -125px;
+  }
+
+  ${media.tablet} {
+    gap: .977vw;
+    left: -12.207vw;
+  }
+
+  ${media.mobile} {
+    gap: 1.667vw;
+    left: -35.333vw;
+  }
 `;
 const RotationParent = styled.div`
   position: relative;
@@ -238,16 +316,22 @@ const RotationParent = styled.div`
   justify-content: center;
   flex-wrap: nowrap;
 `;
-const LogoutWrapper = styled.div`
-  ${text.bodyMBold}
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+
 const Navigation = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   min-width: 100%;
+  height: 15.417vw;
+  ${media.fullWidth} {
+    height: 200px;
+  }
+
+  ${media.tablet} {
+    height: 20.648vw;
+  }
+
+  ${media.mobile} {
+    height: 34vw;
+  }
 `;

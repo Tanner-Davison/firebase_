@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { auth } from "../config/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { googleProvider } from "../config/firebase";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import media from "styles/media";
 import colors from "styles/colors";
+import media from "styles/media";
 import text from "styles/text";
-import { GoogleIcon } from "../images/GoogleIcon";
+import { auth, googleProvider } from "../config/firebase";
 import BackIcon from "../images/BackIcon.png";
+import { GoogleIcon } from "../images/GoogleIcon";
 
 const AuthLogin = () => {
   const [email, setEmail] = useState("");
@@ -17,10 +16,9 @@ const AuthLogin = () => {
   const navigate = useNavigate();
   const handleSignIn = async (e) => {
     e.preventDefault();
-    
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate(`/user/profile/${email.split('@')[0]}`)
+      navigate(`/user/profile/${email.split("@")[0]}`);
     } catch (error) {
       console.log(error);
       if (error.message.includes("auth/email-already-in-use")) {
@@ -32,9 +30,8 @@ const AuthLogin = () => {
   const handleSignInWithGoogle = async (e) => {
     e.preventDefault();
     try {
-      await signInWithPopup(auth, googleProvider)
-      navigate(`/user/profile/${email.split('@')[0]}`)
-      
+      await signInWithPopup(auth, googleProvider);
+      navigate(`/user/profile/${email.split("@")[0]}`);
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +43,6 @@ const AuthLogin = () => {
         {!emailError && (
           <>
             <Title>New User</Title>
-
             <Input
               id="email"
               type="email"
@@ -54,7 +50,6 @@ const AuthLogin = () => {
               placeholder="Email..."
               autoComplete="email"
             />
-
             <Input
               id="password"
               type="password"
@@ -104,18 +99,31 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4.736vw;
-  background-color: rgba(0,0,0,0.4);
-  padding:15px;
-  border:1px ridge ${colors.loginWhite};
+  border-radius: 4.722vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 1.042vw;
+  border: 0.069vw ridge ${colors.loginWhite};
   ${media.fullWidth} {
+    border-radius: 68px;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 15px;
+    border: 1px ridge ${colors.loginWhite};
   }
 
   ${media.tablet} {
+    border-radius: 6.641vw;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 1.465vw;
+    border: 0.098vw ridge ${colors.loginWhite};
+    flex-direction: column;
   }
 
   ${media.mobile} {
     flex-direction: column;
+    border-radius: 18.133vw;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 4vw;
+    border: 0.267vw ridge ${colors.loginWhite};
   }
 `;
 
@@ -133,20 +141,20 @@ const Form = styled.form`
   margin: 58px;
   ${media.fullWidth} {
     border: 3px solid ${colors.primaryPurple};
-  border-radius: 10px;
+    border-radius: 10px;
     gap: 22px;
 
-  padding: 50px;
-  margin: 58px;
+    padding: 50px;
+    margin: 58px;
   }
 
   ${media.tablet} {
     border: 0.293vw solid ${colors.primaryPurple};
-  border-radius: 0.977vw;
-  gap: 3.148vw;
+    border-radius: 0.977vw;
+    gap: 3.148vw;
 
-  padding: 3.883vw;
-  margin: 5.664vw;
+    padding: 3.883vw;
+    margin: 5.664vw;
   }
 
   ${media.mobile} {
@@ -264,7 +272,7 @@ const Pill = styled.div`
   }
 
   ${media.mobile} {
-    padding:1vw;
+    padding: 1vw;
   }
 `;
 const Back = styled.img`
