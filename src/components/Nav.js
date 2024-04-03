@@ -16,6 +16,7 @@ import { currentDate } from "./utils/date";
 const Nav = () => {
   const [settingsIsOpen, setSettingsIsOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [imgHover, setImgHover] = useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -116,6 +117,9 @@ const Nav = () => {
               </Pill>
             </UserNameBlock>
             <ProfileImage
+              onMouseOver ={()=> setImgHover(true)}
+              onMouseLeave ={()=> setImgHover(false)}
+              $blur={imgHover}
               src={user?.photoURL || ""}
               alt={"user-profile-picture"}
             />
@@ -162,6 +166,7 @@ const ProfileImage = styled.img`
   width: 8.472vw;
   height: 8.472vw;
   border-radius: 50.472vw;
+  filter:${props => props.$blur ? 'blur(2px)': 'unset'};
   border: 0.069vw solid black;
   box-sizing: border-box;
   ${media.fullWidth} {
