@@ -10,7 +10,7 @@ import { auth } from "config/firebase";
 import { signOut } from "firebase/auth";
 import gsap from "gsap";
 import { useNavigate } from "react-router-dom";
-import UsersInfo from "./UsersInfo";
+import Settings from "./Settings";
 import { currentDate } from "./utils/date";
 
 const Nav = () => {
@@ -128,7 +128,7 @@ const Nav = () => {
         </RotationParent>
       </Navigation>
       {settingsIsOpen && (
-        <UsersInfo setSettingsIsOpen={() => setSettingsIsOpen()} />
+        <Settings setSettingsIsOpen={() => setSettingsIsOpen()} />
       )}
     </>
   );

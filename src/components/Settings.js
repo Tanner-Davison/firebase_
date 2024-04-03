@@ -7,19 +7,19 @@ import { db } from "../config/firebase";
 import { auth } from "../config/firebase";
 import { getDocs, collection } from "firebase/firestore";
 
-const UsersInfo = ({ setSettingsIsOpen }) => {
+const Settings = ({ setSettingsIsOpen }) => {
   const [userSettings, setUserSettings] = useState([]);
-
   const userCollection = collection(db, "users");
+  
   useEffect(() => {
     const getUserInfo = async () => {
       try {
         const data = await getDocs(userCollection);
-          const filteredData = data.docs.map((doc) => ({
-            ...doc.data(),
-            id: doc.id,
-      }));
-          setUserSettings(filteredData);
+        const filteredData = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setUserSettings(filteredData);
       } catch (error) {
         console.log(error);
       }
@@ -35,9 +35,7 @@ const UsersInfo = ({ setSettingsIsOpen }) => {
   );
 };
 
-
-export default UsersInfo;
-
+export default Settings;
 
 const Form = styled.form`
   display: flex;
