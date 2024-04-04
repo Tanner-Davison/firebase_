@@ -94,6 +94,7 @@ const Title = styled.p`
 `;
 
 const OptionDiv = styled.div`
+cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -108,7 +109,7 @@ const OptionDiv = styled.div`
     0.139vw 0.139vw 1.042vw 0.347vw rgba(0, 0, 0, 0);
   box-shadow: 0.139vw 0.347vw 1.111vw 0vw #0b325e,
     0.139vw 0.139vw 1.042vw 0.347vw rgba(0, 0, 0, 0);
-
+ 
   ${media.fullWidth} {
     border-radius: 29px;
     -webkit-box-shadow: 2px 5px 16px 0px #0b325e,
