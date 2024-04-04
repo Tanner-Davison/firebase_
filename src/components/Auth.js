@@ -30,6 +30,7 @@ const AuthLogin = () => {
   const handleSignInWithGoogle = async (e) => {
     e.preventDefault();
     try {
+      googleProvider.setCustomParameters({ prompt: 'select_account' });
       await signInWithPopup(auth, googleProvider);
       navigate('/user/profile');
     } catch (error) {

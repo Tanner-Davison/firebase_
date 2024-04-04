@@ -6,29 +6,15 @@ import text from "styles/text";
 import { auth } from "config/firebase";
 import { useNavigate } from "react-router-dom";
 import Nav from "components/Nav";
-import {UserDataContext} from 'App';
 
-const HomePage = () => {
+const HomePage = ({userData}) => {
   const navigate = useNavigate();
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const userData = useContext(UserDataContext)
     
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-       console.log(user)
-      } else {
-        // No user is signed in, redirect to login page
-        navigate("/");
-      }
-    });
-
-    return () => unsubscribe();
-  }, [navigate]);
 
   return (
     <Wrapper>
-      <Nav/>
+     <Nav userData={userData}/>
     </Wrapper>
   );
 };

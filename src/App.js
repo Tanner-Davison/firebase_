@@ -22,38 +22,41 @@ function App() {
   });
 
   useEffect(() => {
-    const retrieveUserDataFromLocalStorage = () => {
-      const userEmail = localStorage.getItem("userEmail") || "";
-      const userPhotoUrl = localStorage.getItem("userPhoto") || "";
-      const username = localStorage.getItem("handle") || "";
-      const userId = localStorage.getItem("userId"||"");
-      return { email: userEmail, photoUrl: userPhotoUrl, username, userId };
-    };
-
     const addUserLoginData = async (user) => {
       try {
         const userRef = doc(db, "users", user.uid);
         await getDoc(userRef);
         await setDoc(userRef, {
           email: user.email,
-          profileImgUrl: localStorage.getItem("userPhoto"),
-          username: localStorage.getItem("handle"),
+          profileImgUrl: user.photoURL, // Assuming Firebase user object contains photoURL
+          username: user.displayName, // Assuming Firebase user object contains displayName
         });
         console.log("User data added successfully!");
+
+        // Set user data to localStorage
+        localStorage.setItem("userEmail", user.email);
+        localStorage.setItem("userPhoto", user.photoURL);
+        localStorage.setItem("handle", user.displayName);
       } catch (error) {
         console.error("Error adding user data: ", error);
       }
     };
+
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         addUserLoginData(user);
+        setUserData({
+          email: user.email,
+          photoUrl: user.photoURL,
+          username: user.displayName,
+        });
       } else {
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("userPhoto");
+        localStorage.removeItem("handle");
         console.log('user logged out');
       }
     });
-
-    // Retrieve user data from local storage and set to state
-    setUserData(retrieveUserDataFromLocalStorage());
 
     return () => unsubscribe();
   }, []);
@@ -64,9 +67,7 @@ function App() {
         <Route path="/" element={<AuthLogin />} />
         <Route
           path="/user/profile"
-          element={
-            <HomePage/>
-          }
+          element={<HomePage userData={userData} />}
         />
       </>
     )

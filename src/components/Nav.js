@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import Settings from "./Settings";
 import { currentDate } from "./utils/date";
 
-const Nav = () => {
+const Nav = ({userData}) => {
   const [settingsIsOpen, setSettingsIsOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [imgHover, setImgHover] = useState(false)
@@ -26,9 +26,12 @@ const Nav = () => {
     return () => unsubscribe();
   }, []);
 
-  const handleLogout = (e) => {
+  const handleLogout = async(e) => {
     signOut(auth)
       .then(() => {
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("userPhoto");
+        localStorage.removeItem("handle");
         navigate("/");
         console.log("Signed out successfully");
       })
@@ -120,7 +123,7 @@ const Nav = () => {
               onMouseOver ={()=> setImgHover(true)}
               onMouseLeave ={()=> setImgHover(false)}
               $blur={imgHover}
-              src={user?.photoURL || ""}
+              src={userData?.photoURL || user?.photoURL}
               alt={"user-profile-picture"}
             />
             <UserNameBlock className={"nameObject"}>
