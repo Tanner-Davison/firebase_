@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext } from "react";
 import AuthLogin from "components/Auth";
-import HomePage from "pages/HomePage";
+import HomePage from "components/pages/HomePage";
 import { auth } from "./config/firebase";
 import { db } from "./config/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";

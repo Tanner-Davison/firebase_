@@ -57,7 +57,8 @@ const colors = {
   loginRedPink:'#ff214f',
   loginNavyBlue: '#133951',
   loginSoftLime: '#b7cdb4',
-
+  backgroundBlog: '#F9FAFF',
+  
 }
 
 export default colors

@@ -6,15 +6,15 @@ import text from "styles/text";
 import { auth } from "config/firebase";
 import { useNavigate } from "react-router-dom";
 import Nav from "components/Nav";
-
-const HomePage = ({userData}) => {
+import UsersBlogOptions from "components/HomePage/UsersBlogOptions";
+const HomePage = ({ userData }) => {
   const navigate = useNavigate();
   const [settingsOpen, setSettingsOpen] = useState(false);
-    
 
   return (
     <Wrapper>
-     <Nav userData={userData}/>
+      <Nav userData={userData} />
+      <UsersBlogOptions />
     </Wrapper>
   );
 };
@@ -22,10 +22,10 @@ const HomePage = ({userData}) => {
 export default HomePage;
 
 const Wrapper = styled.div`
-position: relative;
-  width:100%;
+  position: relative;
+  width: 100%;
   display: flex;
-  color:white;
+  color: white;
   align-self: flex-start;
   justify-content: center;
   justify-self: flex-start;
