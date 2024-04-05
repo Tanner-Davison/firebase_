@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
@@ -7,72 +7,23 @@ import CreateBlog from "images/CreateBlog.webp";
 import EditBlog from "images/EditBlog.webp";
 import ViewNewBlogs from "images/ViewNewBlogs.webp";
 import SailBoat from "images/Sailboat.webp";
-import gsap from "gsap";
-import getMedia from "utils/getMedia";
+import { CardOptionsPlay } from "./animations/gsapAnimations";
+import { CardOptionsReverse } from "./animations/gsapAnimations";
 
 const BlogOptions = ({ blogPostData }) => {
-  const [borderColor,setBorderColor]= useState('')
-  const handleOnMouseOver = (e) => {
-    const image = e.target.querySelector(".image");
-    const div = e.target;
-    const body = e.target.querySelector(".body");
-    const tl = gsap.timeline();
-    if (image) {
-      tl.set(body, { yPercent: -100, opacity: 0, display: "flex" });
-      tl.to(image, {
-        duration: 0.5,
-        opacity: 1,
-        scale: 1.1,
-        filter: "contrast(150%)",
-        rotate: 360,
-        zIndex: 5,
-        ease: "none",
-      });
-      tl.to(
-        div,
-        {
-          duration: 0.3,
-          scale: 1.1,
-          height: getMedia('300px','30vw','36vw','60vw'),
-          width: getMedia('280px','20vw','26.094vw','35vw'),
-          borderTop:'6px inset white',
-          zIndex: 4,
-        },
-        "<"
-      );
-      tl.to(body, { yPercent: 0, opacity: 1 }, ">");
-    }
+  const handleOnMouseOver = (e, color) => {
+    CardOptionsPlay(e, color);
   };
 
-  const handleOnMouseLeave = (e) => {
-    const image = e.target.querySelector(".image");
-    const div = e.target;
-    const body = e.target.querySelector(".body");
-    const lt = gsap.timeline();
-    if (image) {
-      lt.to(image, {
-        duration: 0.5,
-        scale: 1,
-        rotateY: 0,
-        rotateX: 0,
-        filter: "contrast(80%)",
-        zIndex: 1,
-        rotation: 0,
-        ease: "none",
-      });
-      lt.to(div, { duration: 0.3, scale: 1, height: "auto",width:getMedia('216px','15vw','21.094vw','29vw'), zIndex: 1 }, "<");
-      lt.to(body, { duration:.5,opacity: 0, yPercent: -200 }, "<");
-      lt.to(body, { display: "none" }, "<-=.5");
-    }
+  const handleOnMouseLeave = (e, color) => {
+    CardOptionsReverse(e);
   };
 
   return (
     <BlogOptionsDiv className="blog-options">
-      <OptionDiv
+      <Card
         className="options"
-        onMouseOver={(e) => {
-          handleOnMouseOver(e);
-        }}
+        onMouseOver={(e) => handleOnMouseOver(e, "#6EE3C7")}
         onMouseLeave={handleOnMouseLeave}
       >
         <OptionsImage className={"image"} src={CreateBlog} alt="Create Blog" />
@@ -81,10 +32,10 @@ const BlogOptions = ({ blogPostData }) => {
           Start a new blog and share it to the feed, or pick up where you left
           off.
         </Body>
-      </OptionDiv>
-      <OptionDiv
+      </Card>
+      <Card
         className="options"
-        onMouseOver={handleOnMouseOver}
+        onMouseOver={(e) => handleOnMouseOver(e, "#6EE3C7")}
         onMouseLeave={handleOnMouseLeave}
       >
         <OptionsImage className={"image"} src={EditBlog} alt="Edit Blog" />
@@ -93,10 +44,10 @@ const BlogOptions = ({ blogPostData }) => {
           Start a new blog and share it to the feed, or pick up where you left
           off.
         </Body>
-      </OptionDiv>
-      <OptionDiv
+      </Card>
+      <Card
         className="options"
-        onMouseOver={handleOnMouseOver}
+        onMouseOver={(e) => handleOnMouseOver(e, "#6EE3C7")}
         onMouseLeave={handleOnMouseLeave}
       >
         <OptionsImage
@@ -109,10 +60,10 @@ const BlogOptions = ({ blogPostData }) => {
           Start a new blog and share it to the feed, or pick up where you left
           off.
         </Body>
-      </OptionDiv>
-      <OptionDiv
+      </Card>
+      <Card
         className="options"
-        onMouseOver={handleOnMouseOver}
+        onMouseOver={(e) => handleOnMouseOver(e, "#71CCFD")}
         onMouseLeave={handleOnMouseLeave}
       >
         <OptionsImage
@@ -125,27 +76,41 @@ const BlogOptions = ({ blogPostData }) => {
           Start a new blog and share it to the feed, or pick up where you left
           off.
         </Body>
-      </OptionDiv>
+      </Card>
     </BlogOptionsDiv>
   );
 };
 
 export default BlogOptions;
 const Body = styled.div`
-position: absolute;
-bottom:25px;
-  display: none;
-  z-index: 1;
-  pointer-events: none;
   ${text.bodyMBold}
-  color:black;
+  position: absolute;
+  pointer-events: none;
+  color: black;
   opacity: 0;
+  bottom: 25px;
+  z-index: 1;
+  padding: 0.694vw 1.736vw;
+
+  ${media.fullWidth} {
+    padding: 10px 25px;
+  }
+
+  ${media.tablet} {
+    padding: 0.977vw 2.441vw;
+  }
+
+  ${media.mobile} {
+    padding: 0.667vw 4.667vw;
+  }
 `;
+
 const OptionsImage = styled.img`
   z-index: 1;
   pointer-events: none;
   width: 7.917vw;
   height: auto;
+  filter: contrast(100%);
   ${media.fullWidth} {
     width: 114px;
   }
@@ -160,7 +125,6 @@ const OptionsImage = styled.img`
 `;
 
 const Title = styled.p`
-
   z-index: 1;
   pointer-events: none;
   ${text.bodyMLeague}
@@ -168,19 +132,20 @@ const Title = styled.p`
   color: black;
 `;
 
-const OptionDiv = styled.div`
+const Card = styled.div`
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   text-align: center;
-  gap:15px;
+  gap: 15px;
   opacity: 0;
-  border-top:3px solid transparent;
+  border-top: 5px solid transparent;
   background-color: ${colors.backgroundBlog};
   width: 15vw;
   padding: 1.042vw;
+  border-top-width: 0%;
   border-radius: 2.014vw;
   -webkit-box-shadow: 0.139vw 0.347vw 1.111vw 0vw #0b325e,
     0.139vw 0.139vw 1.042vw 0.347vw rgba(0, 0, 0, 0);
@@ -224,9 +189,11 @@ const BlogOptionsDiv = styled.div`
   }
 
   ${media.tablet} {
+    gap: 10.431vw 5vw;
   }
 
   ${media.mobile} {
-    
+    gap: 22.431vw 3vw;
+    align-items: center;
   }
 `;
