@@ -54,6 +54,7 @@ function App() {
         localStorage.removeItem("userEmail");
         localStorage.removeItem("userPhoto");
         localStorage.removeItem("handle");
+        localStorage.removeItem("profileImageUrl");
         console.log('user logged out');
       }
     });

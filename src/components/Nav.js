@@ -17,6 +17,7 @@ const Nav = ({userData}) => {
   const [settingsIsOpen, setSettingsIsOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [imgHover, setImgHover] = useState(false)
+  const googleImage = localStorage.getItem('profileImageUrl');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,6 +33,7 @@ const Nav = ({userData}) => {
         localStorage.removeItem("userEmail");
         localStorage.removeItem("userPhoto");
         localStorage.removeItem("handle");
+        localStorage.removeItem("profileImageUrl")
         navigate("/");
         console.log("Signed out successfully");
       })
@@ -123,7 +125,7 @@ const Nav = ({userData}) => {
               onMouseOver ={()=> setImgHover(true)}
               onMouseLeave ={()=> setImgHover(false)}
               $blur={imgHover}
-              src={userData?.photoURL || user?.photoURL}
+              src={googleImage}
               alt={"user-profile-picture"}
             />
             <UserNameBlock className={"nameObject"}>
