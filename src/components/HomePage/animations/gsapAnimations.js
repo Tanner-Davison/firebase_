@@ -1,6 +1,35 @@
 import React from "react";
 import getMedia from "utils/getMedia";
 import gsap from "gsap";
+import colors from 'styles/colors'
+
+export const HomepageOptionsIncoming =()=>{
+
+    const targets = document.querySelectorAll(".options");
+    const OptionCards = gsap.utils.toArray(targets);
+    const tl = gsap.timeline();
+    tl.set(OptionCards, {
+      xPercent: 800,
+      scale: 6,
+      opacity: 0,
+      backgroundColor: `transparent`,
+    })
+      .to(
+        OptionCards,
+        {
+          duration: 0.5,
+          opacity: 1,
+          xPercent: 0,
+          scale: 1,
+          stagger: 0.14,
+          backgroundColor: `${colors.backgroundBlog}`,
+          pointerEvents:'none',
+        },
+        ">+=.2"
+      )
+      .to(OptionCards,{pointerEvents: 'all'})
+ return tl;
+}
 
 export const CardOptionsPlay = (e, color) => {
   const image = e.target.querySelector(".image");
@@ -26,8 +55,7 @@ export const CardOptionsPlay = (e, color) => {
     .to(
       image,
       {
-        filter: "contrast(150%)",
-        duration: 0.3,
+        filter: 'contrast',
         scale: 1.1,
         rotate: 360,
         zIndex: 1,
@@ -74,3 +102,4 @@ export const CardOptionsReverse = (e) => {
     .to(body, { duration: 0.5, opacity: 0, yPercent: -200 }, "<")
     .to(body, { display: "none" }, "<-=.5");
 };
+

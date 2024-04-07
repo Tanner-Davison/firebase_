@@ -6,7 +6,7 @@ import text from "styles/text";
 import { auth } from "config/firebase";
 import { useNavigate } from "react-router-dom";
 import Nav from "components/Nav";
-import UsersBlogOptions from "components/HomePage/UsersBlogOptions";
+import UsersBlogOptions from "components/HomePage/OptionsWrapper";
 const HomePage = ({ userData }) => {
   const navigate = useNavigate();
   const [settingsOpen, setSettingsOpen] = useState(false);

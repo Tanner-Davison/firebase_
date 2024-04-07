@@ -47,7 +47,7 @@ const BlogOptions = ({ blogPostData }) => {
       </Card>
       <Card
         className="options"
-        onMouseOver={(e) => handleOnMouseOver(e, "#6EE3C7")}
+        onMouseOver={(e) => handleOnMouseOver(e, "#77B3D4")}
         onMouseLeave={handleOnMouseLeave}
       >
         <OptionsImage
@@ -63,7 +63,7 @@ const BlogOptions = ({ blogPostData }) => {
       </Card>
       <Card
         className="options"
-        onMouseOver={(e) => handleOnMouseOver(e, "#71CCFD")}
+        onMouseOver={(e) => handleOnMouseOver(e, "#77B3D4")}
         onMouseLeave={handleOnMouseLeave}
       >
         <OptionsImage
