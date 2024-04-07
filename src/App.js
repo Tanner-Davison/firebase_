@@ -1,10 +1,13 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext, useRef } from "react";
 import AuthLogin from "components/Auth";
 import HomePage from "components/pages/HomePage";
 import { auth } from "./config/firebase";
 import { db } from "./config/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import styled from "styled-components";
+import darkTimeKeeper from "images/tortoise-shell.svg";
+import { gsapWrapperBackground } from "components/animations/gsapAnimations";
+import Nav from "components/Nav";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -15,6 +18,8 @@ import {
 export const UserDataContext = createContext();
 
 function App() {
+  const wrapperRef = useRef(null);
+
   const [userData, setUserData] = useState({
     email: "",
     photoUrl: "",
@@ -28,8 +33,8 @@ function App() {
         await getDoc(userRef);
         await setDoc(userRef, {
           email: user.email,
-          profileImgUrl: user.photoURL, // Assuming Firebase user object contains photoURL
-          username: user.displayName, // Assuming Firebase user object contains displayName
+          profileImgUrl: user.photoURL,
+          username: user.displayName,
         });
         console.log("User data added successfully!");
 
@@ -43,6 +48,8 @@ function App() {
     };
 
     const unsubscribe = auth.onAuthStateChanged((user) => {
+      const wrapperElement = wrapperRef.current;
+      const playBackground = gsapWrapperBackground(wrapperElement);
       if (user) {
         addUserLoginData(user);
         setUserData({
@@ -50,12 +57,14 @@ function App() {
           photoUrl: user.photoURL,
           username: user.displayName,
         });
+        playBackground.play();
       } else {
         localStorage.removeItem("userEmail");
         localStorage.removeItem("userPhoto");
         localStorage.removeItem("handle");
         localStorage.removeItem("profileImageUrl");
-        console.log('user logged out');
+        console.log("user logged out");
+        playBackground.pause();
       }
     });
 
@@ -76,8 +85,10 @@ function App() {
 
   return (
     <UserDataContext.Provider value={userData}>
-      <Wrapper>
-        <RouterProvider router={router} />
+      <Wrapper ref={wrapperRef}>
+        <RouterProvider router={router}>
+          <Nav />
+        </RouterProvider>
       </Wrapper>
     </UserDataContext.Provider>
   );
@@ -89,6 +100,9 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(120deg, #3b5998, #ffffff);
+  /* background: linear-gradient(120deg, #3b5998, #ffffff); */
+  background-image: url(${darkTimeKeeper});
+  background-repeat: repeat;
+  background-size: 10%;
   height: 100vh;
 `;

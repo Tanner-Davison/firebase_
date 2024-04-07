@@ -13,11 +13,11 @@ import { useNavigate } from "react-router-dom";
 import Settings from "./Settings";
 import { currentDate } from "./utils/date";
 
-const Nav = ({userData}) => {
+const Nav = ({ userData }) => {
   const [settingsIsOpen, setSettingsIsOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [imgHover, setImgHover] = useState(false)
-  const googleImage = localStorage.getItem('profileImageUrl');
+  const [imgHover, setImgHover] = useState(false);
+  const googleImage = localStorage.getItem("profileImageUrl");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,13 +27,13 @@ const Nav = ({userData}) => {
     return () => unsubscribe();
   }, []);
 
-  const handleLogout = async(e) => {
+  const handleLogout = async (e) => {
     signOut(auth)
       .then(() => {
         localStorage.removeItem("userEmail");
         localStorage.removeItem("userPhoto");
         localStorage.removeItem("handle");
-        localStorage.removeItem("profileImageUrl")
+        localStorage.removeItem("profileImageUrl");
         navigate("/");
         console.log("Signed out successfully");
       })
@@ -122,8 +122,8 @@ const Nav = ({userData}) => {
               </Pill>
             </UserNameBlock>
             <ProfileImage
-              onMouseOver ={()=> setImgHover(true)}
-              onMouseLeave ={()=> setImgHover(false)}
+              onMouseOver={() => setImgHover(true)}
+              onMouseLeave={() => setImgHover(false)}
               $blur={imgHover}
               src={googleImage}
               alt={"user-profile-picture"}
@@ -171,7 +171,7 @@ const ProfileImage = styled.img`
   width: 8.472vw;
   height: 8.472vw;
   border-radius: 50.472vw;
-  filter:${props => props.$blur ? 'blur(2px)': 'unset'};
+  filter: ${(props) => (props.$blur ? "blur(2px)" : "unset")};
   border: 0.069vw solid black;
   box-sizing: border-box;
   ${media.fullWidth} {
@@ -221,7 +221,7 @@ const Name = styled.p`
   &::first-letter {
     text-transform: uppercase;
   }
-  color: ${colors.white};
+  color: #353839;
   margin: unset;
   &.backwards {
     cursor: pointer;
@@ -311,6 +311,10 @@ const ImageAndNameWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   flex-wrap: nowrap;
+  backdrop-filter: blur(0.833vw);
+  border-top-right-radius: 6.944vw;
+  border-bottom-right-radius: 6.944vw;
+  padding-right: 50px;
   justify-content: center;
   gap: 0.694vw;
   left: -8.681vw;

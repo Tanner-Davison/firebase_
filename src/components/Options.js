@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
@@ -7,6 +7,7 @@ import CreateBlog from "images/CreateBlog.webp";
 import EditBlog from "images/EditBlog.webp";
 import ViewNewBlogs from "images/ViewNewBlogs.webp";
 import SailBoat from "images/Sailboat.webp";
+import pageTurner from "images/page-turner.svg";
 import { CardOptionsPlay } from "./animations/gsapAnimations";
 import { CardOptionsReverse } from "./animations/gsapAnimations";
 
@@ -142,7 +143,7 @@ const Card = styled.div`
   gap: 15px;
   opacity: 0;
   border-top: 5px solid transparent;
-  background-color: ${colors.backgroundBlog};
+  /* background-color: ${colors.backgroundBlog}; */
   width: 15vw;
   padding: 1.042vw;
   border-top-width: 0%;
@@ -184,16 +185,17 @@ const BlogOptionsDiv = styled.div`
   gap: 2.431vw;
   flex-wrap: wrap;
   z-index: 5;
+
   ${media.fullWidth} {
     gap: 35px;
   }
 
   ${media.tablet} {
-    gap: 10.431vw 5vw;
+    gap: 5.431vw 5vw;
   }
 
   ${media.mobile} {
-    gap: 22.431vw 3vw;
+    gap: 12.431vw 3vw;
     align-items: center;
   }
 `;

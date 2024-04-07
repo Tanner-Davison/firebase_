@@ -1,35 +1,34 @@
 import React from "react";
 import getMedia from "utils/getMedia";
 import gsap from "gsap";
-import colors from 'styles/colors'
+import colors from "styles/colors";
 
-export const HomepageOptionsIncoming =()=>{
-
-    const targets = document.querySelectorAll(".options");
-    const OptionCards = gsap.utils.toArray(targets);
-    const tl = gsap.timeline();
-    tl.set(OptionCards, {
-      xPercent: 800,
-      scale: 6,
-      opacity: 0,
-      backgroundColor: `transparent`,
-    })
-      .to(
-        OptionCards,
-        {
-          duration: 0.5,
-          opacity: 1,
-          xPercent: 0,
-          scale: 1,
-          stagger: 0.14,
-          backgroundColor: `${colors.backgroundBlog}`,
-          pointerEvents:'none',
-        },
-        ">+=.2"
-      )
-      .to(OptionCards,{pointerEvents: 'all'})
- return tl;
-}
+export const HomepageOptionsIncoming = () => {
+  const targets = document.querySelectorAll(".options");
+  const OptionCards = gsap.utils.toArray(targets);
+  const tl = gsap.timeline();
+  tl.set(OptionCards, {
+    xPercent: 800,
+    scale: 6,
+    opacity: 0,
+    backgroundColor: `transparent`,
+  })
+    .to(
+      OptionCards,
+      {
+        duration: 0.5,
+        opacity: 1,
+        xPercent: 0,
+        scale: 1,
+        stagger: 0.14,
+        backgroundColor: `${colors.backgroundBlog}`,
+        pointerEvents: "none",
+      },
+      ">+=.2"
+    )
+    .to(OptionCards, { pointerEvents: "all" });
+  return tl;
+};
 
 export const CardOptionsPlay = (e, color) => {
   const image = e.target.querySelector(".image");
@@ -55,7 +54,7 @@ export const CardOptionsPlay = (e, color) => {
     .to(
       image,
       {
-        filter: 'contrast',
+        filter: "contrast",
         scale: 1.1,
         rotate: 360,
         zIndex: 1,
@@ -65,7 +64,7 @@ export const CardOptionsPlay = (e, color) => {
     )
     .to(
       body,
-      { duration: 1, yPercent: 0, opacity: 1, ease: "elastic.out" },
+      { duration: 1, yPercent: 0, opacity: 1, ease: "power4.out" },
       "<+=.1"
     );
 };
@@ -103,3 +102,33 @@ export const CardOptionsReverse = (e) => {
     .to(body, { display: "none" }, "<-=.5");
 };
 
+export const gsapWrapperBackground = (element) => {
+  gsap.to(element, {
+    duration: 2,
+    backgroundSize: "200%",
+    backdropFilter: "blur(10px)",
+  });
+
+  const tl = gsap.timeline({ repeat: -1 });
+  tl.to(element, {
+    backgroundPosition: "0px 600px",
+    duration: 30,
+    ease: "expoScale",
+  })
+    .to(element, {
+      backgroundPosition: "400px 300px",
+      duration: 30,
+      ease: "expoScale",
+    })
+    .to(element, {
+      backgroundPosition: "300px 200px",
+      duration: 30,
+      ease: "expoScale",
+    })
+    .to(element, {
+      backgroundPosition: "200px 0px",
+      duration: 30,
+      ease: "expoScale",
+    });
+  return tl;
+};

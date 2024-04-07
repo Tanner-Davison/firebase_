@@ -6,11 +6,11 @@ import text from "styles/text";
 import { auth } from "config/firebase";
 import { useNavigate } from "react-router-dom";
 import Nav from "components/Nav";
-import UsersBlogOptions from "components/HomePage/OptionsWrapper";
+import UsersBlogOptions from "components/OptionsWrapper";
+
 const HomePage = ({ userData }) => {
   const navigate = useNavigate();
   const [settingsOpen, setSettingsOpen] = useState(false);
-
   return (
     <Wrapper>
       <Nav userData={userData} />
@@ -31,6 +31,9 @@ const Wrapper = styled.div`
   justify-self: flex-start;
   align-self: flex-start;
   flex-direction: column;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
   width: 100vw;
   padding: 1vw 1.736vw;
 `;
