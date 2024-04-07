@@ -342,6 +342,8 @@ const RotationParent = styled.div`
 `;
 
 const Navigation = styled.div`
+position: relative;
+top:1px;
   display: flex;
   align-items: center;
   justify-content: space-between;

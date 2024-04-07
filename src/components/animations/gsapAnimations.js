@@ -21,7 +21,6 @@ export const HomepageOptionsIncoming = () => {
         xPercent: 0,
         scale: 1,
         stagger: 0.14,
-        backgroundColor: `${colors.backgroundBlog}`,
         pointerEvents: "none",
       },
       ">+=.2"

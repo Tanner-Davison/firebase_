@@ -74,10 +74,11 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        <Route path="/" element={<AuthLogin />} />
+      
+        <Route path="/" element={<AuthLogin/>} />
         <Route
           path="/user/profile"
-          element={<HomePage userData={userData} />}
+          element={<><Nav/> <HomePage userData={userData} /></> }
         />
       </>
     )
@@ -85,10 +86,9 @@ function App() {
 
   return (
     <UserDataContext.Provider value={userData}>
+
       <Wrapper ref={wrapperRef}>
-        <RouterProvider router={router}>
-          <Nav />
-        </RouterProvider>
+        <RouterProvider router={router}/>
       </Wrapper>
     </UserDataContext.Provider>
   );
@@ -98,11 +98,14 @@ export default App;
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  overflow: hidden;
   /* background: linear-gradient(120deg, #3b5998, #ffffff); */
   background-image: url(${darkTimeKeeper});
   background-repeat: repeat;
   background-size: 10%;
   height: 100vh;
+  max-width:100vw;
 `;

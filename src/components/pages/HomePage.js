@@ -13,7 +13,6 @@ const HomePage = ({ userData }) => {
   const [settingsOpen, setSettingsOpen] = useState(false);
   return (
     <Wrapper>
-      <Nav userData={userData} />
       <UsersBlogOptions />
     </Wrapper>
   );

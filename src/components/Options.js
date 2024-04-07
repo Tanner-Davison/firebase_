@@ -132,7 +132,6 @@ const Title = styled.p`
   margin-top: 10px;
   color: black;
 `;
-
 const Card = styled.div`
   cursor: pointer;
   display: flex;
@@ -143,6 +142,8 @@ const Card = styled.div`
   gap: 15px;
   opacity: 0;
   border-top: 5px solid transparent;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.5); 
   /* background-color: ${colors.backgroundBlog}; */
   width: 15vw;
   padding: 1.042vw;
