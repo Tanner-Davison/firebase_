@@ -126,7 +126,7 @@ const Nav = ({ userData }) => {
               onMouseOver={() => setImgHover(true)}
               onMouseLeave={() => setImgHover(false)}
               $blur={imgHover}
-              src={auth?.currentUser?.photoURL || googleImage}
+              src={googleImage ? googleImage : auth?.currentUser?.photoURL }
               alt={"user-profile-picture"}
             />
             <UserNameBlock className={"nameObject"}>

@@ -3,20 +3,17 @@ import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
 import text from "styles/text";
+import { useNavigate } from "react-router-dom";
 import CreateBlog from "images/CreateBlog.webp";
 import EditBlog from "images/EditBlog.webp";
 import ViewNewBlogs from "images/ViewNewBlogs.webp";
 import SailBoat from "images/Sailboat.webp";
-import pageTurner from "images/page-turner.svg";
 import { CardOptionsPlay } from "./animations/gsapAnimations";
 import { CardOptionsReverse } from "./animations/gsapAnimations";
-import tortoiseShell from "images/tortoise-shell.svg";
-import protrudingSquares from "images/protruding-squares.svg";
-import hollowedBoxes from "images/hollowed-boxes.svg";
-import confettiDoodles from "images/confetti-doodles.svg";
 import world from "images/world.png";
 
 const BlogOptions = ({ blogPostData }) => {
+  const navigate = useNavigate();
   const handleOnMouseOver = (e, color, id) => {
     if (e.target.classList.contains("goToButton")) {
       return;
@@ -45,9 +42,9 @@ const BlogOptions = ({ blogPostData }) => {
         <Title>Create Blog</Title>
         <GoToButton
           className={"goToButton"}
-          onMouseEnter={(e) => e.preventDefault()}
+          onClick={(e) => navigate('/blog-creation')}
         >
-          Start New
+         Create New Blog
         </GoToButton>
         <Body className="body">
           Start a new blog and share it with the world{" "}
@@ -68,8 +65,7 @@ const BlogOptions = ({ blogPostData }) => {
           Start New
         </GoToButton>
         <Body className="body">
-          Continue editing a blog or edit posted blogs. Everyone changes their
-          mind. So should your post.
+          Continue editing a blog or edit published blogs.
         </Body>
       </Card>
       <Card
