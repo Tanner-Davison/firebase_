@@ -33,7 +33,6 @@ const AuthLogin = () => {
       googleProvider.setCustomParameters({ prompt: 'select_account' });
       const user = await signInWithPopup(auth, googleProvider);
       if(user){
-        console.log('NEW DATA',user);
         const PROFILEPHOTO = user.user.photoURL;
         localStorage.setItem('profileImageUrl', PROFILEPHOTO) 
       }
@@ -85,7 +84,6 @@ const AuthLogin = () => {
       </Form>
       {!emailError && (
         <>
-          <Title>{"OR"}</Title>
           <Form onSubmit={handleSignIn} $google>
             <Title>{"User Login"}</Title>
             <GoogleSignInButton onClick={handleSignInWithGoogle}>
@@ -102,23 +100,26 @@ const AuthLogin = () => {
 export default AuthLogin;
 
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  align-self: center;
+  justify-self: center;
+  top:25%;
   border-radius: 4.722vw;
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 1.042vw;
+  
   border: 0.069vw ridge ${colors.loginWhite};
   ${media.fullWidth} {
     border-radius: 68px;
-    background-color: rgba(0, 0, 0, 0.4);
+    
     padding: 15px;
     border: 1px ridge ${colors.loginWhite};
   }
 
   ${media.tablet} {
     border-radius: 6.641vw;
-    background-color: rgba(0, 0, 0, 0.4);
+    
     padding: 1.465vw;
     border: 0.098vw ridge ${colors.loginWhite};
     flex-direction: column;
@@ -126,8 +127,9 @@ const Wrapper = styled.div`
 
   ${media.mobile} {
     flex-direction: column;
+    top:5%;
     border-radius: 18.133vw;
-    background-color: rgba(0, 0, 0, 0.4);
+  
     padding: 4vw;
     border: 0.267vw ridge ${colors.loginWhite};
   }
@@ -228,7 +230,7 @@ const GoogleSignInButton = styled(Button)`
   align-items: center;
   background-color: white;
   border: 1px solid black;
-  border-radius: 25px;
+  border-radius: 10px;
   padding: 0vw 1vw;
   transition: transform 0.2s ease-in-out;
   color: black;

@@ -22,17 +22,13 @@ export default HomePage;
 
 const Wrapper = styled.div`
   position: relative;
-  width: 100%;
   display: flex;
   color: white;
-  align-self: flex-start;
   justify-content: center;
-  justify-self: flex-start;
   align-self: flex-start;
   flex-direction: column;
   background-repeat: no-repeat;
   background-size: cover;
-  overflow: hidden;
-  width: 100vw;
-  padding: 1vw 1.736vw;
+  width:100%;
+  padding: 1vw 0vw;
 `;

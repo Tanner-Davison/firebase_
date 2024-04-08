@@ -18,6 +18,7 @@ const Nav = ({ userData }) => {
   const [user, setUser] = useState(null);
   const [imgHover, setImgHover] = useState(false);
   const googleImage = localStorage.getItem("profileImageUrl");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -125,7 +126,7 @@ const Nav = ({ userData }) => {
               onMouseOver={() => setImgHover(true)}
               onMouseLeave={() => setImgHover(false)}
               $blur={imgHover}
-              src={googleImage}
+              src={auth?.currentUser?.photoURL || googleImage}
               alt={"user-profile-picture"}
             />
             <UserNameBlock className={"nameObject"}>

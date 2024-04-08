@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
@@ -10,6 +10,11 @@ import SailBoat from "images/Sailboat.webp";
 import pageTurner from "images/page-turner.svg";
 import { CardOptionsPlay } from "./animations/gsapAnimations";
 import { CardOptionsReverse } from "./animations/gsapAnimations";
+import tortoiseShell from "images/tortoise-shell.svg";
+import protrudingSquares from "images/protruding-squares.svg";
+import hollowedBoxes from "images/hollowed-boxes.svg";
+import confettiDoodles from "images/confetti-doodles.svg";
+import world from 'images/world.png';
 
 const BlogOptions = ({ blogPostData }) => {
   const handleOnMouseOver = (e, color) => {
@@ -24,31 +29,31 @@ const BlogOptions = ({ blogPostData }) => {
     <BlogOptionsDiv className="blog-options">
       <Card
         className="options"
-        onMouseOver={(e) => handleOnMouseOver(e, "#6EE3C7")}
+        onMouseEnter={(e) => handleOnMouseOver(e, "#6EE3C7")}
         onMouseLeave={handleOnMouseLeave}
       >
         <OptionsImage className={"image"} src={CreateBlog} alt="Create Blog" />
         <Title>Create Blog</Title>
+        <GoToButton onMouseEnter={(e)=>e.preventDefault()}>Start New</GoToButton>
         <Body className="body">
-          Start a new blog and share it to the feed, or pick up where you left
-          off.
+          Start a new blog and share it with the world <World src={world}alt={'share with world'}></World>
+        
         </Body>
       </Card>
       <Card
         className="options"
-        onMouseOver={(e) => handleOnMouseOver(e, "#6EE3C7")}
+        onMouseEnter={(e) => handleOnMouseOver(e, "#6EE3C7")}
         onMouseLeave={handleOnMouseLeave}
       >
         <OptionsImage className={"image"} src={EditBlog} alt="Edit Blog" />
         <Title>Edit Blog</Title>
         <Body className="body">
-          Start a new blog and share it to the feed, or pick up where you left
-          off.
+          Continue editing a blog or edit posted blogs. Everyone changes their mind. So should your post.
         </Body>
       </Card>
       <Card
         className="options"
-        onMouseOver={(e) => handleOnMouseOver(e, "#77B3D4")}
+        onMouseEnter={(e) => handleOnMouseOver(e, "#77B3D4")}
         onMouseLeave={handleOnMouseLeave}
       >
         <OptionsImage
@@ -58,13 +63,12 @@ const BlogOptions = ({ blogPostData }) => {
         />
         <Title>Your Blogs</Title>
         <Body className="body">
-          Start a new blog and share it to the feed, or pick up where you left
-          off.
+          Your home for all your creative writings.
         </Body>
       </Card>
       <Card
         className="options"
-        onMouseOver={(e) => handleOnMouseOver(e, "#77B3D4")}
+        onMouseEnter={(e) => handleOnMouseOver(e, "#77B3D4")}
         onMouseLeave={handleOnMouseLeave}
       >
         <OptionsImage
@@ -74,8 +78,7 @@ const BlogOptions = ({ blogPostData }) => {
         />
         <Title>Explore Blogs</Title>
         <Body className="body">
-          Start a new blog and share it to the feed, or pick up where you left
-          off.
+         Explore all blogs posted by people just like you.
         </Body>
       </Card>
     </BlogOptionsDiv>
@@ -83,18 +86,25 @@ const BlogOptions = ({ blogPostData }) => {
 };
 
 export default BlogOptions;
+const World = styled.img`
+justify-self: flex-end;
+width:3ch;
+height: 3ch;
+`
 const Body = styled.div`
   ${text.bodyMBold}
   position: absolute;
   pointer-events: none;
   color: black;
   opacity: 0;
-  bottom: 25px;
+  width: 80%;
+  bottom: 10%;
+  flex-wrap: nowrap;
   z-index: 1;
   padding: 0.694vw 1.736vw;
 
   ${media.fullWidth} {
-    padding: 10px 25px;
+    padding: 10px 42px;
   }
 
   ${media.tablet} {
@@ -102,11 +112,18 @@ const Body = styled.div`
   }
 
   ${media.mobile} {
+  
+    ${text.bodyM}
     padding: 0.667vw 4.667vw;
   }
 `;
+const GoToButton = styled.button`
+display: flex;
+${text.bodyMBold}
 
+`
 const OptionsImage = styled.img`
+  position: relative;
   z-index: 1;
   pointer-events: none;
   width: 7.917vw;
@@ -126,25 +143,29 @@ const OptionsImage = styled.img`
 `;
 
 const Title = styled.p`
-  z-index: 1;
+  position: relative;
+  z-index: 2;
   pointer-events: none;
   ${text.bodyMLeague}
   margin-top: 10px;
-  color: black;
+  color: #353839;
+  border-radius: 15px;
 `;
 const Card = styled.div`
+  position: relative;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   text-align: center;
-  gap: 15px;
+  gap: 1.042vw;
   opacity: 0;
-  border-top: 5px solid transparent;
+
   overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.5); 
-  /* background-color: ${colors.backgroundBlog}; */
+  background-color: ${colors.backgroundBlog};
+  /* background: ${colors.backgroundBlog}; */
+
   width: 15vw;
   padding: 1.042vw;
   border-top-width: 0%;
@@ -171,7 +192,7 @@ const Card = styled.div`
   }
 
   ${media.mobile} {
-    width: 29vw;
+    width: 34vw;
     padding: 6.2vw;
     border-radius: 7.733vw;
   }
@@ -182,7 +203,6 @@ const BlogOptionsDiv = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  width: 100%;
   gap: 2.431vw;
   flex-wrap: wrap;
   z-index: 5;
@@ -196,7 +216,8 @@ const BlogOptionsDiv = styled.div`
   }
 
   ${media.mobile} {
-    gap: 12.431vw 3vw;
-    align-items: center;
+    gap: 9.431vw 0vw;
+    align-items: flex-start;
+    justify-content: space-around;
   }
 `;

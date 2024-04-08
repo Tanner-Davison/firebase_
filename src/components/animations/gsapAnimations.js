@@ -2,6 +2,7 @@ import React from "react";
 import getMedia from "utils/getMedia";
 import gsap from "gsap";
 import colors from "styles/colors";
+import pageTurner from "images/page-turner.svg";
 
 export const HomepageOptionsIncoming = () => {
   const targets = document.querySelectorAll(".options");
@@ -11,12 +12,11 @@ export const HomepageOptionsIncoming = () => {
     xPercent: 800,
     scale: 6,
     opacity: 0,
-    backgroundColor: `transparent`,
   })
     .to(
       OptionCards,
       {
-        duration: 0.5,
+
         opacity: 1,
         xPercent: 0,
         scale: 1,
@@ -36,12 +36,20 @@ export const CardOptionsPlay = (e, color) => {
 
   return gsap
     .timeline()
-    .set(body, { duration: 0.3, yPercent: -50, opacity: 0, display: "flex" })
+    .set(body, { display:'flex', opacity: 0, yPercent:-50})
+    .to(
+      image,
+      {
+        filter: "contrast(150%)",
+        scale:1.2,
+        rotate: 360,
+        zIndex: 1,
+        ease: "none",
+      },
+    )
     .to(
       div,
       {
-        duration: 0.3,
-        scale: 1.1,
         height: getMedia("300px", "30vw", "36vw", "60vw"),
         width: getMedia("280px", "20vw", "26.094vw", "35vw"),
         borderTopWidth: "100%",
@@ -51,20 +59,9 @@ export const CardOptionsPlay = (e, color) => {
       "<"
     )
     .to(
-      image,
-      {
-        filter: "contrast",
-        scale: 1.1,
-        rotate: 360,
-        zIndex: 1,
-        ease: "none",
-      },
-      "<+=.15"
-    )
-    .to(
       body,
-      { duration: 1, yPercent: 0, opacity: 1, ease: "power4.out" },
-      "<+=.1"
+      {yPercent: 0, opacity: 1},
+      ">"
     );
 };
 
@@ -75,11 +72,11 @@ export const CardOptionsReverse = (e) => {
   return gsap
     .timeline()
     .to(image, {
-      duration: 0.5,
-      scale: 1,
       rotateY: 0,
       rotateX: 0,
+      scale:1,
       filter: "contrast(100%)",
+      xPercent:0,
       zIndex: 1,
       rotation: 0,
       ease: "none",
@@ -87,9 +84,10 @@ export const CardOptionsReverse = (e) => {
     .to(
       div,
       {
-        duration: 0.3,
         scale: 1,
+        scaleY:1,
         height: "auto",
+        backgroundColor: `${colors.backgroundBlog}`,
         width: getMedia("216px", "15vw", "21.094vw", "29vw"),
         borderTopWidth: "0%",
         borderTopColor: "transparent",
@@ -97,8 +95,8 @@ export const CardOptionsReverse = (e) => {
       },
       "<"
     )
-    .to(body, { duration: 0.5, opacity: 0, yPercent: -200 }, "<")
-    .to(body, { display: "none" }, "<-=.5");
+    .to(body, {  opacity: 0 }, "<")
+    .to(body, { display: "none", yPercent:-50 }, "<-=.5");
 };
 
 export const gsapWrapperBackground = (element) => {
@@ -131,3 +129,4 @@ export const gsapWrapperBackground = (element) => {
     });
   return tl;
 };
+
