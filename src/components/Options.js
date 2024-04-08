@@ -14,30 +14,44 @@ import tortoiseShell from "images/tortoise-shell.svg";
 import protrudingSquares from "images/protruding-squares.svg";
 import hollowedBoxes from "images/hollowed-boxes.svg";
 import confettiDoodles from "images/confetti-doodles.svg";
-import world from 'images/world.png';
+import world from "images/world.png";
 
 const BlogOptions = ({ blogPostData }) => {
-  const handleOnMouseOver = (e, color) => {
-    CardOptionsPlay(e, color);
+  const handleOnMouseOver = (e, color, id) => {
+    if (e.target.classList.contains("goToButton")) {
+      return;
+    } else {
+      CardOptionsPlay(e, color);
+    }
   };
 
   const handleOnMouseLeave = (e, color) => {
-    CardOptionsReverse(e);
+    if (e.target.classList.contains("goToButton")) {
+      return;
+    } else {
+      CardOptionsReverse(e);
+    }
   };
 
   return (
     <BlogOptionsDiv className="blog-options">
       <Card
         className="options"
-        onMouseEnter={(e) => handleOnMouseOver(e, "#6EE3C7")}
+        id={"create"}
+        onMouseEnter={(e) => handleOnMouseOver(e, "#6EE3C7", "create")}
         onMouseLeave={handleOnMouseLeave}
       >
         <OptionsImage className={"image"} src={CreateBlog} alt="Create Blog" />
         <Title>Create Blog</Title>
-        <GoToButton className={'goToButton'}onMouseEnter={(e)=>e.preventDefault()}>Start New</GoToButton>
+        <GoToButton
+          className={"goToButton"}
+          onMouseEnter={(e) => e.preventDefault()}
+        >
+          Start New
+        </GoToButton>
         <Body className="body">
-          Start a new blog and share it with the world <World src={world}alt={'share with world'}></World>
-        
+          Start a new blog and share it with the world{" "}
+          <World src={world} alt={"share with world"}></World>
         </Body>
       </Card>
       <Card
@@ -47,8 +61,15 @@ const BlogOptions = ({ blogPostData }) => {
       >
         <OptionsImage className={"image"} src={EditBlog} alt="Edit Blog" />
         <Title>Edit Blog</Title>
+        <GoToButton
+          className={"goToButton"}
+          onMouseEnter={(e) => e.preventDefault()}
+        >
+          Start New
+        </GoToButton>
         <Body className="body">
-          Continue editing a blog or edit posted blogs. Everyone changes their mind. So should your post.
+          Continue editing a blog or edit posted blogs. Everyone changes their
+          mind. So should your post.
         </Body>
       </Card>
       <Card
@@ -62,9 +83,13 @@ const BlogOptions = ({ blogPostData }) => {
           alt="View New Blogs"
         />
         <Title>Your Blogs</Title>
-        <Body className="body">
-          Your home for all your creative writings.
-        </Body>
+        <GoToButton
+          className={"goToButton"}
+          onMouseEnter={(e) => e.preventDefault()}
+        >
+          Start New
+        </GoToButton>
+        <Body className="body">Your home for all your creative writings.</Body>
       </Card>
       <Card
         className="options"
@@ -77,8 +102,14 @@ const BlogOptions = ({ blogPostData }) => {
           alt="Explore New Blogs"
         />
         <Title>Explore Blogs</Title>
+        <GoToButton
+          className={"goToButton"}
+          onMouseEnter={(e) => e.preventDefault()}
+        >
+          Start New
+        </GoToButton>
         <Body className="body">
-         Explore all blogs posted by people just like you.
+          Explore all blogs posted by people just like you.
         </Body>
       </Card>
     </BlogOptionsDiv>
@@ -87,42 +118,36 @@ const BlogOptions = ({ blogPostData }) => {
 
 export default BlogOptions;
 const World = styled.img`
-justify-self: flex-end;
-width:3ch;
-height: 3ch;
-`
-const Body = styled.p`
+  display: flex;
+  width: 3ch;
+  height: 3ch;
+`;
+const Body = styled.div`
   ${text.bodyMBold}
   position: absolute;
-  pointer-events: none;
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: black;
+  bottom: 5%;
+  width: 90%;
   opacity: 0;
-  flex-wrap: nowrap;
   z-index: 1;
-  
-
-  ${media.fullWidth} {
-
+  anima ${media.fullWidth} {
   }
 
   ${media.tablet} {
-
   }
 
   ${media.mobile} {
-  
     ${text.bodyM}
-
   }
 `;
 const GoToButton = styled.button`
-display: flex;
-${text.bodyMBold}
-
-`
+  display: flex;
+  ${text.bodyMBold}
+`;
 const OptionsImage = styled.img`
   position: relative;
   z-index: 1;
@@ -163,7 +188,6 @@ const Card = styled.div`
   gap: 1.042vw;
   opacity: 0;
 
- 
   background-color: ${colors.backgroundBlog};
   /* background: ${colors.backgroundBlog}; */
 

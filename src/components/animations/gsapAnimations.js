@@ -32,7 +32,6 @@ export const CardOptionsPlay = (e, color) => {
   const image = e.target.querySelector(".image");
   let div = e.target;
   const body = e.target.querySelector(".body");
-  const button = e.target.querySelector(".goToButton");
   if (e.target.classList.contains("goToButton")) {
     return;
   }
@@ -40,17 +39,21 @@ export const CardOptionsPlay = (e, color) => {
   return gsap
     .timeline()
     .set(body, { display: "flex", opacity: 0, yPercent: -50 })
-    .to(image, {
-      filter: "contrast(150%)",
-      scale: 1.2,
-      rotate: 360,
-      zIndex: 1,
-      ease: "none",
-    })
+    .to(
+      image,
+      {
+        filter: "contrast(150%)",
+        scale: 1.2,
+        rotate: 360,
+        zIndex: 1,
+        ease: "none",
+      },
+      ">"
+    )
     .to(
       div,
       {
-        height: getMedia("400px", "30vw", "36vw", "75vw"),
+        height: getMedia("400px", "26vw", "36vw", "75vw"),
         width: getMedia("280px", "20vw", "26.094vw", "43vw"),
         borderTopWidth: "100%",
         borderTopColor: `${color}`,
@@ -58,16 +61,14 @@ export const CardOptionsPlay = (e, color) => {
       },
       "<"
     )
-    .to(body, { yPercent: 0, opacity: 1, position: "relative" }, ">");
+    .to(body, { yPercent: 0, opacity: 1 }, ">");
 };
 
 export const CardOptionsReverse = (e) => {
   const image = e.target.querySelector(".image");
   const div = e.target;
   const body = e.target.querySelector(".body");
-  if (e.target.classList.contains("goToButton")) {
-    return;
-  }
+
   return gsap
     .timeline()
     .to(image, {
@@ -95,11 +96,7 @@ export const CardOptionsReverse = (e) => {
       "<"
     )
     .to(body, { opacity: 0 }, "<")
-    .to(
-      body,
-      { display: "none", yPercent: -50, position: "absolute" },
-      "<-=.5"
-    );
+    .to(body, { display: "none", yPercent: -50 }, "<-=.5");
 };
 
 export const gsapWrapperBackground = (element) => {
