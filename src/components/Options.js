@@ -34,7 +34,7 @@ const BlogOptions = ({ blogPostData }) => {
       >
         <OptionsImage className={"image"} src={CreateBlog} alt="Create Blog" />
         <Title>Create Blog</Title>
-        <GoToButton onMouseEnter={(e)=>e.preventDefault()}>Start New</GoToButton>
+        <GoToButton className={'goToButton'}onMouseEnter={(e)=>e.preventDefault()}>Start New</GoToButton>
         <Body className="body">
           Start a new blog and share it with the world <World src={world}alt={'share with world'}></World>
         
@@ -91,30 +91,31 @@ justify-self: flex-end;
 width:3ch;
 height: 3ch;
 `
-const Body = styled.div`
+const Body = styled.p`
   ${text.bodyMBold}
   position: absolute;
   pointer-events: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   color: black;
   opacity: 0;
-  width: 80%;
-  bottom: 10%;
   flex-wrap: nowrap;
   z-index: 1;
-  padding: 0.694vw 1.736vw;
+  
 
   ${media.fullWidth} {
-    padding: 10px 42px;
+
   }
 
   ${media.tablet} {
-    padding: 0.977vw 2.441vw;
+
   }
 
   ${media.mobile} {
   
     ${text.bodyM}
-    padding: 0.667vw 4.667vw;
+
   }
 `;
 const GoToButton = styled.button`
@@ -162,7 +163,7 @@ const Card = styled.div`
   gap: 1.042vw;
   opacity: 0;
 
-  overflow: hidden;
+ 
   background-color: ${colors.backgroundBlog};
   /* background: ${colors.backgroundBlog}; */
 
@@ -192,8 +193,8 @@ const Card = styled.div`
   }
 
   ${media.mobile} {
-    width: 34vw;
-    padding: 6.2vw;
+    width: 38vw;
+    padding: 3.2vw;
     border-radius: 7.733vw;
   }
 `;
@@ -202,7 +203,7 @@ const BlogOptionsDiv = styled.div`
   position: relative;
   display: flex;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: space-evenly;
   gap: 2.431vw;
   flex-wrap: wrap;
   z-index: 5;
@@ -218,6 +219,6 @@ const BlogOptionsDiv = styled.div`
   ${media.mobile} {
     gap: 9.431vw 0vw;
     align-items: flex-start;
-    justify-content: space-around;
+    justify-content: space-evenly;
   }
 `;

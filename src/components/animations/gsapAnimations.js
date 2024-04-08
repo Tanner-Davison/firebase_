@@ -16,7 +16,6 @@ export const HomepageOptionsIncoming = () => {
     .to(
       OptionCards,
       {
-
         opacity: 1,
         xPercent: 0,
         scale: 1,
@@ -31,52 +30,52 @@ export const HomepageOptionsIncoming = () => {
 
 export const CardOptionsPlay = (e, color) => {
   const image = e.target.querySelector(".image");
-  const div = e.target;
+  let div = e.target;
   const body = e.target.querySelector(".body");
+  const button = e.target.querySelector(".goToButton");
+  if (e.target.classList.contains("goToButton")) {
+    return;
+  }
 
   return gsap
     .timeline()
-    .set(body, { display:'flex', opacity: 0, yPercent:-50})
-    .to(
-      image,
-      {
-        filter: "contrast(150%)",
-        scale:1.2,
-        rotate: 360,
-        zIndex: 1,
-        ease: "none",
-      },
-    )
+    .set(body, { display: "flex", opacity: 0, yPercent: -50 })
+    .to(image, {
+      filter: "contrast(150%)",
+      scale: 1.2,
+      rotate: 360,
+      zIndex: 1,
+      ease: "none",
+    })
     .to(
       div,
       {
-        height: getMedia("300px", "30vw", "36vw", "60vw"),
-        width: getMedia("280px", "20vw", "26.094vw", "35vw"),
+        height: getMedia("400px", "30vw", "36vw", "75vw"),
+        width: getMedia("280px", "20vw", "26.094vw", "43vw"),
         borderTopWidth: "100%",
         borderTopColor: `${color}`,
         zIndex: 4,
       },
       "<"
     )
-    .to(
-      body,
-      {yPercent: 0, opacity: 1},
-      ">"
-    );
+    .to(body, { yPercent: 0, opacity: 1, position: "relative" }, ">");
 };
 
 export const CardOptionsReverse = (e) => {
   const image = e.target.querySelector(".image");
   const div = e.target;
   const body = e.target.querySelector(".body");
+  if (e.target.classList.contains("goToButton")) {
+    return;
+  }
   return gsap
     .timeline()
     .to(image, {
       rotateY: 0,
       rotateX: 0,
-      scale:1,
+      scale: 1,
       filter: "contrast(100%)",
-      xPercent:0,
+      xPercent: 0,
       zIndex: 1,
       rotation: 0,
       ease: "none",
@@ -85,18 +84,22 @@ export const CardOptionsReverse = (e) => {
       div,
       {
         scale: 1,
-        scaleY:1,
+        scaleY: 1,
         height: "auto",
         backgroundColor: `${colors.backgroundBlog}`,
-        width: getMedia("216px", "15vw", "21.094vw", "29vw"),
+        width: getMedia("216px", "15vw", "21.094vw", "38vw"),
         borderTopWidth: "0%",
         borderTopColor: "transparent",
         zIndex: 1,
       },
       "<"
     )
-    .to(body, {  opacity: 0 }, "<")
-    .to(body, { display: "none", yPercent:-50 }, "<-=.5");
+    .to(body, { opacity: 0 }, "<")
+    .to(
+      body,
+      { display: "none", yPercent: -50, position: "absolute" },
+      "<-=.5"
+    );
 };
 
 export const gsapWrapperBackground = (element) => {
@@ -129,4 +132,3 @@ export const gsapWrapperBackground = (element) => {
     });
   return tl;
 };
-

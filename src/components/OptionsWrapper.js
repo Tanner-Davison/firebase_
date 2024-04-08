@@ -28,18 +28,18 @@ const Wrapper = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  
   padding: 5vw 0vw;
-  height: 450px;
-  width: 100%;
+ width: 100%;
   ${media.fullWidth} {
-    height: 300px;
+  
   }
 
   ${media.tablet} {
-    height: 68.711vw;
+
   }
 
   ${media.mobile} {
-    height: 145vw;
+   
   }
 `;

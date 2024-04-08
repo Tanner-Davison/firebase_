@@ -103,16 +103,15 @@ const Wrapper = styled.div`
   top: 0;
   left: 0;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
   flex-direction: column;
+  overflow-x: hidden;
   width:100vw;
-  overflow: hidden;
+  
   /* background: linear-gradient(120deg, #3b5998, #ffffff); */
   background-image: url(${darkTimeKeeper});
   background-attachment: fixed;
   background-repeat: repeat;
   background-size: 10%;
-  height: 100vh;
+  height: auto;
   
 `;

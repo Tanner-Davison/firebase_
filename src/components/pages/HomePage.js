@@ -24,11 +24,10 @@ const Wrapper = styled.div`
   position: relative;
   display: flex;
   color: white;
-  justify-content: center;
-  align-self: flex-start;
   flex-direction: column;
   background-repeat: no-repeat;
   background-size: cover;
   width:100%;
   padding: 1vw 0vw;
+  min-height: 100vh;
 `;
