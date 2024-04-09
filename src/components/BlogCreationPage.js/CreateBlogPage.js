@@ -8,7 +8,7 @@ const CreateBlogPage = () => {
   return (
     <BlogCreationContainer>
         <OptionsContainer></OptionsContainer>
-      <TextArea></TextArea>
+      <TextArea rows={18} cols={50}/>
 
     </BlogCreationContainer>
   )
@@ -21,13 +21,14 @@ const OptionsContainer = styled.div`
 
 const TextArea= styled.textarea`
 ${text.bodyMBold}
-min-width:587px;
-min-height:auto;
+
 font-size:1.8ch!important;
 line-height: 2.178ch!important;
 color:#353839;
 background-image: url(${notebookPaper});
 background-size: contain;
+background-repeat:no-repeat;
+resize: none;
 padding-top:43px;
 padding-left:90px;
 overflow:hidden;
