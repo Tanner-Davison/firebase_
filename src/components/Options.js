@@ -81,6 +81,7 @@ const BlogOptions = ({ blogPostData }) => {
         <GoToButton
           className={"goToButton"}
           onMouseEnter={(e) => e.preventDefault()}
+          onClick={()=> navigate('/my-blogs')}
         >
           Start New
         </GoToButton>

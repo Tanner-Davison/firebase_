@@ -4,7 +4,7 @@ import media from "styles/media";
 import colors from "styles/colors";
 import text from "styles/text";
 import {db, auth} from '../config/firebase';
-import { doc, setDoc, updateDoc, arrayUnion, getDoc, collection, getDocs } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, getDoc, collection, getDocs } from "firebase/firestore";
 
 const CreateBlogPage = () => {
 

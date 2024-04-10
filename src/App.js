@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext, useRef } from "react";
 import AuthLogin from "components/Auth";
 import HomePage from "components/pages/HomePage";
+import MyBlogs from "components/MyBlogs";
 import { auth } from "./config/firebase";
 import { db } from "./config/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
@@ -92,6 +93,7 @@ function App() {
               <Nav /> <HomePage userData={userData} />,
             </>}/>,
             <Route path='/blog-creation' element={<><Nav/> <CreateBlogPage/></>}  />
+            <Route path='/my-blogs' element={<><Nav/> <MyBlogs/></>}  />
       </>
     )
   );
