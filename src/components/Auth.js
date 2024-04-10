@@ -18,7 +18,7 @@ const AuthLogin = () => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate('/user/profile');
+      navigate("/user/profile");
     } catch (error) {
       console.log(error);
       if (error.message.includes("auth/email-already-in-use")) {
@@ -30,13 +30,13 @@ const AuthLogin = () => {
   const handleSignInWithGoogle = async (e) => {
     e.preventDefault();
     try {
-      googleProvider.setCustomParameters({ prompt: 'select_account' });
+      googleProvider.setCustomParameters({ prompt: "select_account" });
       const user = await signInWithPopup(auth, googleProvider);
-      if(user){
+      if (user) {
         const PROFILEPHOTO = user.user.photoURL;
-        localStorage.setItem('profileImageUrl', PROFILEPHOTO) 
+        localStorage.setItem("profileImageUrl", PROFILEPHOTO);
       }
-      navigate('/user/profile');
+      navigate("/user/profile");
     } catch (error) {
       console.log(error);
     }
@@ -106,20 +106,20 @@ const Wrapper = styled.div`
   justify-content: center;
   align-self: center;
   justify-self: center;
-  top:25%;
+  top: 25%;
   border-radius: 4.722vw;
-  
+  height:90vh;
   border: 0.069vw ridge ${colors.loginWhite};
   ${media.fullWidth} {
     border-radius: 68px;
-    
+
     padding: 15px;
     border: 1px ridge ${colors.loginWhite};
   }
 
   ${media.tablet} {
     border-radius: 6.641vw;
-    
+
     padding: 1.465vw;
     border: 0.098vw ridge ${colors.loginWhite};
     flex-direction: column;
@@ -127,9 +127,9 @@ const Wrapper = styled.div`
 
   ${media.mobile} {
     flex-direction: column;
-    top:5%;
+    top: 5%;
     border-radius: 18.133vw;
-  
+
     padding: 4vw;
     border: 0.267vw ridge ${colors.loginWhite};
   }

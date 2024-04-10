@@ -4,6 +4,7 @@ import HomePage from "components/pages/HomePage";
 import { auth } from "./config/firebase";
 import { db } from "./config/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
+import CreateBlogPage from "components/BlogCreationPage.js/CreateBlogPage";
 import styled from "styled-components";
 import darkTimeKeeper from "images/tortoise-shell.svg";
 import { gsapWrapperBackground } from "components/animations/gsapAnimations";
@@ -79,10 +80,9 @@ function App() {
           path="/user/profile"
           element={
             <>
-              <Nav /> <HomePage userData={userData} />
-            </>
-          }
-        />
+              <Nav /> <HomePage userData={userData} />,
+            </>}/>,
+            <Route path='/blog-creation' element={<><Nav/> <CreateBlogPage/></>}  />
       </>
     )
   );
