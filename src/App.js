@@ -4,7 +4,7 @@ import HomePage from "components/pages/HomePage";
 import { auth } from "./config/firebase";
 import { db } from "./config/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import CreateBlogPage from "components/BlogCreationPage.js/CreateBlogPage";
+import CreateBlogPage from "components/CreateBlog";
 import styled from "styled-components";
 import darkTimeKeeper from "images/tortoise-shell.svg";
 import { gsapWrapperBackground } from "components/animations/gsapAnimations";
@@ -31,15 +31,24 @@ function App() {
     const addUserLoginData = async (user) => {
       try {
         const userRef = doc(db, "users", user.uid);
-        await getDoc(userRef);
-        await setDoc(userRef, {
-          email: user.email,
-          profileImgUrl: user.photoURL,
-          username: user.displayName,
-        });
-        console.log("User data added successfully!");
-
-        // Set user data to localStorage
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {   //user exists
+          await setDoc(userRef, {
+            email: user.email,
+            profileImgUrl: user.photoURL,
+            username: user.displayName,
+          }, { merge: true }); 
+          console.log("User data updated successfully!");
+        } else {
+          await setDoc(userRef, { //user doees not exist
+            email: user.email,
+            profileImgUrl: user.photoURL,
+            username: user.displayName,
+            blogposts: [],
+          });
+          console.log("User data added successfully!");
+        }
+  
         localStorage.setItem("userEmail", user.email);
         localStorage.setItem("userPhoto", user.photoURL);
         localStorage.setItem("handle", user.displayName);
@@ -106,12 +115,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   overflow-x: hidden;
   width:100vw;
-  
-  /* background: linear-gradient(120deg, #3b5998, #ffffff); */
   background-image: url(${darkTimeKeeper});
   background-attachment: fixed;
   background-repeat: repeat;
   background-size: 10%;
   height: auto;
-  
+  min-height: 100vh;
 `;

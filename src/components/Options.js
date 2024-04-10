@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
