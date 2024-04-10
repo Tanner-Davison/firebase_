@@ -195,9 +195,10 @@ const Card = styled.div`
   padding: 1.042vw;
   border-top-width: 0%;
   border-radius: 2.014vw;
-  -webkit-box-shadow: 0.139vw 0.347vw 1.111vw 0vw #0b325e,
+  border:3px outset ${colors.backgroundBlog};
+  -webkit-box-shadow: 0.139vw 0.347vw 1.511vw 0vw #0b325e,
     0.139vw 0.139vw 1.042vw 0.347vw rgba(0, 0, 0, 0);
-  box-shadow: 0.139vw 0.347vw 1.111vw 0vw #0b325e,
+  box-shadow: 0.139vw 0.347vw 1.511vw 0vw #0b325e,
     0.139vw 0.139vw 1.042vw 0.347vw rgba(0, 0, 0, 0);
 
   ${media.fullWidth} {
