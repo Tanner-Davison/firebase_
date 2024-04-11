@@ -13,18 +13,22 @@ const MyBlogs = () => {
 
   useEffect(() => {
     const fetchDoc = async () => {
-      const docRef = doc(db, "users", userId);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const userData = docSnap.data();
-        const filteredData = userData.blogposts.filter(
-          (post) => post && typeof post === "object"
-        );
-        setBlogData(filteredData);
-      } else {
-        console.log("no data found");
-      }
-    };
+        if (!userId) return;
+    
+        const docRef = doc(db, "users", userId);
+        try {
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            const userData = docSnap.data();
+            const filteredData = userData.blogposts?.filter(post => typeof post === "object") || [];
+            setBlogData(filteredData);
+          } else {
+            console.log("no data found");
+          }
+        } catch (error) {
+          console.error("Failed to fetch document:", error);
+        }
+      };
     fetchDoc();
     //eslint-disable-next-line
   }, []);

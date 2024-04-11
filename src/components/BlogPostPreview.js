@@ -7,7 +7,7 @@ import text from "styles/text";
 const BlogPostPreview = ({ content }) => {
   return (
     <BlogPostPrevWrapper>
-      {content?.blogTitle && <h1>{content.blogTitle}</h1>}
+      {content?.blogTitle && <Header>{content.blogTitle}</Header>}
       {content?.authored && <p>Published By: {content.authored}</p>}
       {content?.date && <p>Date: {content.date}</p>}
       {content?.blodText && <p>{content.blogText}</p>}
@@ -16,7 +16,10 @@ const BlogPostPreview = ({ content }) => {
 };
 
 export default BlogPostPreview;
-
+const Header = styled.h3`
+${text.h3}
+color:black;
+`
 const BlogPostPrevWrapper = styled.div`
   display: flex;
 `;
