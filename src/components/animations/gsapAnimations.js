@@ -53,15 +53,16 @@ export const CardOptionsPlay = (e, color) => {
     .to(
       div,
       {
+        duration:.3,
         height: getMedia("400px", "26vw", "36vw", "75vw"),
         width: getMedia("280px", "20vw", "26.094vw", "43vw"),
-        borderTopWidth: "100%",
+        borderBottomColor:`${color}`,
         borderTopColor: `${color}`,
         zIndex: 4,
       },
       "<"
     )
-    .to(body, { yPercent: 0, opacity: 1 }, ">");
+    .to(body, {duration:.2, yPercent: 0, opacity: 1 }, ">");
 };
 
 export const CardOptionsReverse = (e) => {
@@ -84,12 +85,13 @@ export const CardOptionsReverse = (e) => {
     .to(
       div,
       {
+        duration:.3,
         scale: 1,
         scaleY: 1,
         height: "auto",
         backgroundColor: `${colors.backgroundBlog}`,
         width: getMedia("216px", "15vw", "21.094vw", "38vw"),
-        borderTopWidth: "0%",
+        borderBottomColor:"transparent",
         borderTopColor: "transparent",
         zIndex: 1,
       },

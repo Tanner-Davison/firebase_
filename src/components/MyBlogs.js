@@ -1,67 +1,44 @@
-import React,{useEffect, useState} from 'react'
-import styled from 'styled-components';
-import media from 'styles/media';
-import colors from 'styles/colors';
-import text from 'styles/text';
-import {db}from '../config/firebase';
-import {collection, getDocs} from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import media from "styles/media";
+import colors from "styles/colors";
+import text from "styles/text";
+import { db, auth } from "config/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import BlogPostPreview from "./BlogPostPreview";
+
 const MyBlogs = () => {
-  const[blogposts, setBlogposts] = useState([])
+  const userId = localStorage.getItem("userId");
+  const [blogData, setBlogData] = useState([]);
 
-useEffect(()=>{
+  useEffect(() => {
+    const fetchDoc = async () => {
+      const docRef = doc(db, "users", userId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const userData = docSnap.data();
+        const filteredData = userData.blogposts.filter(
+          (post) => post && typeof post === "object"
+        );
+        setBlogData(filteredData);
+      } else {
+        console.log("no data found");
+      }
+    };
+    fetchDoc();
+    //eslint-disable-next-line
+  }, []);
 
-  const getBlogs = async ()=>{
-
-    const blogCollection = collection(db,"users");
-    const allUsersData = await getDocs(blogCollection);
-        const allDataFromUsers = allUsersData.docs.map((doc)=>({
-          ...doc.data(),
-          id: doc.id,
-        }))
-        setBlogposts(allDataFromUsers)
-        
-  }
-
-  getBlogs()
-
-},[])
-
-const mappedBlogs = blogposts.map((post, index) => {
-  let posts = post.blogposts && post.blogposts.length > 0 ? post.blogposts : null;
-  let mappedPosts = posts && posts.map((post, index) => {
-    return (
-      <Blogs key={index}>{post}</Blogs>
-    );
+  const mappedData = blogData.map((post, index) => {
+    return <BlogPostPreview key={index} content={post} />;
   });
-  
-  return (
-    <Blogs>{mappedPosts}</Blogs>
-  );
-});
 
-  return (
-    <Wrapper>
-      <Blogs>
-        {mappedBlogs}
-        </Blogs>
-    </Wrapper>
-  )
-}
+  return <Wrapper>{mappedData}</Wrapper>;
+};
 
-export default MyBlogs
-const Blogs = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-flex-direction: column;
-width:300px;
-height: 300px;
-color:black;
-${text.bodyM}
+export default MyBlogs;
 
-`
 const Wrapper = styled.div`
-display:flex;
-flex-direction: column;
-
-`
+  display: flex;
+  flex-direction: column;
+`;

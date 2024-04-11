@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext, useRef } from "react";
 import AuthLogin from "components/Auth";
 import HomePage from "components/pages/HomePage";
-import MyBlogs from "components/MyBlogs";
+import AllBlogs from "components/ExploreBlogs";
 import { auth } from "./config/firebase";
 import { db } from "./config/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
@@ -16,6 +16,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+import MyBlogs from "components/MyBlogs";
 
 export const UserDataContext = createContext();
 
@@ -33,15 +34,21 @@ function App() {
       try {
         const userRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userRef);
-        if (userDoc.exists()) {   //user exists
-          await setDoc(userRef, {
-            email: user.email,
-            profileImgUrl: user.photoURL,
-            username: user.displayName,
-          }, { merge: true }); 
+        if (userDoc.exists()) {
+          //user exists
+          await setDoc(
+            userRef,
+            {
+              email: user.email,
+              profileImgUrl: user.photoURL,
+              username: user.displayName,
+            },
+            { merge: true }
+          );
           console.log("User data updated successfully!");
         } else {
-          await setDoc(userRef, { //user doees not exist
+          await setDoc(userRef, {
+            //user doees not exist
             email: user.email,
             profileImgUrl: user.photoURL,
             username: user.displayName,
@@ -49,10 +56,11 @@ function App() {
           });
           console.log("User data added successfully!");
         }
-  
+
         localStorage.setItem("userEmail", user.email);
         localStorage.setItem("userPhoto", user.photoURL);
         localStorage.setItem("handle", user.displayName);
+        localStorage.setItem("userId", user.uid)
       } catch (error) {
         console.error("Error adding user data: ", error);
       }
@@ -74,6 +82,7 @@ function App() {
         localStorage.removeItem("userPhoto");
         localStorage.removeItem("handle");
         localStorage.removeItem("profileImageUrl");
+        localStorage.removeItem("userId")
         console.log("user logged out");
         playBackground.pause();
       }
@@ -91,9 +100,34 @@ function App() {
           element={
             <>
               <Nav /> <HomePage userData={userData} />,
-            </>}/>,
-            <Route path='/blog-creation' element={<><Nav/> <CreateBlogPage/></>}  />
-            <Route path='/my-blogs' element={<><Nav/> <MyBlogs/></>}  />
+            </>
+          }
+        />
+        ,
+        <Route
+          path="/blog-creation"
+          element={
+            <>
+              <Nav /> <CreateBlogPage />
+            </>
+          }
+        />
+        <Route
+          path="/all-blogs"
+          element={
+            <>
+              <Nav /> <AllBlogs />
+            </>
+          }
+        />
+         <Route
+          path="/my-blogs"
+          element={
+            <>
+              <Nav /> <MyBlogs />
+            </>
+          }
+        />
       </>
     )
   );
@@ -116,7 +150,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  width:100vw;
+  width: 100vw;
   background-image: url(${darkTimeKeeper});
   background-attachment: fixed;
   background-repeat: repeat;
