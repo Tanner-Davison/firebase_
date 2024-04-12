@@ -24,10 +24,13 @@ const Nav = ({ userData }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser);
+      console.log(user);
     });
     return () => unsubscribe();
   }, []);
-
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
   const handleLogout = async (e) => {
     signOut(auth)
       .then(() => {
@@ -122,13 +125,15 @@ const Nav = ({ userData }) => {
                 <IsoRoundedIcon sx={{ color: "lightgreen" }} />
               </Pill>
             </UserNameBlock>
-            <ProfileImage
-              onMouseOver={() => setImgHover(true)}
-              onMouseLeave={() => setImgHover(false)}
-              $blur={imgHover}
-              src={googleImage ? googleImage : auth?.currentUser?.photoURL }
-              alt={"user-profile-picture"}
-            />
+            {(user?.photoURL || googleImage) && (
+              <ProfileImage
+                onMouseOver={() => setImgHover(true)}
+                onMouseLeave={() => setImgHover(false)}
+                $blur={imgHover}
+                src={user?.photoURL || googleImage}
+                alt={"user-profile-picture"}
+              />
+            )}
             <UserNameBlock className={"nameObject"}>
               <UserTitle>Welcome,</UserTitle>
               <Name>{"@" + user?.email.split("@")[0]}</Name>
@@ -343,8 +348,8 @@ const RotationParent = styled.div`
 `;
 
 const Navigation = styled.div`
-position: relative;
-top:1px;
+  position: relative;
+  top: 1px;
   display: flex;
   align-items: center;
   justify-content: space-between;

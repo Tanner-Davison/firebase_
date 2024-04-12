@@ -36,6 +36,7 @@ const AllBlogs = () => {
           authored: post.authored,
           date: post.date,
           blogText: post.blogText,
+          blogImage: post.blogImage,
         };
         return <BlogPostPreview key={postIndex} content={data} />;
       });

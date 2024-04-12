@@ -5,8 +5,8 @@ import AllBlogs from "components/ExploreBlogs";
 import { auth } from "./config/firebase";
 import { db } from "./config/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import CreateBlogPage from "components/CreateBlog";
 import styled from "styled-components";
+import CreateBlogPage from "components/CreateBlog";
 import darkTimeKeeper from "images/tortoise-shell.svg";
 import { gsapWrapperBackground } from "components/animations/gsapAnimations";
 import Nav from "components/Nav";
@@ -60,7 +60,7 @@ function App() {
         localStorage.setItem("userEmail", user.email);
         localStorage.setItem("userPhoto", user.photoURL);
         localStorage.setItem("handle", user.displayName);
-        localStorage.setItem("userId", user.uid)
+        localStorage.setItem("userId", user.uid);
       } catch (error) {
         console.error("Error adding user data: ", error);
       }
@@ -82,7 +82,7 @@ function App() {
         localStorage.removeItem("userPhoto");
         localStorage.removeItem("handle");
         localStorage.removeItem("profileImageUrl");
-        localStorage.removeItem("userId")
+        localStorage.removeItem("userId");
         console.log("user logged out");
         playBackground.pause();
       }
@@ -120,7 +120,7 @@ function App() {
             </>
           }
         />
-         <Route
+        <Route
           path="/my-blogs"
           element={
             <>

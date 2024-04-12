@@ -13,28 +13,30 @@ const MyBlogs = () => {
 
   useEffect(() => {
     const fetchDoc = async () => {
-        if (!userId) return;
-    
-        const docRef = doc(db, "users", userId);
-        try {
-          const docSnap = await getDoc(docRef);
-          if (docSnap.exists()) {
-            const userData = docSnap.data();
-            const filteredData = userData.blogposts?.filter(post => typeof post === "object") || [];
-            setBlogData(filteredData);
-          } else {
-            console.log("no data found");
-          }
-        } catch (error) {
-          console.error("Failed to fetch document:", error);
+      if (!userId) return;
+
+      const docRef = doc(db, "users", userId);
+      try {
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+          const filteredData =
+            userData.blogposts?.filter((post) => typeof post === "object") ||
+            [];
+          setBlogData(filteredData);
+        } else {
+          console.log("no data found");
         }
-      };
+      } catch (error) {
+        console.error("Failed to fetch document:", error);
+      }
+    };
     fetchDoc();
     //eslint-disable-next-line
   }, []);
 
-  const mappedData = blogData.map((post, index) => {
-    return <BlogPostPreview key={index} content={post} />;
+  const mappedData = blogData.map((blogDetails, index) => {
+    return <BlogPostPreview key={index} content={blogDetails} />;
   });
 
   return <Wrapper>{mappedData}</Wrapper>;

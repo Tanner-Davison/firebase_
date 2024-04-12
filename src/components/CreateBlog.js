@@ -12,7 +12,7 @@ import {
   getDoc,
   collection,
   getDocs,
-  serverTimestamp
+  serverTimestamp,
 } from "firebase/firestore";
 
 const CreateBlogPage = () => {
@@ -20,15 +20,16 @@ const CreateBlogPage = () => {
   const [blogText, setBlogText] = useState("");
   const [authored, setAuthored] = useState(usersName);
   const [blogTitle, setBlogTitle] = useState("");
-  
+  const [blogImage, setBlogImage] = useState(null);
   const handleSubmit = async (blogText, authored, blogTitle) => {
     if (blogText !== "" && blogTitle !== "") {
       const blogData = {
         blogText,
         authored,
         blogTitle,
+        blogImage,
         date: currentDate,
-      }
+      };
       try {
         const blogCollection = collection(db, "users");
         const userRef = doc(db, "users", auth?.currentUser?.uid);
@@ -56,9 +57,7 @@ const CreateBlogPage = () => {
       return;
     }
   };
-  useEffect(() => {
-    console.log(authored);
-  }, [authored]);
+
   return (
     <BlogCreationContainer>
       <BlogQuestions>
@@ -66,7 +65,7 @@ const CreateBlogPage = () => {
           {"Authored by :"}
           <LabelWrapper>
             <Label htmlFor={"author"}>
-              <BlogInfo
+              <BlogInputs
                 type="radio"
                 id="author"
                 onChange={(e) => setAuthored(e.target.value)}
@@ -76,7 +75,7 @@ const CreateBlogPage = () => {
               {`${auth?.currentUser?.displayName}`}
             </Label>
             <Label htmlFor={"authorAnon"}>
-              <BlogInfo
+              <BlogInputs
                 type="radio"
                 id="authoredAnon"
                 checked={authored === "Anonymous"}
@@ -90,14 +89,35 @@ const CreateBlogPage = () => {
         <OptionsContainer>
           {"Blog Title"}
           <Label htmlFor={"blog-title"}>
-            <BlogInfo
+            <BlogInputs
               type="text"
               id="blog-title"
-              placeholder={". . . title"}
+              placeholder={""}
               value={blogTitle}
               onChange={(e) => setBlogTitle(e.target.value)}
             />
           </Label>
+        </OptionsContainer>
+        <OptionsContainer>
+          {"Upload Photo"}
+          <Label htmlFor={"img-upload"}>
+            <BlogInputs
+              type="file"
+              name="blog-image"
+              id="img-upload"
+              onChange={(e) => {
+                setBlogImage(URL.createObjectURL(e.target.files[0]));
+              }}
+            />
+          </Label>
+          <br></br>
+          {blogImage !== null && (
+            <img
+              src={blogImage}
+              alt={"blog-background-preview"}
+              width={150}
+            />
+          )}
         </OptionsContainer>
       </BlogQuestions>
       <TextArea
@@ -122,7 +142,7 @@ const Label = styled.label`
   flex-direction: row;
   align-self: flex-start;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   font-style: italic;
   margin-top: 0.694vw;
 `;
@@ -130,18 +150,18 @@ const LabelWrapper = styled.div`
   ${text.bodyMBold}
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 1.042vw;
   margin-bottom: 1.042vw;
 `;
-const BlogInfo = styled.input`
+const BlogInputs = styled.input`
   ${text.bodyMBold}
   border-radius: 0.556vw;
+  max-width: 75%;
 `;
 const OptionsContainer = styled.div`
   display: flex;
   flex-direction: column;
+
   ${text.bodyMLeague}
 `;
 const SubmitButton = styled.button``;
@@ -162,8 +182,6 @@ const BlogQuestions = styled.div`
   display: flex;
   flex-direction: column;
   align-self: flex-start;
-  align-items: center;
-  justify-content: center;
   background-color: rgba(0, 0, 0, 0.7);
   border: 4px solid;
   padding: 15px;

@@ -33,7 +33,8 @@ const AuthLogin = () => {
       googleProvider.setCustomParameters({ prompt: "select_account" });
       const user = await signInWithPopup(auth, googleProvider);
       if (user) {
-        const PROFILEPHOTO = user.user.photoURL;
+        console.log(user.user.photoURL)
+        const PROFILEPHOTO = user?.user?.photoURL;
         localStorage.setItem("profileImageUrl", PROFILEPHOTO);
       }
       navigate("/user/profile");
