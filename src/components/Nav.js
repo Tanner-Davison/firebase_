@@ -73,7 +73,7 @@ const Nav = ({ userData }) => {
     const nameObject = document.querySelector(".nameObject");
     const settings = document.querySelector(".settings");
     const tl = gsap.timeline();
-
+console.log('pulled develop')
     tl.to(settings, {
       duration: speed,
       transformOrigin: "140% 50%",
