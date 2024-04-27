@@ -113,7 +113,7 @@ function App() {
           }
         />
         <Route
-          path="/all-blogs"
+          path="/explore"
           element={
             <>
               <Nav /> <AllBlogs />
@@ -152,7 +152,6 @@ const Wrapper = styled.div`
   overflow-x: hidden;
   width: 100vw;
   background-image: url(${darkTimeKeeper});
-  background-attachment: fixed;
   background-repeat: repeat;
   background-size: 10%;
   height: auto;

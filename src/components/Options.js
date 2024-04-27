@@ -36,12 +36,12 @@ const BlogOptions = ({ blogPostData }) => {
         id={"create"}
         onMouseEnter={(e) => handleOnMouseOver(e, "#6EE3C7", "create")}
         onMouseLeave={handleOnMouseLeave}
+        onClick={(e) => navigate('/blog-creation')}
       >
         <OptionsImage className={"image"} src={CreateBlog} alt="Create Blog" />
         <Title>Create Blog</Title>
         <GoToButton
           className={"goToButton"}
-          onClick={(e) => navigate('/blog-creation')}
         >
          Create New Blog
         </GoToButton>
@@ -71,6 +71,7 @@ const BlogOptions = ({ blogPostData }) => {
         className="options"
         onMouseEnter={(e) => handleOnMouseOver(e, "#77B3D4")}
         onMouseLeave={handleOnMouseLeave}
+        onClick={()=> navigate('/my-blogs')}
       >
         <OptionsImage
           className={"image"}
@@ -80,8 +81,6 @@ const BlogOptions = ({ blogPostData }) => {
         <Title>Your Blogs</Title>
         <GoToButton
           className={"goToButton"}
-          onMouseEnter={(e) => e.preventDefault()}
-          onClick={()=> navigate('/my-blogs')}
         >
           Start New
         </GoToButton>
@@ -91,7 +90,7 @@ const BlogOptions = ({ blogPostData }) => {
         className="options"
         onMouseEnter={(e) => handleOnMouseOver(e, "#77B3D4")}
         onMouseLeave={handleOnMouseLeave}
-        onClick={()=> navigate('/all-blogs')}
+        onClick={()=> navigate('/explore')}
       >
         <OptionsImage
           className={"image"}
