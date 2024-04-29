@@ -23,6 +23,8 @@ const CreateBlogPage = () => {
   const [blogImage, setBlogImage] = useState(null);
   const handleSubmit = async (blogText, authored, blogTitle) => {
     if (blogText !== "" && blogTitle !== "") {
+     
+
       const blogData = {
         blogText,
         authored,
@@ -106,17 +108,13 @@ const CreateBlogPage = () => {
               name="blog-image"
               id="img-upload"
               onChange={(e) => {
-                setBlogImage(URL.createObjectURL(e.target.files[0]));
+                setBlogImage(e.target.files[0]);
               }}
             />
           </Label>
           <br></br>
           {blogImage !== null && (
-            <img
-              src={blogImage}
-              alt={"blog-background-preview"}
-              width={150}
-            />
+            <img src={blogImage} alt={"blog-background-preview"} width={150} />
           )}
         </OptionsContainer>
       </BlogQuestions>
