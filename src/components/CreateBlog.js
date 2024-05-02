@@ -51,7 +51,7 @@ const CreateBlogPage = () => {
           ...doc.data(),
           id: doc.id,
         }));
-        console.log("AllUsersData", allDataFromUsers);
+        console.log("All Users Data", allDataFromUsers);
       } catch (error) {
         console.log(error);
       }
