@@ -3,8 +3,9 @@ import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
 import text from "styles/text";
-import { db, auth } from "../config/firebase";
-import { currentDate } from "./utils/date";
+import { db, auth, storage } from "../config/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { currentDate } from "./helpers/date";
 import {
   doc,
   updateDoc,
@@ -12,7 +13,6 @@ import {
   getDoc,
   collection,
   getDocs,
-  serverTimestamp,
 } from "firebase/firestore";
 
 const CreateBlogPage = () => {
@@ -21,6 +21,8 @@ const CreateBlogPage = () => {
   const [authored, setAuthored] = useState(usersName);
   const [blogTitle, setBlogTitle] = useState("");
   const [blogImage, setBlogImage] = useState(null);
+  const [blogImageUrl, setBlogImageUrl] = useState(null);
+  const handle = localStorage.getItem('userEmail')
   const handleSubmit = async (blogText, authored, blogTitle) => {
     if (blogText !== "" && blogTitle !== "") {
      
@@ -29,7 +31,7 @@ const CreateBlogPage = () => {
         blogText,
         authored,
         blogTitle,
-        blogImage,
+        blogImageUrl,
         date: currentDate,
       };
       try {
@@ -59,12 +61,27 @@ const CreateBlogPage = () => {
       return;
     }
   };
+  const handleImageChange = (e) => {
+    const userId = localStorage.getItem("userId");
+    const file = e.target.files[0];
+    setBlogImage(URL.createObjectURL(file));
 
+    const storageRef = ref(storage, `blogs/${userId}/${blogTitle}`);
+    uploadBytes(storageRef, file).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        setBlogImageUrl(url);
+      });
+    });
+  };
+  useEffect(() => {
+    console.log(handle);
+    
+  }, []);
   return (
     <BlogCreationContainer>
       <BlogQuestions>
         <OptionsContainer>
-          {"Authored by :"}
+          {"Publish as :"}
           <LabelWrapper>
             <Label htmlFor={"author"}>
               <BlogInputs
@@ -76,6 +93,16 @@ const CreateBlogPage = () => {
               />
               {`${auth?.currentUser?.displayName}`}
             </Label>
+            <Label htmlFor={"authorHandle"}>
+              <BlogInputs
+                type="radio"
+                id="auhthorHandle"
+                checked={authored === localStorage.getItem('handle')}
+                onChange={(e) => setAuthored(e.target.value)}
+                value={"@" + handle.split("@")[0]}
+              />
+              {"@" + handle.split("@")[0]}
+            </Label>
             <Label htmlFor={"authorAnon"}>
               <BlogInputs
                 type="radio"
@@ -86,6 +113,7 @@ const CreateBlogPage = () => {
               />
               {"Anonymous"}
             </Label>
+            
           </LabelWrapper>
         </OptionsContainer>
         <OptionsContainer>
@@ -105,11 +133,8 @@ const CreateBlogPage = () => {
           <Label htmlFor={"img-upload"}>
             <BlogInputs
               type="file"
-              name="blog-image"
-              id="img-upload"
-              onChange={(e) => {
-                setBlogImage(e.target.files[0]);
-              }}
+              accept="image/*"
+              onChange={(e) => handleImageChange(e)}
             />
           </Label>
           <br></br>

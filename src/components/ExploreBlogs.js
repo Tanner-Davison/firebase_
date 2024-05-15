@@ -24,47 +24,61 @@ const AllBlogs = () => {
   }, []);
 
   const mappedBlogs = blogposts.map((user, index) => {
+    console.log(user);
+    
     const validPosts =
       user.blogposts &&
       user.blogposts.filter((post) => post && typeof post === "object");
 
     if (validPosts && validPosts.length > 0) {
 
-      const mappedPosts = validPosts.map((post, postIndex) => {
+      const mappedPosts = validPosts.flatMap((post, postIndex) => {
         const data = {
           blogTitle: post.blogTitle,
           authored: post.authored,
           date: post.date,
           blogText: post.blogText,
-          blogImage: post.blogImage,
+          blogImageUrl: post.blogImageUrl,
         };
         return <BlogPostPreview key={postIndex} content={data} />;
       });
 
-      return <div key={index}>{mappedPosts}</div>;
+      return mappedPosts;
     } else {
       return null;
     }
   });
 
   return (
-    <Wrapper>
-      <Blogs>{mappedBlogs}</Blogs>
-    </Wrapper>
+      <BlogPostsWrapper>
+      {mappedBlogs}
+      </BlogPostsWrapper>
   );
 };
 
 export default AllBlogs;
-const Blogs = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 300px;
-  color: black;
-  ${text.bodyM}
-`;
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
+
+const BlogPostsWrapper = styled.div`
+display: flex;
+flex-wrap: wrap;
+gap:2.431vw;
+justify-content:center;
+max-width: 100vw;
+align-self: center;
+align-items: center;
+padding:0vw 3.472vw;
+${media.fullWidth} {
+gap:35px;
+justify-content: space-evenly;
+padding:0px 50px;
+}
+
+${media.tablet} {
+  padding:0vw 4.883vw;
+}
+
+${media.mobile} {
+  padding:8vw 11.682vw;
+  gap:10.514vw;
+}
+`

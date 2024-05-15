@@ -11,7 +11,7 @@ import { signOut } from "firebase/auth";
 import gsap from "gsap";
 import { useNavigate } from "react-router-dom";
 import Settings from "./Settings";
-import { currentDate } from "./utils/date";
+import { currentDate } from "./helpers/date";
 
 const Nav = ({ userData }) => {
   const [settingsIsOpen, setSettingsIsOpen] = useState(false);
@@ -24,13 +24,10 @@ const Nav = ({ userData }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser);
-      console.log(user);
     });
     return () => unsubscribe();
   }, []);
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+
   const handleLogout = async (e) => {
     signOut(auth)
       .then(() => {
@@ -73,7 +70,7 @@ const Nav = ({ userData }) => {
     const nameObject = document.querySelector(".nameObject");
     const settings = document.querySelector(".settings");
     const tl = gsap.timeline();
-console.log('pulled develop')
+    console.log("pulled develop");
     tl.to(settings, {
       duration: speed,
       transformOrigin: "140% 50%",

@@ -185,7 +185,7 @@ ${media.mobile} {
     }
     
     ${media.desktop} {
-      font-size: 1.042vw;
+      font-size: .889vw;
       line-height: 1.111vw;
     }
 
