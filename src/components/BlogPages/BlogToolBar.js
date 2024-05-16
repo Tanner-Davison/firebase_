@@ -37,5 +37,16 @@ display: flex;
 width: 100%;
 height: 40px;
 outline: 2px inset black;
-margin-bottom: 150px;
+margin-bottom: 5.208vw;
+${media.fullWidth} {
+    margin-bottom: 75px;
+}
+
+${media.tablet} {
+    margin-bottom: 7.324vw;
+}
+
+${media.mobile} {
+    margin-bottom: 17.523vw;
+}
 `

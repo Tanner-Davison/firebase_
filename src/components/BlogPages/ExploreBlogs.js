@@ -8,10 +8,8 @@ import { collection, getDocs } from "firebase/firestore";
 import BlogPostPreview from "./BlogPostPreview";
 import BlogToolBar from "./BlogToolBar";
 import gsap from 'gsap';
-import {Flip} from 'gsap/all';
 import getMedia from "utils/getMedia";
 
-gsap.registerPlugin(Flip);
 
 
 const AllBlogs = () => {
@@ -34,36 +32,35 @@ const AllBlogs = () => {
     getBlogs();
   }, []);
 
-  const handleLayoutChange = (compactLayout)=>{
+  const handleLayoutChange =(compactLayout)=>{
     setCompactLayout(!compactLayout)
     const smallLayoutWidths = getMedia('350px', '23.958vw','19.931vw','100%');
     const largeLayoutwidths = getMedia('800px','55.556vw','34.722vw','100%')
     const targets = gsap.utils.toArray('.blogPostPreview');
     const targetWrapper = document.querySelector('.targetWrapper');
-    const state = Flip.getState(targetWrapper);
-    // Toggle flex direction
-    targetWrapper.style.flexWrap = compactLayout ? 'wrap' : 'nowrap'
+
+    targetWrapper.style.flexWrap = compactLayout ? 'wrap' : 'nowrap';
     targetWrapper.style.flexDirection = compactLayout ? 'row' : 'column';
-    const tl = gsap.timeline({paused: false});
+    targets.forEach(blog=> {
+      let hover = gsap.to(blog,{scale:1.12, duration:.03,cursor:'pointer', paused:true,ease:'power4.inOut'});
+      blog.addEventListener('mouseenter', ()=> hover.play());
+      blog.addEventListener('mouseleave',()=> hover.reverse());
+    })
+
+
+    const tl =  gsap.timeline({paused: false});
     if (compactLayout) {
       tl.to(targets, { xPercent:600,duration:.8,stagger:.05,ease:'back.in'})
       .to(targets,{opacity:0},'>-=.05')
-      .to(targets,{width:smallLayoutWidths,duration:.01, xPercent:-300, onComplete:()=>handleFlip(targets, state)})
-    } else {
-      tl.to(targets, { width: largeLayoutwidths,ease:'back.out', duration:1.5  });
-    }
+      .to(targets,{width:smallLayoutWidths,duration:.01, xPercent:0, yPercent:300})
+      .to(targets,{yPercent:0, opacity:1,hover:'transform:scale(1.1)',duration:.5,stagger:.2,ease:'back.in'},'>+=.3')
 
+    } else {
+      tl.to(targets, { width: largeLayoutwidths,ease:'back.out', duration:1.5,onComplete:()=>tl.kill()});
+    }
+    
   }
-  const handleFlip =( targets,state)=>{
-    Flip.from(state, {
-      absolute:targets,
-      duration:.5,
-      nested:true,// Set duration or other tween properties as needed
-      onComplete: () => {
-        gsap.to(targets,{xPercent:0, opacity:1,duration:.5,stagger:.2,ease:'back.in'})
-      }
-    })
-  }
+  
   const mappedBlogs = blogposts.map((user, index) => {
 
     const validPosts =
