@@ -1,12 +1,12 @@
 import React, { useState, useEffect, createContext, useRef } from "react";
 import AuthLogin from "components/Auth";
 import HomePage from "components/pages/HomePage";
-import AllBlogs from "components/ExploreBlogs";
+import AllBlogs from "components/BlogPages/ExploreBlogs";
 import { auth } from "./config/firebase";
 import { db } from "./config/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import styled from "styled-components";
-import CreateBlogPage from "components/CreateBlog";
+import CreateBlogPage from "components/BlogPages/CreateBlog";
 import darkTimeKeeper from "images/tortoise-shell.svg";
 import { gsapWrapperBackground } from "components/animations/gsapAnimations";
 import Nav from "components/Nav";
@@ -16,7 +16,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import MyBlogs from "components/MyBlogs";
+import MyBlogs from "components/BlogPages/MyBlogs";
 
 export const UserDataContext = createContext();
 

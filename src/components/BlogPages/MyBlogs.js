@@ -45,6 +45,26 @@ const MyBlogs = () => {
 export default MyBlogs;
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+display: flex;
+flex-wrap: wrap;
+gap:2.431vw;
+justify-content:center;
+max-width: 100vw;
+align-self: center;
+align-items: center;
+padding:0vw 3.472vw;
+${media.fullWidth} {
+gap:35px;
+justify-content: space-evenly;
+padding:0px 50px;
+}
+
+${media.tablet} {
+  padding:0vw 4.883vw;
+}
+
+${media.mobile} {
+  padding:8vw 11.682vw;
+  gap:10.514vw;
+}
+`

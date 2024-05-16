@@ -3,9 +3,9 @@ import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
 import text from "styles/text";
-import { db, auth, storage } from "../config/firebase";
+import { db, auth, storage } from "../../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { currentDate } from "./helpers/date";
+import { currentDate } from "../helpers/date";
 import {
   doc,
   updateDoc,
@@ -22,11 +22,9 @@ const CreateBlogPage = () => {
   const [blogTitle, setBlogTitle] = useState("");
   const [blogImage, setBlogImage] = useState(null);
   const [blogImageUrl, setBlogImageUrl] = useState(null);
-  const handle = localStorage.getItem('userEmail')
+  const handle = localStorage.getItem("userEmail");
   const handleSubmit = async (blogText, authored, blogTitle) => {
     if (blogText !== "" && blogTitle !== "") {
-     
-
       const blogData = {
         blogText,
         authored,
@@ -75,7 +73,6 @@ const CreateBlogPage = () => {
   };
   useEffect(() => {
     console.log(handle);
-    
   }, []);
   return (
     <BlogCreationContainer>
@@ -97,7 +94,7 @@ const CreateBlogPage = () => {
               <BlogInputs
                 type="radio"
                 id="auhthorHandle"
-                checked={authored === localStorage.getItem('handle')}
+                checked={authored === localStorage.getItem("handle")}
                 onChange={(e) => setAuthored(e.target.value)}
                 value={"@" + handle.split("@")[0]}
               />
@@ -113,7 +110,6 @@ const CreateBlogPage = () => {
               />
               {"Anonymous"}
             </Label>
-            
           </LabelWrapper>
         </OptionsContainer>
         <OptionsContainer>
@@ -212,6 +208,7 @@ const BlogQuestions = styled.div`
   border-radius: 1.042vw;
 `;
 const BlogCreationContainer = styled.div`
+position: relative;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
