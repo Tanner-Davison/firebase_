@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
@@ -7,13 +7,23 @@ import TruncatedText from "../helpers/truncatedText";
 import blogPostIcon from "../../images/blogPostIcon.png";
 import UserProfileBlock from "./UserProfileBlock";
 
-const BlogPostPreview = ({ content, featured, userData }) => {
+const BlogPostPreview = ({ content, featured, userData, lastitem }) => {
+const [lastOrFeature, setLastOrFeature] =useState(null)
+useEffect(()=>{
+if(featured && !lastitem){
+  setLastOrFeature('feature')
+}else if(lastitem && !featured){
+  setLastOrFeature('last')
+}else{
+  setLastOrFeature(null)
+}
+},[])
   const photoExist = content.blogImageUrl != null;
   return (
     <>
+        {featured && !lastitem && <UserProfileBlock content={userData}/>}
       <Wrapper>
-        {featured && <UserProfileBlock content={userData}/>}
-        <BlogPostWrapper className={"blogPostPreview"} $featured={featured}>
+      <BlogPostWrapper className={"blogPostPreview"} $featured={lastOrFeature}>
           {content?.blogTitle && <Header>{content.blogTitle}</Header>}
           <ContentDiv>
             <Image $bg={photoExist}>
@@ -141,11 +151,13 @@ const BlogPostWrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
   text-align: center;
   background-color: ${colors.backgroundBlog};
-  width: ${props=> props.$featured ? '63.542vw': '300px'};
+
+  width: ${props => props.$featured === 'feature' ? '800px': props.$featured === 'last' ? '455px':'300px'};
+  
+
+  height:35vh;
   /* width: 19.097vw; */
   padding: 1.042vw;
   border-top-width: 0%;
@@ -164,7 +176,7 @@ const BlogPostWrapper = styled.div`
     z-index: 100;
   }
   ${media.fullWidth} {
-    width: ${props=> props.$featured ? '800px': '300px'};
+    width: ${props => props.$featured ? props.$islast ? '800px' : '500px': '350px'};
     padding: 15px;
     border-radius: 29px;
     border-radius: 29px;

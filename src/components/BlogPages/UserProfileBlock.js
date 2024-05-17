@@ -10,10 +10,12 @@ const UserProfileBlock = ({content, children}) => {
   return (
     <>
     <Wrapper>
+
       <UserImage src={content?.profileImgUrl}/>
       <UserName>{content?.username}</UserName>
-    {children}
+ 
     </Wrapper>
+   
     </>
   )
 }
@@ -26,10 +28,11 @@ const UserImage = styled.img`
 width:100px;
 height: 100px;
 `
+
 const Wrapper = styled.div`
 position: relative;
 display: flex;
-flex-direction: column;
+flex-direction: row;
 align-items: center;
 align-self:center;
 width:100%;

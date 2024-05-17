@@ -35,7 +35,9 @@ const AllBlogs = () => {
 
     if (validPosts && validPosts.length > 0) {
       const mappedPosts = validPosts.flatMap((post, postIndex) => {
-        const isFeatured = postIndex === 0;
+        console.log(postIndex);
+        const isLastItem = postIndex === validPosts.length - 1;
+        const isFeatured = postIndex === 0 ;
         const data = {
           blogTitle: post.blogTitle,
           authored: post.authored,
@@ -48,13 +50,14 @@ const AllBlogs = () => {
             <BlogPostPreview
               featured={true}
               key={postIndex}
+              lastitem={false}
               userData={user}
               content={data}
             />
           );
         } else {
           return (
-            <BlogPostPreview featured={false} key={postIndex} content={data} />
+            <BlogPostPreview lastitem={isLastItem}featured={false} key={postIndex} content={data} />
           );
         }
       });
@@ -80,9 +83,9 @@ export default AllBlogs;
 const UserPostsWrapper = styled.div`
 position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: 25px;
   border: 2px solid red;
