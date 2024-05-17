@@ -20,11 +20,13 @@ const CreateBlogPage = () => {
   const [blogText, setBlogText] = useState("");
   const [authored, setAuthored] = useState(usersName);
   const [blogTitle, setBlogTitle] = useState("");
+  const [imageConfirmed, setImageConfirmed] =useState(false)
   const [blogImage, setBlogImage] = useState(null);
   const [blogImageUrl, setBlogImageUrl] = useState(null);
+  const [pickedImageFile, setPickedImageFile]= useState('')
   const handle = localStorage.getItem("userEmail");
   const handleSubmit = async (blogText, authored, blogTitle) => {
-    if (blogText !== "" && blogTitle !== "") {
+    if (blogText !== "" && blogTitle !== "" && imageConfirmed) {
       const blogData = {
         blogText,
         authored,
@@ -59,21 +61,22 @@ const CreateBlogPage = () => {
       return;
     }
   };
-  const handleImageChange = (e) => {
+  const handleConfirmImage = () =>{
     const userId = localStorage.getItem("userId");
-    const file = e.target.files[0];
-    setBlogImage(URL.createObjectURL(file));
-
     const storageRef = ref(storage, `blogs/${userId}/${blogTitle}`);
-    uploadBytes(storageRef, file).then((snapshot) => {
+    uploadBytes(storageRef, pickedImageFile).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         setBlogImageUrl(url);
       });
     });
+    return setImageConfirmed(true)
+  }
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setBlogImage(URL.createObjectURL(file));
+    setPickedImageFile(file)
   };
-  useEffect(() => {
-    console.log(handle);
-  }, []);
+
   return (
     <BlogCreationContainer>
       <BlogQuestions>
@@ -94,7 +97,7 @@ const CreateBlogPage = () => {
               <BlogInputs
                 type="radio"
                 id="auhthorHandle"
-                checked={authored === localStorage.getItem("handle")}
+                checked={authored === "@" + handle.split("@")[0]}
                 onChange={(e) => setAuthored(e.target.value)}
                 value={"@" + handle.split("@")[0]}
               />
@@ -135,7 +138,10 @@ const CreateBlogPage = () => {
           </Label>
           <br></br>
           {blogImage !== null && (
-            <img src={blogImage} alt={"blog-background-preview"} width={150} />
+            <>
+            <Img src={blogImage} alt={"blog-background-preview"} width={150} />
+            <ConfirmImg onClick={()=> handleConfirmImage()}>Save As Blog Upload</ConfirmImg>
+            </>
           )}
         </OptionsContainer>
       </BlogQuestions>
@@ -183,6 +189,25 @@ const OptionsContainer = styled.div`
 
   ${text.bodyMLeague}
 `;
+const ConfirmImg = styled.button`
+${text.bodyMBold}
+background-color: rgba(0,100,30,0.3);
+
+`
+const Img = styled.img`
+width:10.417vw;
+${media.fullWidth} {
+  width:150px;
+}
+
+${media.tablet} {
+  width:14.648vw;
+}
+
+${media.mobile} {
+  width:35.047vw;
+}
+`
 const SubmitButton = styled.button``;
 const TextArea = styled.textarea`
   ${text.bodyMBold}

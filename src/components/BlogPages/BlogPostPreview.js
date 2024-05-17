@@ -9,10 +9,12 @@ import UserProfileBlock from "./UserProfileBlock";
 
 const BlogPostPreview = ({ content, featured, userData, lastitem }) => {
 const [lastOrFeature, setLastOrFeature] =useState(null)
+const lessThanTwo = userData?.blogposts?.length === 2
+
 useEffect(()=>{
-if(featured && !lastitem){
+if(featured && !lastitem && !lessThanTwo){
   setLastOrFeature('feature')
-}else if(lastitem && !featured){
+}else if(lastitem && !featured ){
   setLastOrFeature('last')
 }else{
   setLastOrFeature(null)
@@ -154,7 +156,7 @@ const BlogPostWrapper = styled.div`
   text-align: center;
   background-color: ${colors.backgroundBlog};
 
-  width: ${props => props.$featured === 'feature' ? '800px': props.$featured === 'last' ? '455px':'300px'};
+  width: ${props => props.$featured === 'feature' ? '55.556vw': props.$featured === 'last' ? '31.597vw':'20.833vw'};
   
 
   height:35vh;
@@ -176,7 +178,7 @@ const BlogPostWrapper = styled.div`
     z-index: 100;
   }
   ${media.fullWidth} {
-    width: ${props => props.$featured ? props.$islast ? '800px' : '500px': '350px'};
+    width: ${props => props.$featured === 'feature' ? '800px': props.$featured === 'last' ? '455px':'300px'};
     padding: 15px;
     border-radius: 29px;
     border-radius: 29px;
