@@ -1,16 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
 import text from "styles/text";
-import { auth } from "config/firebase";
-import { useNavigate } from "react-router-dom";
-import Nav from "components/Nav";
 import UsersBlogOptions from "components/OptionsWrapper";
 
 const HomePage = ({ userData }) => {
-  const navigate = useNavigate();
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  
   return (
     <Wrapper>
       <UsersBlogOptions />

@@ -150,7 +150,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  width: 100vw;
+  width: 100%;
   background-image: url(${darkTimeKeeper});
   background-repeat: repeat;
   background-size: 10%;
