@@ -4,8 +4,8 @@ import gsap from "gsap";
 import text from "styles/text";
 
 const AnimationPractice = () => {
-  const clickCountRef = useRef(0); // Store the click count
-  const lastClickedRef = useRef(null); // Store the last clicked element
+  const clickCountRef = useRef(0); 
+  const lastClickedRef = useRef(null); 
 
   const handleMouseOver = (e, index) => {
     const movement = 150 - (index + 1) + 'px'; 
@@ -13,13 +13,14 @@ const AnimationPractice = () => {
   };
 
   const handleMouseLeave = (e) => {
-    gsap.to(e.currentTarget, { x: 0, ease:'power1.in' });
+    clickCountRef.current = 0;
+    gsap.to(e.currentTarget, { zIndex:0,x: 0,width:'300px',height:'300px', ease:'power1.in' });
   };
 
   const handleClick = (e) => {
     const clickedElement = e.currentTarget;
     
-    if (lastClickedRef.current !== clickedElement) {
+    if (lastClickedRef.current === clickedElement) {
         gsap.to(lastClickedRef.current,{zIndex:0});
         gsap.to(lastClickedRef.current,{x: 0,width:'300px',height:'300px', ease: 'power1.out' })
       clickCountRef.current = 0;
