@@ -17,6 +17,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import MyBlogs from "components/BlogPages/MyBlogs";
+import AnimationPractice from "components/pages/AnimationPractice";
 
 export const UserDataContext = createContext();
 
@@ -117,6 +118,14 @@ function App() {
           element={
             <>
               <Nav /> <AllBlogs />
+            </>
+          }
+        />
+         <Route
+          path="/animation-practice"
+          element={
+            <>
+          <AnimationPractice />
             </>
           }
         />
