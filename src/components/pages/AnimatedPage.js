@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef} from "react";
 import styled from "styled-components";
 import media from "styles/media";
-import colors from "styles/colors";
 import text from "styles/text";
 import AllSvgs from "./svgs";
 import gsap from "gsap";
 import GSDevTools from "gsap/src/GSDevTools";
-gsap.registerPlugin(GSDevTools) 
+gsap.registerPlugin(GSDevTools);
 
 const AnimatedPage = () => {
+
   let demo = useRef(null);
   let head1 = useRef(null);
   let subHead = useRef(null);
@@ -17,13 +17,13 @@ const AnimatedPage = () => {
 
   useEffect(() => {
     const items = document.querySelectorAll("#items > g");
-    const tl = gsap.timeline({
-      id: 'page-demo-timeline',
+    const pageDemoTl = gsap.timeline({
+      id: "page-demo-timeline",
       paused: false,
       defaults: { opacity: 0, ease: "back" },
     });
 
-    tl.fromTo(demo.current, { opacity: 0 }, { opacity: 1, ease: "linear" })
+    pageDemoTl.fromTo(demo.current, { opacity: 0 }, { opacity: 1, ease: "linear" })
       .fromTo(head1.current, { x: 80 }, { x: 0, opacity: 1 })
       .fromTo(subHead.current, { x: -80 }, { x: 0, opacity: 1 })
       .fromTo(bodyDemo.current, { y: 30 }, { y: 0, opacity: 1 })
@@ -34,9 +34,9 @@ const AnimatedPage = () => {
         { scale: 1, opacity: 1, stagger: 0.289 }
       );
 
-    GSDevTools.create({ animation: tl, config: { visibility: 'auto' } });
+      GSDevTools.create({animation:'page-demo-timeline'});
+   
   }, []);
-
   return (
     <Wrapper id="demo" ref={demo}>
       <Main>
@@ -64,7 +64,6 @@ const AnimatedPage = () => {
 export default AnimatedPage;
 
 const ReadMore = styled.button`
-  
   -moz-box-shadow: inset 0px 1px 0px 0px #fbafe3;
   -webkit-box-shadow: inset 0px 1px 0px 0px #fbafe3;
   box-shadow: inset 0px 1px 0px 0px #fbafe3;
@@ -99,32 +98,32 @@ const ReadMore = styled.button`
 
   ${media.fullWidth} {
     -moz-border-radius: 17px;
-  -webkit-border-radius: 17px;
-  text-shadow: 0px 1px 0px #c70067;
-  border-radius: 17px;
-  padding: 6px 24px;
-  font-size: 15px;
-  margin-top: 20px;
+    -webkit-border-radius: 17px;
+    text-shadow: 0px 1px 0px #c70067;
+    border-radius: 17px;
+    padding: 6px 24px;
+    font-size: 15px;
+    margin-top: 20px;
   }
-  
+
   ${media.tablet} {
     -moz-border-radius: 1.66vw;
-  -webkit-border-radius: 1.66vw;
-  text-shadow: 0vw 0.098vw 0vw #c70067;
-  border-radius: 1.66vw;
-  padding: 0.586vw 2.344vw;
-  font-size: 1.465vw;
-  margin-top: 1.953vw;
+    -webkit-border-radius: 1.66vw;
+    text-shadow: 0vw 0.098vw 0vw #c70067;
+    border-radius: 1.66vw;
+    padding: 0.586vw 2.344vw;
+    font-size: 1.465vw;
+    margin-top: 1.953vw;
   }
-  
+
   ${media.mobile} {
     -moz-border-radius: 3.972vw;
-  -webkit-border-radius: 3.972vw;
-  text-shadow: 0vw 0.234vw 0vw #c70067;
-  border-radius: 3.972vw;
-  padding: 1.402vw 5.607vw;
-  font-size: 3.505vw;
-  margin-top: 4.673vw;
+    -webkit-border-radius: 3.972vw;
+    text-shadow: 0vw 0.234vw 0vw #c70067;
+    border-radius: 3.972vw;
+    padding: 1.402vw 5.607vw;
+    font-size: 3.505vw;
+    margin-top: 4.673vw;
   }
 `;
 const ImageWrapper = styled.div`
@@ -135,22 +134,21 @@ const ImageWrapper = styled.div`
   }
   ${media.fullWidth} {
     #images {
-    position: absolute;
-    left: 485px;
-    top: -10px;
+      position: absolute;
+      left: 485px;
+      top: -10px;
+    }
   }
-  }
-  
+
   ${media.tablet} {
     #images {
-    position: absolute;
-    left: 45.156vw;
-    top: -5.859vw;
+      position: absolute;
+      left: 45.156vw;
+      top: -5.859vw;
+    }
   }
-  }
-  
-  ${media.mobile} {
 
+  ${media.mobile} {
   }
 `;
 const Body = styled.p`
@@ -175,20 +173,20 @@ const Main = styled.div`
 
   ${media.fullWidth} {
     width: 250px;
-  top: 130px;
-  left: 20px;
+    top: 130px;
+    left: 20px;
   }
-  
+
   ${media.tablet} {
     width: 24.414vw;
-  top: 12.695vw;
-  left: 1.953vw;
+    top: 12.695vw;
+    left: 1.953vw;
   }
-  
+
   ${media.mobile} {
     width: 58.411vw;
-  top: 30.374vw;
-  left: 4.673vw;
+    top: 30.374vw;
+    left: 4.673vw;
   }
 `;
 
@@ -213,12 +211,11 @@ const Wrapper = styled.div`
   }
 
   ${media.tablet} {
-    width:77.93vw;
- height:46.582vw;
- border-radius:2.441vw;
+    width: 77.93vw;
+    height: 46.582vw;
+    border-radius: 2.441vw;
   }
 
   ${media.mobile} {
-   
   }
 `;
