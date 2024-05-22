@@ -5,40 +5,35 @@ import text from "styles/text";
 import AllSvgs from "./svgs";
 import gsap from "gsap";
 import GSDevTools from "gsap/src/GSDevTools";
+import {useGSAP} from '@gsap/react'
 gsap.registerPlugin(GSDevTools);
-
 const AnimatedPage = () => {
-
   let demo = useRef(null);
   let head1 = useRef(null);
   let subHead = useRef(null);
   let bodyDemo = useRef(null);
   let ctaLink = useRef(null);
-
-  useEffect(() => {
+  useGSAP(() => {
     const items = document.querySelectorAll("#items > g");
     const pageDemoTl = gsap.timeline({
       id: "page-demo-timeline",
       paused: false,
       defaults: { opacity: 0, ease: "back" },
     });
-
-    pageDemoTl.fromTo(demo.current, { opacity: 0 }, { opacity: 1, ease: "linear" })
-      .fromTo(head1.current, { x: 80 }, { x: 0, opacity: 1 })
-      .fromTo(subHead.current, { x: -80 }, { x: 0, opacity: 1 })
-      .fromTo(bodyDemo.current, { y: 30 }, { y: 0, opacity: 1 })
-      .fromTo(ctaLink.current, { y: 30 }, { y: 0, opacity: 1 })
+    pageDemoTl.fromTo(demo.current, { opacity: 0 }, { opacity: 1, ease:"linear" })
+      .fromTo(head1.current, { x: 80 }, { x: 0, duration: 1, opacity: 1 })
+      .fromTo(subHead.current, { x: -80 }, { x: 0,duration:1, opacity: 1 },'<')
+      .fromTo(bodyDemo.current, { y: 30 }, { y: 0, opacity: 1 },'-=0.2')
+      .fromTo(ctaLink.current, { y: 30 }, { y: 0, opacity: 1 },'-=0.4')
       .fromTo(
         items,
         { scale: 0, opacity: 0 },
-        { scale: 1, opacity: 1, stagger: 0.289 }
+        { scale: 1, opacity: 1, stagger: 0.289 , rotate:45}
       );
-
       GSDevTools.create({animation:'page-demo-timeline'});
-   
-  }, []);
+  },{scope:demo.current});
   return (
-    <Wrapper id="demo" ref={demo}>
+    <Wrapper id="demo-container" ref={demo}>
       <Main>
         <Header className="header-one" ref={head1}>
           Creative
@@ -52,7 +47,6 @@ const AnimatedPage = () => {
         <ReadMore className="cta-link-demo" ref={ctaLink}>
           READ MORE
         </ReadMore>
-
         <ImageWrapper id="images-demo">
           <AllSvgs />
         </ImageWrapper>
@@ -127,6 +121,11 @@ const ReadMore = styled.button`
   }
 `;
 const ImageWrapper = styled.div`
+svg{
+
+  overflow: visible !important;
+  
+}
   #images {
     position: absolute;
     left: 35vw;
