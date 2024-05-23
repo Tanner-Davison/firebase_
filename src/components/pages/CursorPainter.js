@@ -140,7 +140,7 @@ width:46.729vw;
 `
 const Wrapper = styled.div`
   position: relative;
-  width: 62.5vw;
+  width: 95.472vw;
   height: 48.611vw;
   overflow-y: hidden;
   background-color: black;

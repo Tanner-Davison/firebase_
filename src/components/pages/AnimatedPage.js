@@ -1,11 +1,11 @@
-import React, { useEffect, useRef} from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import media from "styles/media";
 import text from "styles/text";
 import AllSvgs from "./svgs";
 import gsap from "gsap";
 import GSDevTools from "gsap/src/GSDevTools";
-import {useGSAP} from '@gsap/react'
+import { useGSAP } from "@gsap/react";
 gsap.registerPlugin(GSDevTools);
 const AnimatedPage = () => {
   let demo = useRef(null);
@@ -13,25 +13,51 @@ const AnimatedPage = () => {
   let subHead = useRef(null);
   let bodyDemo = useRef(null);
   let ctaLink = useRef(null);
-  useGSAP(() => {
-    const items = document.querySelectorAll("#items > g");
-    const pageDemoTl = gsap.timeline({
-      id: "page-demo-timeline",
-      paused: false,
-      defaults: { autoAlpha: 0, ease: "back" },
-    });
-    
-  pageDemoTl.fromTo(demo.current, { xPercent:-100, autoAlpha:0 }, {xPercent:0, autoAlpha: 1, duration:1 })
-      .fromTo(head1.current, { x: 80 }, { x: 0, duration: 1, autoAlpha: 1 },'+=0.1')
-      .fromTo(subHead.current, { x: -80 }, { x: 0,duration:1, autoAlpha: 1 },'<')
-      .fromTo(bodyDemo.current, { y: 30 }, { y: 0, autoAlpha: 1},'-=0.3')
-      .fromTo(ctaLink.current, { y: 30 }, { y: 0, autoAlpha: 1},'-=0.3')
-      .fromTo(items,
-        { scale: 0 },
-        { scale: 1, autoAlpha: 1,transformOrigin:'30% left', stagger: 0.289 , rotate:10}
-      );
-      GSDevTools.create({animation:'page-demo-timeline'});
-  },{scope:demo.current});
+  useGSAP(
+    () => {
+      const items = document.querySelectorAll("#items > g");
+      const pageDemoTl = gsap.timeline({
+        id: "page-demo-timeline",
+        paused: false,
+        defaults: { autoAlpha: 0, ease: "back" },
+      });
+
+      pageDemoTl
+        .fromTo(
+          demo.current,
+          { xPercent: -100, autoAlpha: 0 },
+          { xPercent: 0, autoAlpha: 1, duration: 1.3 }
+        )
+        .fromTo(
+          head1.current,
+          { x: 80 },
+          { x: 0, duration: 1, autoAlpha: 1 },
+          "+=0.1"
+        )
+        .fromTo(
+          subHead.current,
+          { x: -80 },
+          { x: 0, duration: 1, autoAlpha: 1 },
+          "<"
+        )
+        .fromTo(bodyDemo.current, { y: 30 }, { y: 0, autoAlpha: 1 }, "-=0.1")
+        .fromTo(ctaLink.current, { y: 30 }, { y: 0, autoAlpha: 1 }, "-=0.1")
+        .fromTo(
+          items,
+          { scale: 0 },
+          {
+            scale: 1,
+            autoAlpha: 1,
+            transformOrigin: "30% left",
+            stagger: 0.350,
+            rotate: 10,
+          },
+          '<+=0.7'
+        );
+      GSDevTools.create({ animation: "page-demo-timeline" });
+    },
+    { scope: demo.current }
+  );
   return (
     <Wrapper id="demo-container" ref={demo}>
       <Main>
@@ -121,24 +147,21 @@ const ReadMore = styled.button`
   }
 `;
 const ImageWrapper = styled.div`
-svg{
-
-  overflow: visible !important;
-  
-}
+  svg {
+    overflow: visible !important;
+  }
   #images {
     position: absolute;
     left: 34.514vw;
     top: -4.167vw;
-    
   }
   ${media.fullWidth} {
-    svg{
-      width:350px;
+    svg {
+      width: 350px;
     }
     #images {
       left: 497px;
-    top: 0px;
+      top: 0px;
     }
   }
 
@@ -146,7 +169,7 @@ svg{
     #images {
       position: absolute;
       left: 48.535vw;
-    top: -5.859vw;
+      top: -5.859vw;
     }
   }
 
@@ -200,8 +223,8 @@ const Wrapper = styled.div`
   overflow-x: hidden;
   opacity: 1;
   border: 1px outset #ffffff;
-  -webkit-box-shadow: 5px 5px 15px 2px rgba(0,0,0,0.51); 
-box-shadow: 5px 5px 15px 2px rgba(0,0,0,0.51);
+  -webkit-box-shadow: 5px 5px 15px 2px rgba(0, 0, 0, 0.51);
+  box-shadow: 5px 5px 15px 2px rgba(0, 0, 0, 0.51);
   background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/32887/creative-process-bg.png);
   background-repeat: no-repeat;
   background-size: cover;
