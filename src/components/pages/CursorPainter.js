@@ -140,9 +140,22 @@ width:46.729vw;
 `
 const Wrapper = styled.div`
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 62.5vw;
+  height: 48.611vw;
   overflow-y: hidden;
+  ${media.fullWidth} {
+    width: 900px;
+  height: 700px;
+  }
+  
+  ${media.tablet} {
+    width: 87.891vw;
+  height: 68.359vw;
+  }
+  
+  ${media.mobile} {
+  
+  }
 `;
 const styles = `
 .dot {

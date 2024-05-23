@@ -1,80 +1,98 @@
-import React, {useEffect, useRef} from 'react'
-import styled from 'styled-components';
-import media from 'styles/media';
-import colors from 'styles/colors';
-import text from 'styles/text';
-import gsap from 'gsap';
+import React, { useEffect, useRef } from "react";
+import styled from "styled-components";
+import media from "styles/media";
+import colors from "styles/colors";
+import text from "styles/text";
+import gsap from "gsap";
 
 const OrderedItemsAnimation = () => {
-    const clickCountRef = useRef(0); 
-    const lastClickedRef = useRef(null); 
-  
-    const handleMouseOver = (e, index) => {
-      const movement = 150 - (index + 1) + 'px'; 
-      gsap.to(e.currentTarget, { x: movement, ease:'power1.out' });
-    };
-  
-    const handleMouseLeave = (e) => {
-      clickCountRef.current = 0;
-      gsap.to(e.currentTarget,{zIndex:0});
-      gsap.to(e.currentTarget, { zIndex:0,x: 0,width:'300px',height:'300px', ease:'power1.in' });
-    };
-  
-    const handleClick = (e) => {
-     
-      const clickedElement = e.currentTarget;
-      
-      if (lastClickedRef.current === clickedElement) {
-          gsap.to(lastClickedRef.current,{zIndex:0});
-          gsap.to(lastClickedRef.current,{x: 0,width:'300px',height:'300px', ease: 'power1.out' })
-        clickCountRef.current = 0;
-        lastClickedRef.current = clickedElement;
-      }
-      clickCountRef.current += 1;
-      if(clickCountRef.current === 2){
-          gsap.to(e.currentTarget,{zIndex:0});
-          gsap.to(e.currentTarget, { x: 0,width:'300px',height:'300px', ease: 'power1.in' });
-          return clickCountRef.current = 0
-      }else{
-          gsap.to(e.currentTarget, {zIndex:5, width:'400px',x:'-50px',height:'400px',ease:'power1.inOut'})
-      }
-  
-    };
-  
-    useEffect(() => {
-   
-      const items = document.querySelectorAll(".box");
-  
-      items.forEach((box, index) => {
-        box.addEventListener("mouseenter", (e) => handleMouseOver(e, index));
-        box.addEventListener("mouseleave", handleMouseLeave);
-        box.addEventListener("click", handleClick);
-      });
-  
-      return () => {
-        items.forEach((box, index) => {
-          box.removeEventListener("mouseenter", (e) => handleMouseOver(e, index));
-          box.removeEventListener("mouseleave", handleMouseLeave);
-          box.removeEventListener("click", handleClick);
-        });
-      };
-    }, []);
-  
-    return (
- 
-        
-        <Slider className={"slider"}>
-          <Item className={"box box-6"}>6</Item>
-          <Item className={"box box-5"}>5</Item>
-          <Item className={"box box-4"}>4</Item>
-          <Item className={"box box-3"}>3</Item>
-          <Item className={"box box-2"}>2</Item>
-          <Item className={"box box-1"}>1</Item>
-        </Slider>
-   
-    );
+  const clickCountRef = useRef(0);
+  const lastClickedRef = useRef(null);
+
+  const handleMouseOver = (e, index) => {
+    const movement = 150 - (index + 1) + "px";
+    gsap.to(e.currentTarget, { x: movement, ease: "power1.out" });
   };
-export default OrderedItemsAnimation
+
+  const handleMouseLeave = (e) => {
+    clickCountRef.current = 0;
+    gsap.to(e.currentTarget, { zIndex: 0 });
+    gsap.to(e.currentTarget, {
+      zIndex: 0,
+      x: 0,
+      width: "300px",
+      height: "300px",
+      ease: "power1.in",
+    });
+  };
+
+  const handleClick = (e) => {
+    const clickedElement = e.currentTarget;
+
+    if (lastClickedRef.current === clickedElement) {
+      gsap.to(lastClickedRef.current, { zIndex: 0 });
+      gsap.to(lastClickedRef.current, {
+        x: 0,
+        width: "300px",
+        height: "300px",
+        ease: "power1.out",
+      });
+      clickCountRef.current = 0;
+      lastClickedRef.current = clickedElement;
+    }
+    clickCountRef.current += 1;
+    if (clickCountRef.current === 2) {
+      gsap.to(e.currentTarget, { zIndex: 0 });
+      gsap.to(e.currentTarget, {
+        x: 0,
+        width: "300px",
+        height: "300px",
+        ease: "power1.in",
+      });
+      return (clickCountRef.current = 0);
+    } else {
+      gsap.to(e.currentTarget, {
+        zIndex: 5,
+        width: "400px",
+        x: "-50px",
+        height: "400px",
+        ease: "power1.inOut",
+      });
+    }
+  };
+
+  useEffect(() => {
+    const items = document.querySelectorAll(".box");
+
+    items.forEach((box, index) => {
+      box.addEventListener("mouseenter", (e) => handleMouseOver(e, index));
+      box.addEventListener("mouseleave", handleMouseLeave);
+      box.addEventListener("click", handleClick);
+    });
+
+    return () => {
+      items.forEach((box, index) => {
+        box.removeEventListener("mouseenter", (e) => handleMouseOver(e, index));
+        box.removeEventListener("mouseleave", handleMouseLeave);
+        box.removeEventListener("click", handleClick);
+      });
+    };
+  }, []);
+
+  return (
+    <Wrapper>
+      <Slider className={"slider"}>
+        <Item className={"box box-6"}>6</Item>
+        <Item className={"box box-5"}>5</Item>
+        <Item className={"box box-4"}>4</Item>
+        <Item className={"box box-3"}>3</Item>
+        <Item className={"box box-2"}>2</Item>
+        <Item className={"box box-1"}>1</Item>
+      </Slider>
+    </Wrapper>
+  );
+};
+export default OrderedItemsAnimation;
 
 const Item = styled.div`
   ${text.bodyMBold}
@@ -82,9 +100,9 @@ const Item = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 25px;
-  width: 300px;
-  height: 300px;
+  border-radius: 1.736vw;
+  width: 20.833vw;
+  height: 20.833vw;
   cursor: pointer;
   -webkit-box-shadow: 10px 9px 11px -5px #000000;
   box-shadow: 10px 9px 11px -5px #000000;
@@ -131,6 +149,25 @@ const Item = styled.div`
     top: -110px;
     left: 150px;
   }
+  ${media.fullWidth} {
+    border-radius: 25px;
+  width: 300px;
+  height: 300px;
+  }
+  
+  ${media.tablet} {
+    border-radius: 25px;
+  width: 300px;
+  height: 300px;
+  }
+  
+  ${media.mobile} {
+    border-radius: 5.841vw;
+    max-width: 40vw;
+    max-height: 40vw;
+  width: 30.093vw;
+  height: 30.093vw;
+  }
 `;
 
 const Slider = styled.div`
@@ -140,4 +177,27 @@ const Slider = styled.div`
   perspective: 100px;
 `;
 
-
+const Wrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 55.556vw;
+  height: 41.667vw;
+  ${media.fullWidth} {
+    width: 800px;
+  height: 600px;
+  }
+  
+  ${media.tablet} {
+    width: 78.125vw;
+  height: 58.594vw;
+  }
+  
+  ${media.mobile} {
+    width: 100vw;
+  height: 100vw;
+  align-items: flex-end;
+  }
+`;

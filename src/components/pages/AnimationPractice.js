@@ -55,9 +55,9 @@ const ViewBox = styled.div`
   justify-content: center;
   background-color: black;
   border-radius: 25px;
-  width: 95%;
+  width: fit-content;
   outline: 4px solid red;
-  height: 65vh;
+  height: fit-content;
 `;
 const ComponentName = styled.p`
   ${text.bodyMBold}
