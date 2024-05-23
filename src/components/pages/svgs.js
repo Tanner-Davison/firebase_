@@ -10,9 +10,9 @@ const AllSvgs = () => {
           xmlnsXlink="http://www.w3.org/1999/xlink"
           x="0px"
           y="0px"
-          width="238.54px"
-          height="222.9px"
-          viewBox="0 0 238.54 222.9"
+          width="280.54px"
+          height="280.9px"
+          viewBox="0 0 300 222.9"
           style={{ enableBackground: 'new 0 0 238.54 222.9' }}
           xmlSpace="preserve"
         >

@@ -33,8 +33,8 @@ const OrderedItemsAnimation = () => {
       gsap.to(lastClickedRef.current, { zIndex: 0 });
       gsap.to(lastClickedRef.current, {
         x: 0,
-        width: "300px",
-        height: "300px",
+        width: "29.297vw",
+        height: "29.297vw",
         ease: "power1.out",
       });
       clickCountRef.current = 0;
@@ -45,8 +45,8 @@ const OrderedItemsAnimation = () => {
       gsap.to(e.currentTarget, { zIndex: 0 });
       gsap.to(e.currentTarget, {
         x: 0,
-        width: "300px",
-        height: "300px",
+        width: "29.297vw",
+        height: "29.297vw",
         ease: "power1.in",
       });
       return (clickCountRef.current = 0);
@@ -156,9 +156,9 @@ const Item = styled.div`
   }
   
   ${media.tablet} {
-    border-radius: 25px;
-  width: 300px;
-  height: 300px;
+    border-radius: 2.441vw;
+  width: 22.297vw;
+  height: 22.297vw;
   }
   
   ${media.mobile} {
@@ -172,9 +172,26 @@ const Item = styled.div`
 
 const Slider = styled.div`
   position: relative;
-  width: 300px;
+  width: 20.833vw;
+  height: 13.889vw;
+  perspective: 6.944vw;
+  ${media.fullWidth} {
+    width: 300px;
   height: 200px;
   perspective: 100px;
+  }
+  
+  ${media.tablet} {
+    width: 29.297vw;
+  height: 19.531vw;
+  perspective: 9.766vw;
+  }
+  
+  ${media.mobile} {
+    width: 70.093vw;
+  height: 46.729vw;
+  perspective: 23.364vw;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -183,16 +200,17 @@ const Wrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 55.556vw;
-  height: 41.667vw;
+  overflow-x:visible;
+  width: 80.556vw;
+  height: 43.667vw;
   ${media.fullWidth} {
     width: 800px;
   height: 600px;
   }
   
   ${media.tablet} {
-    width: 78.125vw;
-  height: 58.594vw;
+    width: 90.125vw;
+  height: 75.594vw;
   }
   
   ${media.mobile} {

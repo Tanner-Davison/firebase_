@@ -53,10 +53,8 @@ const ViewBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: black;
   border-radius: 25px;
   width: fit-content;
-  outline: 4px solid red;
   height: fit-content;
 `;
 const ComponentName = styled.p`
@@ -180,4 +178,5 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  
 `;

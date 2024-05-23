@@ -143,6 +143,9 @@ const Wrapper = styled.div`
   width: 62.5vw;
   height: 48.611vw;
   overflow-y: hidden;
+  background-color: black;
+  border-radius:25px;
+  overflow: hidden;
   ${media.fullWidth} {
     width: 900px;
   height: 700px;

@@ -18,17 +18,17 @@ const AnimatedPage = () => {
     const pageDemoTl = gsap.timeline({
       id: "page-demo-timeline",
       paused: false,
-      defaults: { opacity: 0, ease: "back" },
+      defaults: { autoAlpha: 0, ease: "back" },
     });
-    pageDemoTl.fromTo(demo.current, { opacity: 0 }, { opacity: 1, ease:"linear" })
-      .fromTo(head1.current, { x: 80 }, { x: 0, duration: 1, opacity: 1 })
-      .fromTo(subHead.current, { x: -80 }, { x: 0,duration:1, opacity: 1 },'<')
-      .fromTo(bodyDemo.current, { y: 30 }, { y: 0, opacity: 1 },'-=0.2')
-      .fromTo(ctaLink.current, { y: 30 }, { y: 0, opacity: 1 },'-=0.4')
-      .fromTo(
-        items,
-        { scale: 0, opacity: 0 },
-        { scale: 1, opacity: 1, stagger: 0.289 , rotate:45}
+    
+  pageDemoTl.fromTo(demo.current, { xPercent:-100, autoAlpha:0 }, {xPercent:0, autoAlpha: 1, duration:1 })
+      .fromTo(head1.current, { x: 80 }, { x: 0, duration: 1, autoAlpha: 1 },'+=0.1')
+      .fromTo(subHead.current, { x: -80 }, { x: 0,duration:1, autoAlpha: 1 },'<')
+      .fromTo(bodyDemo.current, { y: 30 }, { y: 0, autoAlpha: 1},'-=0.3')
+      .fromTo(ctaLink.current, { y: 30 }, { y: 0, autoAlpha: 1},'-=0.3')
+      .fromTo(items,
+        { scale: 0 },
+        { scale: 1, autoAlpha: 1,transformOrigin:'30% left', stagger: 0.289 , rotate:10}
       );
       GSDevTools.create({animation:'page-demo-timeline'});
   },{scope:demo.current});
@@ -128,22 +128,25 @@ svg{
 }
   #images {
     position: absolute;
-    left: 35vw;
-    top: 1.167vw;
+    left: 34.514vw;
+    top: -4.167vw;
+    
   }
   ${media.fullWidth} {
+    svg{
+      width:350px;
+    }
     #images {
-      position: absolute;
-      left: 485px;
-      top: -10px;
+      left: 497px;
+    top: 0px;
     }
   }
 
   ${media.tablet} {
     #images {
       position: absolute;
-      left: 45.156vw;
-      top: -5.859vw;
+      left: 48.535vw;
+    top: -5.859vw;
     }
   }
 
@@ -194,8 +197,11 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-x: hidden;
   opacity: 1;
-  border: 1px solid #333;
+  border: 1px outset #ffffff;
+  -webkit-box-shadow: 5px 5px 15px 2px rgba(0,0,0,0.51); 
+box-shadow: 5px 5px 15px 2px rgba(0,0,0,0.51);
   background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/32887/creative-process-bg.png);
   background-repeat: no-repeat;
   background-size: cover;
