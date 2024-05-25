@@ -39,13 +39,14 @@ const AnimationPractice = () => {
   }, []);
 
   return (
-    <Wrapper  className={'.layoutRef'}>
-      <Controls className='layoutRef'>
+    <Wrapper >
+      <Controls>
         <Left onClick={leftClick}>Left</Left>
         <ComponentName>{animationArray[isVisible].animeName}</ComponentName>
         <Right onClick={rightClick}>Right</Right>
       </Controls>
       <ViewBox>{animationArray[isVisible].Component}</ViewBox>
+      
     </Wrapper>
   );
 };
@@ -58,7 +59,7 @@ const ViewBox = styled.div`
   justify-content: center;
   border-radius: 25px;
   width: fit-content;
-  height: fit-content;
+  height: auto;
 `;
 const ComponentName = styled.p`
   ${text.bodyMBold}

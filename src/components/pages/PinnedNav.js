@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import styled from "styled-components"
 import media from "styles/media"
 import colors from "styles/colors"
@@ -12,52 +12,44 @@ import { getProgress } from "utils/getViewportProgress"
 
 gsap.registerPlugin(ScrollTrigger)
 
-const ProgressNav = () => {
-  useGSAP(()=>{
-      const sections = gsap.utils.toArray(`.slider-section-test`)
-        console.log(sections);
+const ProgressNav = ({layout}) => {
+//   useGSAP(()=>{
+//       const sections = gsap.utils.toArray(`.slider-section-test`)
+//         console.log(sections);
         
-      sections.forEach((section, index) => {
-        //eslint-disable-next-line
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            markers: true,
-            end: "bottom bottom",
-            scrub: true,
-            onUpdate: () => {
+//       sections.forEach((section, index) => {
+//         //eslint-disable-next-line
+//         const tl = gsap.timeline({
+//           scrollTrigger: {
+//             trigger: section,
+//             markers: true,
+//             end: "bottom bottom",
+//             scrub: true,
+//             onUpdate: () => {
                
                 
-              gsap.set(`#slide-${index}`, { width: `${getProgress(section)}%` })
-            },
-          },
-        })
-      })
-    },
-    {  scope:'.layoutRef',revertOnUpdate: false }
-  )
-  
-  useGSAP(
-    () => {
-        //eslint-disable-next-line
-        const pinnedLayout = document.querySelector('.layoutRef')
-        console.log(pinnedLayout);
-        const toPin = document.querySelector('.pinned-loaders')
-        console.log(toPin);
-        
-      const pinTimeline = gsap.timeline({
-        
-        scrollTrigger: {
-          trigger: pinnedLayout,
-          start: "top 15%",
-          end: "bottom bottom",
-          pin: toPin,
-          pinSpacer: false,
-        },
-      });
-    },
-    { scope:'.layoutRef', revertOnUpdate:false }
-  )
+//               gsap.set(`#slide-${index}`, { width: `${getProgress(section)}%` })
+//             },
+//           },
+//         })
+//       })
+//     },
+//     {  scope:'.layoutRef',revertOnUpdate: false }
+//   )
+useEffect(() => {
+    const trigga = document.querySelector('.layoutRef')
+    
+    const pinned = document.querySelector('.pinned-loaders')
+    ScrollTrigger.create({
+      trigger: trigga,
+      start: "top 8%",
+      end: "bottom bottom",
+      pin: pinned,
+      
+    })
+},[]);
+
+
 
   return (
     <ProgressBarContainer className="pinned-loaders">

@@ -1,15 +1,25 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components';
 import media from 'styles/media';
 import colors from 'styles/colors';
 import text from 'styles/text';
 import PinnedNav from './PinnedNav';
+import { scrollToElement } from "../../utils/scrollTo"
+import { gsap } from "gsap"
+import { useGSAP } from "@gsap/react"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { getProgress } from "utils/getViewportProgress"
+import { doc } from 'firebase/firestore';
+
 
 const PinnedPages = () => {
 
+
   return (
-    <Wrapper>
-        <PinnedNav />
+    <>
+        
+    <Wrapper className={'layoutRef'}>
+      <PinnedNav />
         <SectionWrapper className={`slider-section-test one`}>
         <p>Hello World</p>
         </SectionWrapper>
@@ -23,6 +33,7 @@ const PinnedPages = () => {
         <p>Hello World</p>
         </SectionWrapper>
     </Wrapper>
+    </>
   )
 }
 
@@ -34,7 +45,7 @@ justify-content: center;
 ${text.h1}
 color:black;
 height: 100vh;
-width:100%;
+width:1100px;
 `
 const Wrapper = styled.div`
 position:relative;
@@ -43,5 +54,5 @@ align-items: center;
 justify-content: center;
 flex-direction: column;
 width:100%;
-height: auto;
+height: fit-content;
 `

@@ -124,9 +124,9 @@ function App() {
          <Route
           path="/animation-practice"
           element={
-            <>
-          <AnimationPractice />
-            </>
+            
+          <AnimationPractice  />
+          
           }
         />
         <Route
