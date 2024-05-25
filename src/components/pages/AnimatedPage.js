@@ -25,7 +25,7 @@ const AnimatedPage = () => {
       pageDemoTl
         .fromTo(
           demo.current,
-          { xPercent: -100, autoAlpha: 0 },
+          { xPercent: -100 },
           { xPercent: 0, autoAlpha: 1, duration: 1.3 }
         )
         .fromTo(

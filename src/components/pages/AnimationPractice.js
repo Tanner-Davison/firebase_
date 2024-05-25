@@ -6,6 +6,8 @@ import CursorPainter from "./CursorPainter";
 import RolloverEffects from "./RolloverEffects";
 import AnimatedPage from "./AnimatedPage";
 import media from "styles/media";
+import PinnedNav from "./PinnedNav";
+import PinnedPages from "./PinnedPages";
 
 const AnimationPractice = () => {
   const countRef = useRef(0);
@@ -16,6 +18,7 @@ const AnimationPractice = () => {
     { Component: <CursorPainter />, animeName: "Cursor-Painter" },
     { Component: <RolloverEffects />, animeName: "Rollover-Effects" },
     { Component: <AnimatedPage />, animeName: "Page-Demo" },
+    { Component: <PinnedPages/> , animeName: "Pinned-Nav"}
   ];
 
   const leftClick = () => {
@@ -36,8 +39,8 @@ const AnimationPractice = () => {
   }, []);
 
   return (
-    <Wrapper>
-      <Controls>
+    <Wrapper  className={'.layoutRef'}>
+      <Controls className='layoutRef'>
         <Left onClick={leftClick}>Left</Left>
         <ComponentName>{animationArray[isVisible].animeName}</ComponentName>
         <Right onClick={rightClick}>Right</Right>
@@ -177,6 +180,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  height:auto;
   
 `;
