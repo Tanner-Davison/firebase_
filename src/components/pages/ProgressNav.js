@@ -1,25 +1,36 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import media from "styles/media";
-import colors from "styles/colors";
-import text from "styles/text";
-import { scrollToElement } from "../../utils/scrollTo";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { getProgress } from "utils/getViewportProgress";
+import React, { useRef } from "react"
+import styled from "styled-components"
+import media from "styles/media"
+import colors from "styles/colors"
+import text from "styles/text"
+import { scrollToElement } from "utils/scrollTo"
+import { gsap } from "gsap"
+import { useGSAP } from "@gsap/react"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { getProgress } from "utils/getViewportProgress"
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger)
 
-const ProgressNav = ({ layout }) => {
-    useGSAP(()=>{
-        const sections = gsap.utils.toArray(`.slider-section-test`)
-          console.log(sections);
+const ProgressNav = ({ layout, targets }) => {
 
-      },
-      {  revertOnUpdate: false }
-    )
-
+    useGSAP(() => {
+      
+      
+      targets.forEach((item, index) => { 
+        const target = document.querySelector(item)
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: target,  // Trigger on the section
+            end: "bottom bottom",
+            scrub: true,
+            onUpdate: () => {
+              gsap.set(`#slide-${index}`, { width: `${getProgress(target)}%` });
+            },
+          },
+        });
+      });
+    }, { revertOnUpdate: false })
+  
 
 
   return (
@@ -60,10 +71,10 @@ const ProgressNav = ({ layout }) => {
         Start a free 30-day trial
       </ProgressBarDiv>
     </ProgressBarContainer>
-  );
-};
+  )
+}
 
-export default ProgressNav;
+export default ProgressNav
 const GuideCount = styled.div`
   ${text.bodyXSBold}
   display: flex;
@@ -92,7 +103,7 @@ const GuideCount = styled.div`
     height: 4.907vw;
     border-radius: 0.935vw;
   }
-`;
+`
 const ProgressSlider = styled.div`
   position: absolute;
   left: 0;
@@ -113,7 +124,7 @@ const ProgressSlider = styled.div`
   ${media.mobile} {
     border-radius: 0.935vw;
   }
-`;
+`
 
 const ProgressBarDiv = styled.div`
   position: relative;
@@ -153,10 +164,10 @@ const ProgressBarDiv = styled.div`
     height: 13.084vw;
     border-radius: 0.935vw;
   }
-`;
+`
 
 const ProgressBarContainer = styled.div`
-  position: sticky;
+  position:fixed;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -164,4 +175,4 @@ const ProgressBarContainer = styled.div`
   margin: 20px 20%;
   gap: 0.833vw;
   z-index: 150;
-`;
+`

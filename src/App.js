@@ -18,6 +18,7 @@ import {
 } from "react-router-dom";
 import MyBlogs from "components/BlogPages/MyBlogs";
 import AnimationPractice from "components/pages/AnimationPractice";
+import PinnedPages from "components/pages/PinnedPages";
 
 export const UserDataContext = createContext();
 
@@ -121,19 +122,20 @@ function App() {
             </>
           }
         />
-         <Route
-          path="/animation-practice"
-          element={
-            
-          <AnimationPractice  />
-          
-          }
-        />
+        <Route path="/animation-practice" element={<AnimationPractice />} />
         <Route
           path="/my-blogs"
           element={
             <>
               <Nav /> <MyBlogs />
+            </>
+          }
+        />
+        <Route
+          path="/pinned-scroll"
+          element={
+            <>
+              <PinnedPages />
             </>
           }
         />
@@ -143,7 +145,7 @@ function App() {
 
   return (
     <UserDataContext.Provider value={userData}>
-      <Wrapper ref={wrapperRef}>
+      <Wrapper ref={wrapperRef} className='testing'>
         <RouterProvider router={router} />
       </Wrapper>
     </UserDataContext.Provider>
@@ -159,10 +161,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  width: 100%;
   background-image: url(${darkTimeKeeper});
   background-repeat: repeat;
   background-size: 10%;
   height: auto;
-  min-height: 100vh;
 `;

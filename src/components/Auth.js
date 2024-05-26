@@ -107,8 +107,9 @@ const Wrapper = styled.div`
   align-self: center;
   justify-self: center;
   top: 25%;
+  height: 100vh;
+  overflow-y: hidden;
   border-radius: 4.722vw;
-  height:90vh;
   border: 0.069vw ridge ${colors.loginWhite};
   ${media.fullWidth} {
     border-radius: 68px;

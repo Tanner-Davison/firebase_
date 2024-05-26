@@ -6,7 +6,7 @@ import CursorPainter from "./CursorPainter";
 import RolloverEffects from "./RolloverEffects";
 import AnimatedPage from "./AnimatedPage";
 import media from "styles/media";
-import PinnedNav from "./PinnedNav";
+
 import PinnedPages from "./PinnedPages";
 
 const AnimationPractice = () => {
@@ -18,7 +18,7 @@ const AnimationPractice = () => {
     { Component: <CursorPainter />, animeName: "Cursor-Painter" },
     { Component: <RolloverEffects />, animeName: "Rollover-Effects" },
     { Component: <AnimatedPage />, animeName: "Page-Demo" },
-    { Component: <PinnedPages/> , animeName: "Pinned-Nav"}
+    { Component: <testPages />, animeName: "Pinned-Nav" },
   ];
 
   const leftClick = () => {
@@ -34,19 +34,17 @@ const AnimationPractice = () => {
   };
 
   useEffect(() => {
-  
     setIsVisible(countRef.current);
   }, []);
 
   return (
-    <Wrapper >
+    <Wrapper>
       <Controls>
         <Left onClick={leftClick}>Left</Left>
         <ComponentName>{animationArray[isVisible].animeName}</ComponentName>
         <Right onClick={rightClick}>Right</Right>
       </Controls>
       <ViewBox>{animationArray[isVisible].Component}</ViewBox>
-      
     </Wrapper>
   );
 };
@@ -58,10 +56,9 @@ const ViewBox = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 25px;
-  width:auto;
-  max-height:75vh;
+  width: auto;
+  max-height: auto;
   flex-direction: column;
-
 `;
 const ComponentName = styled.p`
   ${text.bodyMBold}
@@ -183,6 +180,5 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height:auto;
-  
+  height: auto;
 `;
