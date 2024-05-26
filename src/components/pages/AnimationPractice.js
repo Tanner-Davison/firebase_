@@ -7,8 +7,6 @@ import RolloverEffects from "./RolloverEffects";
 import AnimatedPage from "./AnimatedPage";
 import media from "styles/media";
 
-import PinnedPages from "./PinnedPages";
-
 const AnimationPractice = () => {
   const countRef = useRef(0);
   const [isVisible, setIsVisible] = useState(0);
@@ -18,7 +16,7 @@ const AnimationPractice = () => {
     { Component: <CursorPainter />, animeName: "Cursor-Painter" },
     { Component: <RolloverEffects />, animeName: "Rollover-Effects" },
     { Component: <AnimatedPage />, animeName: "Page-Demo" },
-    { Component: <testPages />, animeName: "Pinned-Nav" },
+   
   ];
 
   const leftClick = () => {

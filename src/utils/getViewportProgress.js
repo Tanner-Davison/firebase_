@@ -1,4 +1,6 @@
 export const getProgress = section => {
+  console.log(section);
+  
     const sectionRect = section.getBoundingClientRect()
     let overlap = Math.max(
       0,

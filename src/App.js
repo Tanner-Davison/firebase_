@@ -18,7 +18,7 @@ import {
 } from "react-router-dom";
 import MyBlogs from "components/BlogPages/MyBlogs";
 import AnimationPractice from "components/pages/AnimationPractice";
-import PinnedPages from "components/pages/PinnedPages";
+
 
 export const UserDataContext = createContext();
 
@@ -131,21 +131,14 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/pinned-scroll"
-          element={
-            <>
-              <PinnedPages />
-            </>
-          }
-        />
+        
       </>
     )
   );
 
   return (
     <UserDataContext.Provider value={userData}>
-      <Wrapper ref={wrapperRef} className='testing'>
+      <Wrapper ref={wrapperRef}>
         <RouterProvider router={router} />
       </Wrapper>
     </UserDataContext.Provider>
@@ -164,5 +157,6 @@ const Wrapper = styled.div`
   background-image: url(${darkTimeKeeper});
   background-repeat: repeat;
   background-size: 10%;
-  height: auto;
+  min-height: 100vh;
+  overflow: hidden;
 `;
