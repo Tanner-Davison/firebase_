@@ -1,37 +1,64 @@
-import React, { useRef } from "react"
-import styled from "styled-components"
-import media from "styles/media"
-import colors from "styles/colors"
-import text from "styles/text"
-import { scrollToElement } from "utils/scrollTo"
-import { gsap } from "gsap"
-import { useGSAP } from "@gsap/react"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { getProgress } from "utils/getViewportProgress"
+import React, { useRef } from "react";
+import styled from "styled-components";
+import media from "styles/media";
+import colors from "styles/colors";
+import text from "styles/text";
+import { scrollToElement } from "utils/scrollTo";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { getProgress } from "utils/getViewportProgress";
+import { revokeAccessToken } from "firebase/auth";
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger);
 
 const ProgressNav = ({ layout, targets }) => {
+  useGSAP(
+    () => {
+      targets.forEach((item, index) => {
+        const target = document.querySelector(item);
+        const slide = document.querySelector(`#slide-${index}`);
 
-    useGSAP(() => {
-      
-      
-      targets.forEach((item, index) => { 
-        const target = document.querySelector(item)
         const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: target,  // Trigger on the section
+            trigger: target, // Trigger on the section
             end: "bottom bottom",
             scrub: true,
+            // onUpdate: () => {
+            //   gsap.set(slide, { width: `${getProgress(target)}%` });
+            // },
+          },
+        });
+      });
+    },
+    { revertOnUpdate: false }
+  );
+
+  useGSAP(
+    () => {
+      const sliders = gsap.utils.toArray(".allBg-slide");
+      sliders.forEach((slide, index) => {
+        const target = document.querySelector(targets[index]);
+        console.log(target);
+        
+        const currentSlide = document.querySelector(`#slide-${index}`)
+        console.log(currentSlide);
+        
+        const sliderTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: target,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
             onUpdate: () => {
-              gsap.set(`#slide-${index}`, { width: `${getProgress(target)}%` });
+              gsap.set(currentSlide, { width: `${getProgress(target)}%` });
             },
           },
         });
       });
-    }, { revertOnUpdate: false })
-  
-
+    },
+    { revertOnUpdate: false }
+  );
 
   return (
     <ProgressBarContainer className="pinned-loaders">
@@ -71,10 +98,10 @@ const ProgressNav = ({ layout, targets }) => {
         Start a free 30-day trial
       </ProgressBarDiv>
     </ProgressBarContainer>
-  )
-}
+  );
+};
 
-export default ProgressNav
+export default ProgressNav;
 const GuideCount = styled.div`
   ${text.bodyXSBold}
   display: flex;
@@ -103,7 +130,7 @@ const GuideCount = styled.div`
     height: 4.907vw;
     border-radius: 0.935vw;
   }
-`
+`;
 const ProgressSlider = styled.div`
   position: absolute;
   left: 0;
@@ -124,7 +151,7 @@ const ProgressSlider = styled.div`
   ${media.mobile} {
     border-radius: 0.935vw;
   }
-`
+`;
 
 const ProgressBarDiv = styled.div`
   position: relative;
@@ -164,10 +191,10 @@ const ProgressBarDiv = styled.div`
     height: 13.084vw;
     border-radius: 0.935vw;
   }
-`
+`;
 
 const ProgressBarContainer = styled.div`
-  position:fixed;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -175,4 +202,4 @@ const ProgressBarContainer = styled.div`
   margin: 20px 20%;
   gap: 0.833vw;
   z-index: 150;
-`
+`;

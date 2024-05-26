@@ -22,7 +22,6 @@ const PinnedPages = () => {
         trigger: ".scroll-container",
         start: "top top",
         end: "bottom bottom",
-        markers: true,
         pin: ".pinned-loaders",
         pinSpacing: false,
       },
@@ -31,10 +30,9 @@ const PinnedPages = () => {
   return (
 <>
 
-      <ScrollContainer className='toPin'>
-        <Wrapper className='scroll-container'>
+      <ScrollContainer className='scroll-container' >
           <ProgressNav layout={layout} targets={targets} />
-       
+        <Wrapper  >
             <SectionWrapper className={`slider-section-test one`}>
               <p>Hello World</p>
             </SectionWrapper>
@@ -56,10 +54,12 @@ const PinnedPages = () => {
 export default PinnedPages;
 
 const SectionWrapper = styled.div`
+${text.h1}
   display: flex;
   flex-direction: column;
   outline: 4px solid red;
   height: 100vh;
+  
 `
 
 const Wrapper = styled.div`
@@ -69,5 +69,6 @@ const Wrapper = styled.div`
   width: 100%;
 `
 const ScrollContainer= styled.div`
-
+height: 100vh;
+overflow: scroll;
 `
