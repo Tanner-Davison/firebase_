@@ -58,8 +58,10 @@ const ViewBox = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 25px;
-  width: fit-content;
-  height: auto;
+  width:auto;
+  max-height:75vh;
+  flex-direction: column;
+
 `;
 const ComponentName = styled.p`
   ${text.bodyMBold}

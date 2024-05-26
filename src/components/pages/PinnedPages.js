@@ -5,21 +5,25 @@ import colors from 'styles/colors';
 import text from 'styles/text';
 import PinnedNav from './PinnedNav';
 import { scrollToElement } from "../../utils/scrollTo"
-import { gsap } from "gsap"
+import { gsap, scrollTrigger } from "gsap"
 import { useGSAP } from "@gsap/react"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { getProgress } from "utils/getViewportProgress"
 import { doc } from 'firebase/firestore';
 
 
 const PinnedPages = () => {
+  useGSAP(()=>{
+    const sections = gsap.utils.toArray(`.slider-section-test`)
+      console.log(sections);
 
+  },{ scope:'.layoutRef', revertOnUpdate: false }
+)
 
   return (
     <>
         
-    <Wrapper className={'layoutRef'}>
-      <PinnedNav />
+        <PinnedNav />
+    <Wrapper className='layoutRef'>
         <SectionWrapper className={`slider-section-test one`}>
         <p>Hello World</p>
         </SectionWrapper>
@@ -32,27 +36,30 @@ const PinnedPages = () => {
         <SectionWrapper className={`slider-section-test four`}>
         <p>Hello World</p>
         </SectionWrapper>
-    </Wrapper>
+        </Wrapper>
     </>
   )
 }
 
 export default PinnedPages
 const SectionWrapper = styled.div`
+position: relative;
 display: flex;
-align-items: center;
+align-items: flex-start;
 justify-content: center;
 ${text.h1}
 color:black;
-height: 100vh;
-width:1100px;
+min-height: 900px;
+width:80%;
+
 `
 const Wrapper = styled.div`
 position:relative;
 display: flex;
 align-items: center;
-justify-content: center;
+justify-content: flex-start;
 flex-direction: column;
+overflow-y:scroll;
 width:100%;
-height: fit-content;
+height: 65vh;
 `
