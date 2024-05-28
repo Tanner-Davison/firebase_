@@ -3,7 +3,7 @@ export const scrollToElement = (target) => {
     if (element) {
       element.scrollIntoView({
         behavior: 'smooth',
-        inline: 'nearest' 
+        block: 'center' 
       });
     }
   };

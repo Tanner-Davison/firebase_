@@ -9,6 +9,7 @@ import styled from "styled-components";
 import CreateBlogPage from "components/BlogPages/CreateBlog";
 import darkTimeKeeper from "images/tortoise-shell.svg";
 import { gsapWrapperBackground } from "components/animations/gsapAnimations";
+import ScrollExample from './components/pages/ScrollExample';
 import Nav from "components/Nav";
 import {
   createBrowserRouter,
@@ -69,8 +70,7 @@ function App() {
     };
 
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      const wrapperElement = wrapperRef.current;
-      const playBackground = gsapWrapperBackground(wrapperElement);
+      const playBackground = gsapWrapperBackground(wrapperRef.current);
       if (user) {
         addUserLoginData(user);
         setUserData({
@@ -100,37 +100,37 @@ function App() {
         <Route
           path="/user/profile"
           element={
-            <>
+            <Wrapper ref={wrapperRef}>
               <Nav /> <HomePage userData={userData} />,
-            </>
+            </Wrapper>
           }
         />
         ,
         <Route
           path="/blog-creation"
           element={
-            <>
+            <Wrapper ref={wrapperRef}>
               <Nav /> <CreateBlogPage />
-            </>
+            </Wrapper>
           }
         />
         <Route
           path="/explore"
           element={
-            <>
+            <Wrapper id='animated-background' ref={wrapperRef}>
               <Nav /> <AllBlogs />
-            </>
+            </Wrapper>
           }
         />
         <Route path="/animation-practice" element={<AnimationPractice />} />
         <Route
           path="/my-blogs"
           element={
-            <>
+            <Wrapper ref={wrapperRef}>
               <Nav /> <MyBlogs />
-            </>
+            </Wrapper>
           }
-        />
+        />    
         
       </>
     )
@@ -138,9 +138,7 @@ function App() {
 
   return (
     <UserDataContext.Provider value={userData}>
-      <Wrapper ref={wrapperRef}>
         <RouterProvider router={router} />
-      </Wrapper>
     </UserDataContext.Provider>
   );
 }
@@ -153,10 +151,8 @@ const Wrapper = styled.div`
   left: 0;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
   background-image: url(${darkTimeKeeper});
   background-repeat: repeat;
   background-size: 10%;
-  min-height: 100vh;
-  overflow: hidden;
+  
 `;

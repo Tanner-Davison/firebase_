@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import text from "styles/text";
 import OrderedItemsAnimation from "./OrderedItemsAnimation";
+import ScrollExample from "./ScrollExample";
 import CursorPainter from "./CursorPainter";
 import RolloverEffects from "./RolloverEffects";
 import AnimatedPage from "./AnimatedPage";
@@ -16,6 +17,7 @@ const AnimationPractice = () => {
     { Component: <CursorPainter />, animeName: "Cursor-Painter" },
     { Component: <RolloverEffects />, animeName: "Rollover-Effects" },
     { Component: <AnimatedPage />, animeName: "Page-Demo" },
+    { Component: <ScrollExample/>, animeName:"Pinned(Scroll)Loaders"}
    
   ];
 

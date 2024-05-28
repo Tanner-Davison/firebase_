@@ -4,7 +4,6 @@ import BlogOptions from "./Options";
 import { HomepageOptionsIncoming } from "./animations/gsapAnimations";
 import media from "styles/media";
 
-
 const UsersBlogsOptions = () => {
   useEffect(() => {
     const userOptions = HomepageOptionsIncoming();
@@ -16,7 +15,7 @@ const UsersBlogsOptions = () => {
 
   return (
     <Wrapper>
-        <BlogOptions />
+      <BlogOptions />
     </Wrapper>
   );
 };
@@ -28,18 +27,15 @@ const Wrapper = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  
-  padding: 5vw 0vw;
- width: 100%;
+  overflow: hidden;
+  padding: 10vw 0vw;
+  width: 100%;
   ${media.fullWidth} {
-  
   }
 
   ${media.tablet} {
-
   }
 
   ${media.mobile} {
-   
   }
 `;

@@ -102,7 +102,7 @@ export const CardOptionsReverse = (e) => {
 };
 
 export const gsapWrapperBackground = (element) => {
-  gsap.to(element, {
+  gsap.set(element, {
     duration: 2,
     backgroundSize: "200%",
     backdropFilter: "blur(10px)",
