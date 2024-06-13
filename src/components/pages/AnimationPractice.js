@@ -11,7 +11,6 @@ import media from "styles/media";
 const AnimationPractice = () => {
   const countRef = useRef(0);
   const [isVisible, setIsVisible] = useState(0);
-
   const animationArray = [
     { Component: <OrderedItemsAnimation />, animeName: "Ordered-Items" },
     { Component: <CursorPainter />, animeName: "Cursor-Painter" },
@@ -34,6 +33,8 @@ const AnimationPractice = () => {
   };
 
   useEffect(() => {
+  console.log(countRef.current);
+  
     setIsVisible(countRef.current);
   }, []);
 

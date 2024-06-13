@@ -145,12 +145,12 @@ const Image = styled.div`
   justify-content: center;
   background: ${(props) => (props.$bg ? "unset" : "rgba(0,0,0,0.2)")};
   width: 10.417vw;
-  max-height: 14.028vw;
+  height: 10.028vw;
   padding:0.694vw;
   border-radius: 1.736vw;
   ${media.fullWidth} {
     width: 150px;
-  max-height: 202px;
+  height: 150px;
   padding:10px;
   border-radius: 25px;
   }
@@ -196,10 +196,11 @@ align-items: center;
     z-index: 100;
   }
   ${media.fullWidth} {
-    width: ${props => props.$featured === 'feature' ? '742px': props.$featured === 'last' ? '657px':'300px'};
+    width: ${props => props.$featured === 'feature' ? '565px': props.$featured === 'last' ? '450px':'300px'};
   border-radius: 29px;
   gap: 25px;
-  height:26.042vw;
+  height:auto;
+
   padding: 15px;
     -webkit-box-shadow: 2px 5px 16px 0px #0b325e,
       2px 2px 15px 5px rgba(0, 0, 0, 0);
@@ -225,6 +226,8 @@ const Wrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
   flex-wrap: wrap;
   width: auto;
   ${media.fullWidth} {

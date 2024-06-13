@@ -61,6 +61,8 @@ const AllBlogs = () => {
           );
         }
       });
+      <div>
+      </div>
 
       return <UserPostsWrapper>{mappedPosts}</UserPostsWrapper>;
     } else {
@@ -86,7 +88,7 @@ position: relative;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: space-evenly;
   gap: 25px;
   border: 2px solid red;
   width: 100%;
@@ -98,8 +100,8 @@ const BlogPostsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  align-self: center;
-  justify-content: center;
+  align-self: flex-start;
+  justify-content: flex-start;
   gap: 2.431vw;
   width: 100vw;
 
