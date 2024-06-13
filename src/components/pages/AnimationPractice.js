@@ -10,6 +10,7 @@ import media from "styles/media";
 
 const AnimationPractice = () => {
   const countRef = useRef(0);
+  console.log('testing')
   const [isVisible, setIsVisible] = useState(0);
   const animationArray = [
     { Component: <OrderedItemsAnimation />, animeName: "Ordered-Items" },
